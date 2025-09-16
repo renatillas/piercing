@@ -1588,9 +1588,6 @@ function none2() {
 }
 
 // build/dev/javascript/lustre/lustre/element/html.mjs
-function h1(attrs, children) {
-  return element2("h1", attrs, children);
-}
 function h2(attrs, children) {
   return element2("h2", attrs, children);
 }
@@ -1614,6 +1611,9 @@ function p(attrs, children) {
 }
 function a(attrs, children) {
   return element2("a", attrs, children);
+}
+function br(attrs) {
+  return element2("br", attrs, empty_list);
 }
 function img(attrs) {
   return element2("img", attrs, empty_list);
@@ -3846,11 +3846,12 @@ function navbar() {
       div(
         toList([class$("nav-brand mb-2 sm:mb-0")]),
         toList([
-          h1(
+          a(
             toList([
               class$(
                 "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white"
-              )
+              ),
+              href("/")
             ]),
             toList([text2("\uE00AEI \uE193 PINX\uE01A")])
           )
@@ -3866,16 +3867,7 @@ function navbar() {
           a(
             toList([
               class$(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
-              ),
-              href("/")
-            ]),
-            toList([text2("INICIO")])
-          ),
-          a(
-            toList([
-              class$(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
+                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
               ),
               href("/gallery")
             ]),
@@ -3884,7 +3876,7 @@ function navbar() {
           a(
             toList([
               class$(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
+                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
               ),
               href("/about")
             ]),
@@ -3893,7 +3885,7 @@ function navbar() {
           a(
             toList([
               class$(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
+                "border-2 border-transparent text-white hover:text-black px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
               ),
               href("/contact")
             ]),
@@ -4022,6 +4014,31 @@ function contact_page() {
               p(
                 toList([class$("text-gray-300")]),
                 toList([text2("+34 663 73 66 31")])
+              )
+            ])
+          ),
+          div(
+            toList([
+              class$(
+                "p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
+              )
+            ]),
+            toList([
+              h3(
+                toList([
+                  class$(
+                    "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide"
+                  )
+                ]),
+                toList([text2("DIRECCI\xD3N")])
+              ),
+              p(
+                toList([class$("text-gray-300")]),
+                toList([
+                  text2("C/ Doctor Jaume Segarra, 4"),
+                  br(toList([])),
+                  text2("46019 Valencia, Espa\xF1a")
+                ])
               )
             ])
           )
@@ -4356,7 +4373,7 @@ function modal_view(modal) {
         div(
           toList([
             class$(
-              "metallic-border modal-slide-up relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
+              "relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
             )
           ]),
           toList([
@@ -4407,8 +4424,10 @@ function modal_view(modal) {
 }
 function view2(model) {
   return div(
-    toList([class$("min-h-screen bg-black/80 black text-white")]),
+    toList([class$("min-h-[100dvh] bg-black/80 black text-white")]),
     toList([
+      div(toList([class$("fixed-overlay-1")]), toList([])),
+      div(toList([class$("fixed-overlay-2")]), toList([])),
       navbar(),
       (() => {
         let $ = model.route;

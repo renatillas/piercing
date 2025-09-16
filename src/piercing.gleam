@@ -77,7 +77,9 @@ fn update(model: Model, msg: Msg) {
 }
 
 fn view(model: Model) -> Element(Msg) {
-  html.div([attribute.class("min-h-screen bg-black/80 black text-white")], [
+  html.div([attribute.class("min-h-[100dvh] bg-black/80 black text-white")], [
+    html.div([attribute.class("fixed-overlay-1")], []),
+    html.div([attribute.class("fixed-overlay-2")], []),
     navbar(),
     case model.route {
       Home -> home_page()
@@ -98,11 +100,12 @@ fn navbar() -> Element(Msg) {
     ],
     [
       html.div([attribute.class("nav-brand mb-2 sm:mb-0")], [
-        html.h1(
+        html.a(
           [
             attribute.class(
               "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white",
             ),
+            attribute.href("/"),
           ],
           [element.text("EI  PINX")],
         ),
@@ -117,16 +120,7 @@ fn navbar() -> Element(Msg) {
           html.a(
             [
               attribute.class(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
-              ),
-              attribute.href("/"),
-            ],
-            [element.text("INICIO")],
-          ),
-          html.a(
-            [
-              attribute.class(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
+                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
               attribute.href("/gallery"),
             ],
@@ -135,7 +129,7 @@ fn navbar() -> Element(Msg) {
           html.a(
             [
               attribute.class(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
+                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
               attribute.href("/about"),
             ],
@@ -144,7 +138,7 @@ fn navbar() -> Element(Msg) {
           html.a(
             [
               attribute.class(
-                "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
+                "border-2 border-transparent text-white hover:text-black px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
               attribute.href("/contact"),
             ],
@@ -499,6 +493,28 @@ fn contact_page() -> Element(Msg) {
               ]),
             ],
           ),
+          html.div(
+            [
+              attribute.class(
+                "p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300",
+              ),
+            ],
+            [
+              html.h3(
+                [
+                  attribute.class(
+                    "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide",
+                  ),
+                ],
+                [element.text("DIRECCIÓN")],
+              ),
+              html.p([attribute.class("text-gray-300")], [
+                element.text("C/ Doctor Jaume Segarra, 4"),
+                html.br([]),
+                element.text("46019 Valencia, España"),
+              ]),
+            ],
+          ),
         ],
       ),
     ],
@@ -597,7 +613,7 @@ fn modal_view(modal: ModalState) -> Element(Msg) {
           html.div(
             [
               attribute.class(
-                "metallic-border modal-slide-up relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80",
+                "relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80",
               ),
             ],
             [
