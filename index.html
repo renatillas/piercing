@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kei Te Pinxa - Perforaciones Premium</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/priv/static/piercing.css" />
   <script type="module" src="/priv/static/piercing.mjs"></script>
   <style>
@@ -98,39 +97,145 @@
       height: 100%;
       z-index: 1000;
       pointer-events: none;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.9));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: overlay-fade 3s ease-out forwards;
     }
 
+    .intro-logo {
+      font-size: 4rem;
+      font-weight: bold;
+      color: transparent;
+      background: linear-gradient(45deg, #c0c0c0, #ffffff, #a9a9a9, #d3d3d3);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(192, 192, 192, 0.4),
+        0 0 30px rgba(169, 169, 169, 0.3);
+      animation:
+        logo-entrance 3s ease-out,
+        logo-glow 10s ease-in-out infinite;
+      opacity: 0;
+    }
 
-    .metallic-particles {
-      position: absolute;
+    .flash-effect {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 20%, rgba(192, 192, 192, 0.6), transparent 2%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.4), transparent 1.5%),
-        radial-gradient(circle at 40% 60%, rgba(169, 169, 169, 0.5), transparent 1%),
-        radial-gradient(circle at 60% 30%, rgba(211, 211, 211, 0.3), transparent 2.5%);
-      opacity: 0;
-      animation: particles-fade 2s 1.5s ease-in-out forwards;
+      width: 300vw;
+      height: 100vh;
+      background: linear-gradient(70deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.8) 50%,
+          transparent 70%);
+      transform: translateX(100%);
+      animation: flash-sweep 1.8s ease-out;
+      z-index: 1001;
     }
 
-    @keyframes tribal-spin {
+
+
+    @keyframes overlay-fade {
       0% {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      85% {
         opacity: 1;
       }
 
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    @keyframes logo-entrance {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+
       50% {
-        transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+        transform: scale(1);
         opacity: 0.8;
       }
 
       100% {
-        transform: translate(-50%, -50%) rotate(360deg) scale(0);
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes metallic-gradient {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+        filter: hue-rotate(0deg);
+      }
+
+      50% {
+        background-position: 100% 50%;
+        filter: hue-rotate(20deg);
+      }
+    }
+
+    @keyframes logo-glow {
+
+      0%,
+      100% {
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 0.5),
+          0 0 20px rgba(192, 192, 192, 0.4),
+          0 0 30px rgba(169, 169, 169, 0.3);
+      }
+
+      50% {
+        text-shadow:
+          0 0 20px rgba(255, 255, 255, 0.8),
+          0 0 30px rgba(192, 192, 192, 0.6),
+          0 0 40px rgba(169, 169, 169, 0.5),
+          0 0 50px rgba(211, 211, 211, 0.3);
+      }
+    }
+
+    @keyframes flash-sweep {
+      0% {
+        transform: translateX(-100%) skewX(-25deg);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(100%) skewX(-25deg);
         opacity: 0;
       }
     }
+
+    @keyframes sparkle-twinkle {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+        box-shadow: 0 0 6px white;
+      }
+    }
+
 
     @keyframes particles-fade {
 
@@ -207,8 +312,62 @@
       -webkit-background-clip: text;
     }
 
-    .text-transparent {
-      color: transparent;
+    /* Custom Modal Animations */
+    @keyframes modal-slide-up {
+      from { 
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes metallic-border-flow {
+      0%, 100% { 
+        background-position: 0% 50%;
+      }
+      50% { 
+        background-position: 100% 50%;
+      }
+    }
+
+
+    .modal-slide-up {
+      animation: modal-slide-up 0.4s ease-out;
+    }
+
+    .metallic-border::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        #c0c0c0, #ffffff, #a9a9a9, #d3d3d3, 
+        #c0c0c0, #ffffff, #a9a9a9, #d3d3d3);
+      background-size: 400% 400%;
+      border-radius: inherit;
+      z-index: -1;
+      animation: metallic-border-flow 3s ease-in-out infinite;
+    }
+
+
+    .modal-caption-accent::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255,255,255,0.6), 
+        transparent);
+      box-shadow: 0 0 6px rgba(255,255,255,0.4);
     }
   </style>
 </head>
@@ -217,8 +376,8 @@
   <div id="app">
     <div class="min-h-screen text-white flex items-center justify-center">
       <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-          KEI TE PINXA
+        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text">
+          EI  PINX
         </h1>
         <p class="text-gray-300">Cargando aplicación...</p>
         <div class="mt-4">
@@ -229,6 +388,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Shiny Metallic Intro Overlay -->
+  <div class="opening-overlay">
+    <div class="intro-logo">EI  PINX </div>
+    <div class="flash-effect"></div>
   </div>
 
 </body>

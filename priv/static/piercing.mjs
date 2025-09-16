@@ -185,6 +185,11 @@ function run(data, decoder) {
     return new Error(errors);
   }
 }
+function success(data) {
+  return new Decoder((_) => {
+    return [data, toList([])];
+  });
+}
 function map2(decoder, transformer) {
   return new Decoder(
     (d) => {
@@ -728,6 +733,94 @@ function remove_dot_segments(input) {
 function path_segments(path) {
   return remove_dot_segments(split2(path, "/"));
 }
+function to_string2(uri) {
+  let _block;
+  let $ = uri.fragment;
+  if ($ instanceof Some) {
+    let fragment3 = $[0];
+    _block = toList(["#", fragment3]);
+  } else {
+    _block = toList([]);
+  }
+  let parts = _block;
+  let _block$1;
+  let $1 = uri.query;
+  if ($1 instanceof Some) {
+    let query = $1[0];
+    _block$1 = prepend("?", prepend(query, parts));
+  } else {
+    _block$1 = parts;
+  }
+  let parts$1 = _block$1;
+  let parts$2 = prepend(uri.path, parts$1);
+  let _block$2;
+  let $2 = uri.host;
+  let $3 = starts_with(uri.path, "/");
+  if (!$3 && $2 instanceof Some) {
+    let host = $2[0];
+    if (host !== "") {
+      _block$2 = prepend("/", parts$2);
+    } else {
+      _block$2 = parts$2;
+    }
+  } else {
+    _block$2 = parts$2;
+  }
+  let parts$3 = _block$2;
+  let _block$3;
+  let $4 = uri.host;
+  let $5 = uri.port;
+  if ($5 instanceof Some && $4 instanceof Some) {
+    let port = $5[0];
+    _block$3 = prepend(":", prepend(to_string(port), parts$3));
+  } else {
+    _block$3 = parts$3;
+  }
+  let parts$4 = _block$3;
+  let _block$4;
+  let $6 = uri.scheme;
+  let $7 = uri.userinfo;
+  let $8 = uri.host;
+  if ($8 instanceof Some) {
+    if ($7 instanceof Some) {
+      if ($6 instanceof Some) {
+        let h = $8[0];
+        let u = $7[0];
+        let s = $6[0];
+        _block$4 = prepend(
+          s,
+          prepend(
+            "://",
+            prepend(u, prepend("@", prepend(h, parts$4)))
+          )
+        );
+      } else {
+        _block$4 = parts$4;
+      }
+    } else if ($6 instanceof Some) {
+      let h = $8[0];
+      let s = $6[0];
+      _block$4 = prepend(s, prepend("://", prepend(h, parts$4)));
+    } else {
+      let h = $8[0];
+      _block$4 = prepend("//", prepend(h, parts$4));
+    }
+  } else if ($7 instanceof Some) {
+    if ($6 instanceof Some) {
+      let s = $6[0];
+      _block$4 = prepend(s, prepend(":", parts$4));
+    } else {
+      _block$4 = parts$4;
+    }
+  } else if ($6 instanceof Some) {
+    let s = $6[0];
+    _block$4 = prepend(s, prepend(":", parts$4));
+  } else {
+    _block$4 = parts$4;
+  }
+  let parts$5 = _block$4;
+  return concat2(parts$5);
+}
 
 // build/dev/javascript/gleam_stdlib/gleam/bool.mjs
 function guard(requirement, consequence, alternative) {
@@ -805,6 +898,12 @@ var Handler = class extends CustomType {
     this.prevent_default = prevent_default;
     this.stop_propagation = stop_propagation;
     this.message = message2;
+  }
+};
+var Never = class extends CustomType {
+  constructor(kind) {
+    super();
+    this.kind = kind;
   }
 };
 function merge(loop$attributes, loop$merged) {
@@ -938,7 +1037,21 @@ function attribute(name, value) {
 }
 var property_kind = 1;
 var event_kind = 2;
+function event(name, handler, include, prevent_default, stop_propagation, immediate, debounce, throttle) {
+  return new Event2(
+    event_kind,
+    name,
+    handler,
+    include,
+    prevent_default,
+    stop_propagation,
+    immediate,
+    debounce,
+    throttle
+  );
+}
 var never_kind = 0;
+var never = /* @__PURE__ */ new Never(never_kind);
 var always_kind = 2;
 
 // build/dev/javascript/lustre/lustre/attribute.mjs
@@ -947,6 +1060,15 @@ function attribute2(name, value) {
 }
 function class$(name) {
   return attribute2("class", name);
+}
+function style(property3, value) {
+  if (property3 === "") {
+    return class$("");
+  } else if (value === "") {
+    return class$("");
+  } else {
+    return attribute2("style", property3 + ":" + value + ";");
+  }
 }
 function href(url) {
   return attribute2("href", url);
@@ -1080,19 +1202,19 @@ function do_to_string(loop$path, loop$acc) {
     }
   }
 }
-function to_string2(path) {
+function to_string3(path) {
   return do_to_string(path, toList([]));
 }
 function matches(path, candidates) {
   if (candidates instanceof Empty) {
     return false;
   } else {
-    return do_matches(to_string2(path), candidates);
+    return do_matches(to_string3(path), candidates);
   }
 }
 var separator_event = "\n";
-function event(path, event2) {
-  return do_to_string(path, toList([separator_event, event2]));
+function event2(path, event4) {
+  return do_to_string(path, toList([separator_event, event4]));
 }
 
 // build/dev/javascript/lustre/lustre/vdom/vnode.mjs
@@ -1319,7 +1441,7 @@ function tick(events) {
   );
 }
 function do_remove_event(handlers, path, name) {
-  return remove(handlers, event(path, name));
+  return remove(handlers, event2(path, name));
 }
 function remove_event(events, path, name) {
   let handlers = do_remove_event(events.handlers, path, name);
@@ -1343,7 +1465,7 @@ function remove_attributes(handlers, path, attributes) {
     }
   );
 }
-function handle(events, path, name, event2) {
+function handle(events, path, name, event4) {
   let next_dispatched_paths = prepend(path, events.next_dispatched_paths);
   let events$1 = new Events(
     events.handlers,
@@ -1356,7 +1478,7 @@ function handle(events, path, name, event2) {
   );
   if ($ instanceof Ok) {
     let handler = $[0];
-    return [events$1, run(event2, handler)];
+    return [events$1, run(event4, handler)];
   } else {
     return [events$1, new Error(toList([]))];
   }
@@ -1367,7 +1489,7 @@ function has_dispatched_events(events, path) {
 function do_add_event(handlers, mapper, path, name, handler) {
   return insert2(
     handlers,
-    event(path, name),
+    event2(path, name),
     map2(
       handler,
       (handler2) => {
@@ -1569,6 +1691,12 @@ function nav(attrs, children) {
 function div(attrs, children) {
   return element2("div", attrs, children);
 }
+function figcaption(attrs, children) {
+  return element2("figcaption", attrs, children);
+}
+function figure(attrs, children) {
+  return element2("figure", attrs, children);
+}
 function p(attrs, children) {
   return element2("p", attrs, children);
 }
@@ -1577,6 +1705,12 @@ function a(attrs, children) {
 }
 function img(attrs) {
   return element2("img", attrs, empty_list);
+}
+function button(attrs, children) {
+  return element2("button", attrs, children);
+}
+function dialog(attrs, children) {
+  return element2("dialog", attrs, children);
 }
 
 // build/dev/javascript/lustre/lustre/vdom/patch.mjs
@@ -1708,10 +1842,10 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
     let mapper = loop$mapper;
     let events = loop$events;
     let old = loop$old;
-    let new$7 = loop$new;
+    let new$8 = loop$new;
     let added = loop$added;
     let removed = loop$removed;
-    if (new$7 instanceof Empty) {
+    if (new$8 instanceof Empty) {
       if (old instanceof Empty) {
         return new AttributeChange(added, removed, events);
       } else {
@@ -1727,7 +1861,7 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
           loop$mapper = mapper;
           loop$events = events$1;
           loop$old = old$1;
-          loop$new = new$7;
+          loop$new = new$8;
           loop$added = added;
           loop$removed = removed$1;
         } else {
@@ -1739,16 +1873,16 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
           loop$mapper = mapper;
           loop$events = events;
           loop$old = old$1;
-          loop$new = new$7;
+          loop$new = new$8;
           loop$added = added;
           loop$removed = removed$1;
         }
       }
     } else if (old instanceof Empty) {
-      let $ = new$7.head;
+      let $ = new$8.head;
       if ($ instanceof Event2) {
         let next = $;
-        let new$1 = new$7.tail;
+        let new$1 = new$8.tail;
         let name = $.name;
         let handler = $.handler;
         let added$1 = prepend(next, added);
@@ -1763,7 +1897,7 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
         loop$removed = removed;
       } else {
         let next = $;
-        let new$1 = new$7.tail;
+        let new$1 = new$8.tail;
         let added$1 = prepend(next, added);
         loop$controlled = controlled;
         loop$path = path;
@@ -1775,8 +1909,8 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
         loop$removed = removed;
       }
     } else {
-      let next = new$7.head;
-      let remaining_new = new$7.tail;
+      let next = new$8.head;
+      let remaining_new = new$8.tail;
       let prev = old.head;
       let remaining_old = old.tail;
       let $ = compare3(prev, next);
@@ -1790,7 +1924,7 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
           loop$mapper = mapper;
           loop$events = events$1;
           loop$old = remaining_old;
-          loop$new = new$7;
+          loop$new = new$8;
           loop$added = added;
           loop$removed = removed$1;
         } else {
@@ -1800,7 +1934,7 @@ function diff_attributes(loop$controlled, loop$path, loop$mapper, loop$events, l
           loop$mapper = mapper;
           loop$events = events;
           loop$old = remaining_old;
-          loop$new = new$7;
+          loop$new = new$8;
           loop$added = added;
           loop$removed = removed$1;
         }
@@ -1992,7 +2126,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
   while (true) {
     let old = loop$old;
     let old_keyed = loop$old_keyed;
-    let new$7 = loop$new;
+    let new$8 = loop$new;
     let new_keyed = loop$new_keyed;
     let moved = loop$moved;
     let moved_offset = loop$moved_offset;
@@ -2004,7 +2138,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
     let children = loop$children;
     let mapper = loop$mapper;
     let events = loop$events;
-    if (new$7 instanceof Empty) {
+    if (new$8 instanceof Empty) {
       if (old instanceof Empty) {
         return new Diff(
           new Patch(patch_index, removed, changes, children),
@@ -2024,7 +2158,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
         let events$1 = remove_child(events, path, node_index, prev);
         loop$old = old$1;
         loop$old_keyed = old_keyed;
-        loop$new = new$7;
+        loop$new = new$8;
         loop$new_keyed = new_keyed;
         loop$moved = moved;
         loop$moved_offset = moved_offset;
@@ -2043,19 +2177,19 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
         mapper,
         path,
         node_index,
-        new$7
+        new$8
       );
-      let insert4 = insert3(new$7, node_index - moved_offset);
+      let insert4 = insert3(new$8, node_index - moved_offset);
       let changes$1 = prepend(insert4, changes);
       return new Diff(
         new Patch(patch_index, removed, changes$1, children),
         events$1
       );
     } else {
-      let next = new$7.head;
+      let next = new$8.head;
       let prev = old.head;
       if (prev.key !== next.key) {
-        let new_remaining = new$7.tail;
+        let new_remaining = new$8.tail;
         let old_remaining = old.tail;
         let next_did_exist = get(old_keyed, next.key);
         let prev_does_exist = has_key2(new_keyed, prev.key);
@@ -2066,7 +2200,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             if ($) {
               loop$old = old_remaining;
               loop$old_keyed = old_keyed;
-              loop$new = new$7;
+              loop$new = new$8;
               loop$new_keyed = new_keyed;
               loop$moved = moved;
               loop$moved_offset = moved_offset - 1;
@@ -2088,7 +2222,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
               let moved_offset$1 = moved_offset + 1;
               loop$old = prepend(match, old);
               loop$old_keyed = old_keyed;
-              loop$new = new$7;
+              loop$new = new$8;
               loop$new_keyed = new_keyed;
               loop$moved = moved$1;
               loop$moved_offset = moved_offset$1;
@@ -2108,7 +2242,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             let moved_offset$1 = moved_offset - 1;
             loop$old = old_remaining;
             loop$old_keyed = old_keyed;
-            loop$new = new$7;
+            loop$new = new$8;
             loop$new_keyed = new_keyed;
             loop$moved = moved;
             loop$moved_offset = moved_offset$1;
@@ -2171,10 +2305,10 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
       } else {
         let $ = old.head;
         if ($ instanceof Fragment) {
-          let $1 = new$7.head;
+          let $1 = new$8.head;
           if ($1 instanceof Fragment) {
             let next$1 = $1;
-            let new$1 = new$7.tail;
+            let new$1 = new$8.tail;
             let prev$1 = $;
             let old$1 = old.tail;
             let composed_mapper = compose_mapper(mapper, next$1.mapper);
@@ -2230,7 +2364,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             loop$events = child.events;
           } else {
             let next$1 = $1;
-            let new_remaining = new$7.tail;
+            let new_remaining = new$8.tail;
             let prev$1 = $;
             let old_remaining = old.tail;
             let change = replace2(node_index - moved_offset, next$1);
@@ -2261,12 +2395,12 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             loop$events = events$1;
           }
         } else if ($ instanceof Element) {
-          let $1 = new$7.head;
+          let $1 = new$8.head;
           if ($1 instanceof Element) {
             let next$1 = $1;
             let prev$1 = $;
             if (prev$1.namespace === next$1.namespace && prev$1.tag === next$1.tag) {
-              let new$1 = new$7.tail;
+              let new$1 = new$8.tail;
               let old$1 = old.tail;
               let composed_mapper = compose_mapper(
                 mapper,
@@ -2353,7 +2487,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
               loop$events = child.events;
             } else {
               let next$2 = $1;
-              let new_remaining = new$7.tail;
+              let new_remaining = new$8.tail;
               let prev$2 = $;
               let old_remaining = old.tail;
               let change = replace2(node_index - moved_offset, next$2);
@@ -2390,7 +2524,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             }
           } else {
             let next$1 = $1;
-            let new_remaining = new$7.tail;
+            let new_remaining = new$8.tail;
             let prev$1 = $;
             let old_remaining = old.tail;
             let change = replace2(node_index - moved_offset, next$1);
@@ -2421,12 +2555,12 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             loop$events = events$1;
           }
         } else if ($ instanceof Text) {
-          let $1 = new$7.head;
+          let $1 = new$8.head;
           if ($1 instanceof Text) {
             let next$1 = $1;
             let prev$1 = $;
             if (prev$1.content === next$1.content) {
-              let new$1 = new$7.tail;
+              let new$1 = new$8.tail;
               let old$1 = old.tail;
               loop$old = old$1;
               loop$old_keyed = old_keyed;
@@ -2444,7 +2578,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
               loop$events = events;
             } else {
               let next$2 = $1;
-              let new$1 = new$7.tail;
+              let new$1 = new$8.tail;
               let old$1 = old.tail;
               let child = new$5(
                 node_index,
@@ -2469,7 +2603,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             }
           } else {
             let next$1 = $1;
-            let new_remaining = new$7.tail;
+            let new_remaining = new$8.tail;
             let prev$1 = $;
             let old_remaining = old.tail;
             let change = replace2(node_index - moved_offset, next$1);
@@ -2500,10 +2634,10 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             loop$events = events$1;
           }
         } else {
-          let $1 = new$7.head;
+          let $1 = new$8.head;
           if ($1 instanceof UnsafeInnerHtml) {
             let next$1 = $1;
-            let new$1 = new$7.tail;
+            let new$1 = new$8.tail;
             let prev$1 = $;
             let old$1 = old.tail;
             let composed_mapper = compose_mapper(mapper, next$1.mapper);
@@ -2568,7 +2702,7 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
             loop$events = events$1;
           } else {
             let next$1 = $1;
-            let new_remaining = new$7.tail;
+            let new_remaining = new$8.tail;
             let prev$1 = $;
             let old_remaining = old.tail;
             let change = replace2(node_index - moved_offset, next$1);
@@ -2603,11 +2737,11 @@ function do_diff(loop$old, loop$old_keyed, loop$new, loop$new_keyed, loop$moved,
     }
   }
 }
-function diff(events, old, new$7) {
+function diff(events, old, new$8) {
   return do_diff(
     toList([old]),
     empty2(),
-    toList([new$7]),
+    toList([new$8]),
     empty2(),
     empty2(),
     0,
@@ -2923,7 +3057,7 @@ var Reconciler = class {
         addEventListener(node, name, handleEvent, { passive });
         this.#updateDebounceThrottle(throttles, name, throttleDelay);
         this.#updateDebounceThrottle(debouncers, name, debounceDelay);
-        handlers.set(name, (event2) => this.#handleEvent(attribute3, event2));
+        handlers.set(name, (event4) => this.#handleEvent(attribute3, event4));
         break;
       }
     }
@@ -2944,8 +3078,8 @@ var Reconciler = class {
       map4.delete(name);
     }
   }
-  #handleEvent(attribute3, event2) {
-    const { currentTarget, type } = event2;
+  #handleEvent(attribute3, event4) {
+    const { currentTarget, type } = event4;
     const { debouncers, throttles } = currentTarget[meta];
     const path = getPath(currentTarget);
     const {
@@ -2954,22 +3088,22 @@ var Reconciler = class {
       include,
       immediate
     } = attribute3;
-    if (prevent.kind === always_kind) event2.preventDefault();
-    if (stop.kind === always_kind) event2.stopPropagation();
+    if (prevent.kind === always_kind) event4.preventDefault();
+    if (stop.kind === always_kind) event4.stopPropagation();
     if (type === "submit") {
-      event2.detail ??= {};
-      event2.detail.formData = [
-        ...new FormData(event2.target, event2.submitter).entries()
+      event4.detail ??= {};
+      event4.detail.formData = [
+        ...new FormData(event4.target, event4.submitter).entries()
       ];
     }
-    const data = this.#useServerEvents ? createServerEvent(event2, include ?? []) : event2;
+    const data = this.#useServerEvents ? createServerEvent(event4, include ?? []) : event4;
     const throttle = throttles.get(type);
     if (throttle) {
       const now = Date.now();
       const last = throttle.last || 0;
       if (now > last + throttle.delay) {
         throttle.last = now;
-        throttle.lastEvent = event2;
+        throttle.lastEvent = event4;
         this.#dispatch(data, path, type, immediate);
       }
     }
@@ -2977,7 +3111,7 @@ var Reconciler = class {
     if (debounce) {
       clearTimeout(debounce.timeout);
       debounce.timeout = setTimeout(() => {
-        if (event2 === throttles.get(type)?.lastEvent) return;
+        if (event4 === throttles.get(type)?.lastEvent) return;
         this.#dispatch(data, path, type, immediate);
       }, debounce.delay);
     }
@@ -2997,22 +3131,22 @@ var iterate = (list4, callback) => {
     }
   }
 };
-var handleEvent = (event2) => {
-  const { currentTarget, type } = event2;
+var handleEvent = (event4) => {
+  const { currentTarget, type } = event4;
   const handler = currentTarget[meta].handlers.get(type);
-  handler(event2);
+  handler(event4);
 };
-var createServerEvent = (event2, include = []) => {
+var createServerEvent = (event4, include = []) => {
   const data = {};
-  if (event2.type === "input" || event2.type === "change") {
+  if (event4.type === "input" || event4.type === "change") {
     include.push("target.value");
   }
-  if (event2.type === "submit") {
+  if (event4.type === "submit") {
     include.push("detail.formData");
   }
   for (const property3 of include) {
     const path = property3.split(".");
-    for (let i = 0, input = event2, output = data; i < path.length; i++) {
+    for (let i = 0, input = event4, output = data; i < path.length; i++) {
       if (i === path.length - 1) {
         output[path[i]] = input[path[i]];
         break;
@@ -3271,30 +3405,30 @@ var Runtime = class {
     this.#model = model;
     this.#view = view3;
     this.#update = update3;
-    this.root.addEventListener("context-request", (event2) => {
-      if (!(event2.context && event2.callback)) return;
-      if (!this.#contexts.has(event2.context)) return;
-      event2.stopImmediatePropagation();
-      const context = this.#contexts.get(event2.context);
-      if (event2.subscribe) {
+    this.root.addEventListener("context-request", (event4) => {
+      if (!(event4.context && event4.callback)) return;
+      if (!this.#contexts.has(event4.context)) return;
+      event4.stopImmediatePropagation();
+      const context = this.#contexts.get(event4.context);
+      if (event4.subscribe) {
         const unsubscribe = () => {
           context.subscribers = context.subscribers.filter(
-            (subscriber) => subscriber !== event2.callback
+            (subscriber) => subscriber !== event4.callback
           );
         };
-        context.subscribers.push([event2.callback, unsubscribe]);
-        event2.callback(context.value, unsubscribe);
+        context.subscribers.push([event4.callback, unsubscribe]);
+        event4.callback(context.value, unsubscribe);
       } else {
-        event2.callback(context.value);
+        event4.callback(context.value);
       }
     });
-    this.#reconciler = new Reconciler(this.root, (event2, path, name) => {
-      const [events, result] = handle(this.#events, path, name, event2);
+    this.#reconciler = new Reconciler(this.root, (event4, path, name) => {
+      const [events, result] = handle(this.#events, path, name, event4);
       this.#events = events;
       if (result.isOk()) {
         const handler = result[0];
-        if (handler.stop_propagation) event2.stopPropagation();
-        if (handler.prevent_default) event2.preventDefault();
+        if (handler.stop_propagation) event4.stopPropagation();
+        if (handler.prevent_default) event4.preventDefault();
         this.dispatch(handler.message, false);
       }
     });
@@ -3315,10 +3449,10 @@ var Runtime = class {
       this.#tick(effects);
     }
   }
-  emit(event2, data) {
+  emit(event4, data) {
     const target = this.root.host ?? this.root;
     target.dispatchEvent(
-      new CustomEvent(event2, {
+      new CustomEvent(event4, {
         detail: data,
         bubbles: true,
         composed: true
@@ -3361,7 +3495,7 @@ var Runtime = class {
   #shouldFlush = false;
   #actions = {
     dispatch: (msg, immediate) => this.dispatch(msg, immediate),
-    emit: (event2, data) => this.emit(event2, data),
+    emit: (event4, data) => this.emit(event4, data),
     select: () => {
     },
     root: () => this.root,
@@ -3512,8 +3646,8 @@ var Spa = class {
   dispatch(msg, immediate) {
     this.#runtime.dispatch(msg, immediate);
   }
-  emit(event2, data) {
-    this.#runtime.emit(event2, data);
+  emit(event4, data) {
+    this.#runtime.emit(event4, data);
   }
 };
 var start = ({ init: init3, update: update3, view: view3 }, selector, flags) => {
@@ -3554,6 +3688,44 @@ function start3(app, selector, start_args) {
   );
 }
 
+// build/dev/javascript/lustre/lustre/event.mjs
+function is_immediate_event(name) {
+  if (name === "input") {
+    return true;
+  } else if (name === "change") {
+    return true;
+  } else if (name === "focus") {
+    return true;
+  } else if (name === "focusin") {
+    return true;
+  } else if (name === "focusout") {
+    return true;
+  } else if (name === "blur") {
+    return true;
+  } else if (name === "select") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function on(name, handler) {
+  return event(
+    name,
+    map2(handler, (msg) => {
+      return new Handler(false, false, msg);
+    }),
+    empty_list,
+    never,
+    never,
+    is_immediate_event(name),
+    0,
+    0
+  );
+}
+function on_click(msg) {
+  return on("click", success(msg));
+}
+
 // build/dev/javascript/modem/modem.ffi.mjs
 var defaults = {
   handle_external_links: false,
@@ -3568,8 +3740,8 @@ var do_initial_uri = () => {
   }
 };
 var do_init = (dispatch, options = defaults) => {
-  document.addEventListener("click", (event2) => {
-    const a2 = find_anchor(event2.target);
+  document.addEventListener("click", (event4) => {
+    const a2 = find_anchor(event4.target);
     if (!a2) return;
     try {
       const url = new URL(a2.href);
@@ -3577,7 +3749,7 @@ var do_init = (dispatch, options = defaults) => {
       const is_external = url.host !== window.location.host;
       if (!options.handle_external_links && is_external) return;
       if (!options.handle_internal_links && !is_external) return;
-      event2.preventDefault();
+      event4.preventDefault();
       if (!is_external) {
         window.history.pushState({}, "", a2.href);
         window.requestAnimationFrame(() => {
@@ -3612,6 +3784,15 @@ var do_init = (dispatch, options = defaults) => {
   window.addEventListener("modem-replace", ({ detail }) => {
     dispatch(detail);
   });
+};
+var do_replace = (uri) => {
+  window.history.replaceState({}, "", to_string2(uri));
+  window.requestAnimationFrame(() => {
+    if (uri.fragment[0]) {
+      document.getElementById(uri.fragment[0])?.scrollIntoView();
+    }
+  });
+  window.dispatchEvent(new CustomEvent("modem-replace", { detail: uri }));
 };
 var find_anchor = (el) => {
   if (!el || el.tagName === "BODY") {
@@ -3661,13 +3842,55 @@ function init(handler) {
     }
   );
 }
+var relative = /* @__PURE__ */ new Uri(
+  /* @__PURE__ */ new None(),
+  /* @__PURE__ */ new None(),
+  /* @__PURE__ */ new None(),
+  /* @__PURE__ */ new None(),
+  "",
+  /* @__PURE__ */ new None(),
+  /* @__PURE__ */ new None()
+);
+function replace3(path, query, fragment3) {
+  return from(
+    (_) => {
+      return guard(
+        !is_browser(),
+        void 0,
+        () => {
+          return do_replace(
+            new Uri(
+              relative.scheme,
+              relative.userinfo,
+              relative.host,
+              relative.port,
+              path,
+              query,
+              fragment3
+            )
+          );
+        }
+      );
+    }
+  );
+}
 
 // build/dev/javascript/piercing/piercing.mjs
 var FILEPATH = "src/piercing.gleam";
 var Model = class extends CustomType {
-  constructor(route) {
+  constructor(route, modal) {
     super();
     this.route = route;
+    this.modal = modal;
+  }
+};
+var Closed = class extends CustomType {
+};
+var Open = class extends CustomType {
+  constructor(image_src, image_alt) {
+    super();
+    this.image_src = image_src;
+    this.image_alt = image_alt;
   }
 };
 var Home = class extends CustomType {
@@ -3683,6 +3906,15 @@ var OnRouteChange = class extends CustomType {
     super();
     this[0] = $0;
   }
+};
+var OpenModal = class extends CustomType {
+  constructor($0, $1) {
+    super();
+    this[0] = $0;
+    this[1] = $1;
+  }
+};
+var CloseModal = class extends CustomType {
 };
 function uri_to_route(uri) {
   let _pipe = path_segments(uri.path);
@@ -3718,11 +3950,36 @@ function init2(_) {
   let _pipe$1 = map3(_pipe, uri_to_route);
   _block = unwrap(_pipe$1, new Home());
   let route = _block;
-  return [new Model(route), init(on_route_change)];
+  return [new Model(route, new Closed()), init(on_route_change)];
 }
-function update2(_, msg) {
-  let route = msg[0];
-  return [new Model(route), none()];
+function update2(model, msg) {
+  if (msg instanceof OnRouteChange) {
+    let route = msg[0];
+    return [
+      new Model(route, model.modal),
+      replace3(
+        (() => {
+          if (route instanceof Home) {
+            return "/";
+          } else if (route instanceof Gallery) {
+            return "/gallery";
+          } else if (route instanceof About) {
+            return "/about";
+          } else {
+            return "/contact";
+          }
+        })(),
+        new None(),
+        new None()
+      )
+    ];
+  } else if (msg instanceof OpenModal) {
+    let src2 = msg[0];
+    let alt2 = msg[1];
+    return [new Model(model.route, new Open(src2, alt2)), none()];
+  } else {
+    return [new Model(model.route, new Closed()), none()];
+  }
 }
 function navbar() {
   return nav(
@@ -3741,7 +3998,7 @@ function navbar() {
                 "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white"
               )
             ]),
-            toList([text2("\uE00AEI \uE193 PIN\uE163\uE01A")])
+            toList([text2("\uE00AEI \uE193 PINX\uE01A")])
           )
         ])
       ),
@@ -3812,7 +4069,7 @@ function about_page() {
       div(
         toList([
           class$(
-            "max-w-4xl mx-auto bg-gradient-to-br from-gray-900 to-gray-800 p-6 sm:p-8 lg:p-12 border border-gray-700"
+            "max-w-4xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700"
           )
         ]),
         toList([
@@ -3871,7 +4128,7 @@ function contact_page() {
           div(
             toList([
               class$(
-                "bg-gradient-to-br from-gray-900 to-gray-800 p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
+                "p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
               )
             ]),
             toList([
@@ -3896,7 +4153,7 @@ function contact_page() {
           div(
             toList([
               class$(
-                "bg-gradient-to-br from-gray-900 to-gray-800 p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
+                "p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
               )
             ]),
             toList([
@@ -3923,7 +4180,7 @@ function feature_card(title, description) {
   return div(
     toList([
       class$(
-        "bg-gradient-to-br from-gray-900 to-gray-800 p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
+        "p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
       )
     ]),
     toList([
@@ -3957,14 +4214,14 @@ function home_page() {
       div(
         toList([
           class$(
-            "text-center py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gray-900 to-black -mx-4 sm:-mx-6 lg:-mx-8 mb-6 sm:mb-8 lg:mb-12 border-b-2 border-gray-700"
+            "text-center py-8 sm:py-12 lg:py-16 -mx-4 sm:-mx-6 lg:-mx-8 mb-6 sm:mb-8 lg:mb-12 border-b-2 border-gray-700"
           )
         ]),
         toList([
           h2(
             toList([
               class$(
-                "text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent tracking-wide sm:tracking-widest"
+                "text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent tracking-wide sm:tracking-widest"
               )
             ]),
             toList([text2("PERFORACIONES PREMIUM")])
@@ -3984,11 +4241,129 @@ function home_page() {
           a(
             toList([
               class$(
-                "bg-gradient-to-r from-gray-600 to-gray-800 text-white border-2 border-white px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold tracking-wide sm:tracking-widest hover:bg-white hover:text-black transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/30 transition-all duration-300"
+                "text-white border-2 border-white px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold tracking-wide sm:tracking-widest hover:bg-white hover:text-black transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/30 transition-all duration-300"
               ),
               href("/gallery")
             ]),
             toList([text2("VER NUESTRO TRABAJO")])
+          )
+        ])
+      ),
+      div(
+        toList([class$("mb-12 sm:mb-16 lg:mb-20")]),
+        toList([
+          h3(
+            toList([
+              class$(
+                "text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 tracking-wide text-white"
+              )
+            ]),
+            toList([text2("NUESTROS TRABAJOS")])
+          ),
+          div(
+            toList([
+              class$(
+                "grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 max-w-4xl mx-auto"
+              )
+            ]),
+            toList([
+              button(
+                toList([
+                  class$(
+                    "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer"
+                  ),
+                  on_click(
+                    new OpenModal(
+                      "/priv/static/oreja.jpeg",
+                      "Perforaci\xF3n de oreja"
+                    )
+                  )
+                ]),
+                toList([
+                  img(
+                    toList([
+                      src("/priv/static/oreja.jpeg"),
+                      class$(
+                        "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      ),
+                      alt("Perforaci\xF3n de oreja")
+                    ])
+                  )
+                ])
+              ),
+              button(
+                toList([
+                  class$(
+                    "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer"
+                  ),
+                  on_click(
+                    new OpenModal(
+                      "/priv/static/lengua.jpeg",
+                      "Perforaci\xF3n de lengua"
+                    )
+                  )
+                ]),
+                toList([
+                  img(
+                    toList([
+                      src("/priv/static/lengua.jpeg"),
+                      class$(
+                        "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      ),
+                      alt("Perforaci\xF3n de lengua")
+                    ])
+                  )
+                ])
+              ),
+              button(
+                toList([
+                  class$(
+                    "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer"
+                  ),
+                  on_click(
+                    new OpenModal(
+                      "/priv/static/ceja.heic",
+                      "Perforaci\xF3n de ceja"
+                    )
+                  )
+                ]),
+                toList([
+                  img(
+                    toList([
+                      src("/priv/static/ceja.heic"),
+                      class$(
+                        "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      ),
+                      alt("Perforaci\xF3n de ceja")
+                    ])
+                  )
+                ])
+              ),
+              button(
+                toList([
+                  class$(
+                    "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer"
+                  ),
+                  on_click(
+                    new OpenModal(
+                      "/priv/static/cuerpo.heic",
+                      "Perforaci\xF3n corporal"
+                    )
+                  )
+                ]),
+                toList([
+                  img(
+                    toList([
+                      src("/priv/static/cuerpo.heic"),
+                      class$(
+                        "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      ),
+                      alt("Perforaci\xF3n corporal")
+                    ])
+                  )
+                ])
+              )
+            ])
           )
         ])
       ),
@@ -4020,14 +4395,14 @@ function piercing_card(title, description, image_url) {
   return div(
     toList([
       class$(
-        "bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 overflow-hidden hover:border-white hover:scale-105 hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
+        "border border-gray-700 overflow-hidden hover:border-white hover:scale-105 hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
       )
     ]),
     toList([
       div(
         toList([
           class$(
-            "h-40 sm:h-48 bg-gradient-to-r from-gray-600 to-gray-800 border-b border-gray-600 relative overflow-hidden"
+            "h-40 sm:h-48 border-b border-gray-600 relative overflow-hidden"
           )
         ]),
         toList([
@@ -4109,6 +4484,75 @@ function gallery_page() {
     ])
   );
 }
+function modal_view(modal) {
+  if (modal instanceof Closed) {
+    return div(toList([]), toList([]));
+  } else {
+    let src2 = modal.image_src;
+    let alt2 = modal.image_alt;
+    return dialog(
+      toList([
+        class$(
+          "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm m-0 max-w-none max-h-none w-full h-full flex items-center justify-center p-4"
+        ),
+        attribute2("open", ""),
+        on_click(new CloseModal())
+      ]),
+      toList([
+        div(
+          toList([
+            class$(
+              "metallic-border modal-slide-up relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
+            ),
+            on_click(new CloseModal())
+          ]),
+          toList([
+            button(
+              toList([
+                class$(
+                  "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center rounded-full bg-transparent border border-white/20 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:scale-110 hover:shadow-lg hover:shadow-white/30"
+                ),
+                attribute2("aria-label", "Close modal"),
+                on_click(new CloseModal())
+              ]),
+              toList([text2("\xD7")])
+            ),
+            figure(
+              toList([
+                class$(
+                  "bb-black border border-white/10 relative overflow-hidden m-0"
+                ),
+                on_click(new CloseModal())
+              ]),
+              toList([
+                img(
+                  toList([
+                    src(src2),
+                    alt(alt2),
+                    class$("max-w-full max-h-[80vh] object-contain")
+                  ])
+                ),
+                figcaption(
+                  toList([
+                    class$(
+                      "modal-caption-accent bg-transparent border-t border-white/10 p-4 text-center text-gray-300 uppercase tracking-[2px] relative"
+                    ),
+                    style("font-family", "'Dark Reborn', sans-serif"),
+                    style(
+                      "text-shadow",
+                      "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)"
+                    )
+                  ]),
+                  toList([text2(alt2)])
+                )
+              ])
+            )
+          ])
+        )
+      ])
+    );
+  }
+}
 function view2(model) {
   return div(
     toList([class$("min-h-screen bg-black/80 black text-white")]),
@@ -4125,7 +4569,8 @@ function view2(model) {
         } else {
           return contact_page();
         }
-      })()
+      })(),
+      modal_view(model.modal)
     ])
   );
 }
@@ -4137,10 +4582,10 @@ function main() {
       "let_assert",
       FILEPATH,
       "piercing",
-      27,
+      36,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 381, end: 430, pattern_start: 392, pattern_end: 397 }
+      { value: $, start: 560, end: 609, pattern_start: 571, pattern_end: 576 }
     );
   }
   return void 0;
