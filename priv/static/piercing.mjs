@@ -733,94 +733,6 @@ function remove_dot_segments(input) {
 function path_segments(path) {
   return remove_dot_segments(split2(path, "/"));
 }
-function to_string2(uri) {
-  let _block;
-  let $ = uri.fragment;
-  if ($ instanceof Some) {
-    let fragment3 = $[0];
-    _block = toList(["#", fragment3]);
-  } else {
-    _block = toList([]);
-  }
-  let parts = _block;
-  let _block$1;
-  let $1 = uri.query;
-  if ($1 instanceof Some) {
-    let query = $1[0];
-    _block$1 = prepend("?", prepend(query, parts));
-  } else {
-    _block$1 = parts;
-  }
-  let parts$1 = _block$1;
-  let parts$2 = prepend(uri.path, parts$1);
-  let _block$2;
-  let $2 = uri.host;
-  let $3 = starts_with(uri.path, "/");
-  if (!$3 && $2 instanceof Some) {
-    let host = $2[0];
-    if (host !== "") {
-      _block$2 = prepend("/", parts$2);
-    } else {
-      _block$2 = parts$2;
-    }
-  } else {
-    _block$2 = parts$2;
-  }
-  let parts$3 = _block$2;
-  let _block$3;
-  let $4 = uri.host;
-  let $5 = uri.port;
-  if ($5 instanceof Some && $4 instanceof Some) {
-    let port = $5[0];
-    _block$3 = prepend(":", prepend(to_string(port), parts$3));
-  } else {
-    _block$3 = parts$3;
-  }
-  let parts$4 = _block$3;
-  let _block$4;
-  let $6 = uri.scheme;
-  let $7 = uri.userinfo;
-  let $8 = uri.host;
-  if ($8 instanceof Some) {
-    if ($7 instanceof Some) {
-      if ($6 instanceof Some) {
-        let h = $8[0];
-        let u = $7[0];
-        let s = $6[0];
-        _block$4 = prepend(
-          s,
-          prepend(
-            "://",
-            prepend(u, prepend("@", prepend(h, parts$4)))
-          )
-        );
-      } else {
-        _block$4 = parts$4;
-      }
-    } else if ($6 instanceof Some) {
-      let h = $8[0];
-      let s = $6[0];
-      _block$4 = prepend(s, prepend("://", prepend(h, parts$4)));
-    } else {
-      let h = $8[0];
-      _block$4 = prepend("//", prepend(h, parts$4));
-    }
-  } else if ($7 instanceof Some) {
-    if ($6 instanceof Some) {
-      let s = $6[0];
-      _block$4 = prepend(s, prepend(":", parts$4));
-    } else {
-      _block$4 = parts$4;
-    }
-  } else if ($6 instanceof Some) {
-    let s = $6[0];
-    _block$4 = prepend(s, prepend(":", parts$4));
-  } else {
-    _block$4 = parts$4;
-  }
-  let parts$5 = _block$4;
-  return concat2(parts$5);
-}
 
 // build/dev/javascript/gleam_stdlib/gleam/bool.mjs
 function guard(requirement, consequence, alternative) {
@@ -1202,14 +1114,14 @@ function do_to_string(loop$path, loop$acc) {
     }
   }
 }
-function to_string3(path) {
+function to_string2(path) {
   return do_to_string(path, toList([]));
 }
 function matches(path, candidates) {
   if (candidates instanceof Empty) {
     return false;
   } else {
-    return do_matches(to_string3(path), candidates);
+    return do_matches(to_string2(path), candidates);
   }
 }
 var separator_event = "\n";
@@ -3785,15 +3697,6 @@ var do_init = (dispatch, options = defaults) => {
     dispatch(detail);
   });
 };
-var do_replace = (uri) => {
-  window.history.replaceState({}, "", to_string2(uri));
-  window.requestAnimationFrame(() => {
-    if (uri.fragment[0]) {
-      document.getElementById(uri.fragment[0])?.scrollIntoView();
-    }
-  });
-  window.dispatchEvent(new CustomEvent("modem-replace", { detail: uri }));
-};
 var find_anchor = (el) => {
   if (!el || el.tagName === "BODY") {
     return null;
@@ -3836,38 +3739,6 @@ function init(handler) {
               let _pipe$1 = handler(_pipe);
               return dispatch(_pipe$1);
             }
-          );
-        }
-      );
-    }
-  );
-}
-var relative = /* @__PURE__ */ new Uri(
-  /* @__PURE__ */ new None(),
-  /* @__PURE__ */ new None(),
-  /* @__PURE__ */ new None(),
-  /* @__PURE__ */ new None(),
-  "",
-  /* @__PURE__ */ new None(),
-  /* @__PURE__ */ new None()
-);
-function replace3(path, query, fragment3) {
-  return from(
-    (_) => {
-      return guard(
-        !is_browser(),
-        void 0,
-        () => {
-          return do_replace(
-            new Uri(
-              relative.scheme,
-              relative.userinfo,
-              relative.host,
-              relative.port,
-              path,
-              query,
-              fragment3
-            )
           );
         }
       );
@@ -3955,24 +3826,7 @@ function init2(_) {
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
     let route = msg[0];
-    return [
-      new Model(route, model.modal),
-      replace3(
-        (() => {
-          if (route instanceof Home) {
-            return "/";
-          } else if (route instanceof Gallery) {
-            return "/gallery";
-          } else if (route instanceof About) {
-            return "/about";
-          } else {
-            return "/contact";
-          }
-        })(),
-        new None(),
-        new None()
-      )
-    ];
+    return [new Model(route, model.modal), none()];
   } else if (msg instanceof OpenModal) {
     let src2 = msg[0];
     let alt2 = msg[1];
@@ -4503,8 +4357,7 @@ function modal_view(modal) {
           toList([
             class$(
               "metallic-border modal-slide-up relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
-            ),
-            on_click(new CloseModal())
+            )
           ]),
           toList([
             button(
@@ -4520,9 +4373,8 @@ function modal_view(modal) {
             figure(
               toList([
                 class$(
-                  "bb-black border border-white/10 relative overflow-hidden m-0"
-                ),
-                on_click(new CloseModal())
+                  "bg-black border border-white/10 relative overflow-hidden m-0"
+                )
               ]),
               toList([
                 img(

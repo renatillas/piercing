@@ -67,16 +67,7 @@ fn update(model: Model, msg: Msg) {
   case msg {
     OnRouteChange(route) -> #(
       Model(route: route, modal: model.modal),
-      modem.replace(
-        case route {
-          Home -> "/"
-          Gallery -> "/gallery"
-          About -> "/about"
-          Contact -> "/contact"
-        },
-        option.None,
-        option.None,
-      ),
+      effect.none(),
     )
     OpenModal(src, alt) -> #(
       Model(route: model.route, modal: Open(src, alt)),
@@ -609,7 +600,6 @@ fn modal_view(modal: ModalState) -> Element(Msg) {
               attribute.class(
                 "metallic-border modal-slide-up relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80",
               ),
-              event.on_click(CloseModal),
             ],
             [
               html.button(
@@ -627,9 +617,8 @@ fn modal_view(modal: ModalState) -> Element(Msg) {
               html.figure(
                 [
                   attribute.class(
-                    "bb-black border border-white/10 relative overflow-hidden m-0",
+                    "bg-black border border-white/10 relative overflow-hidden m-0",
                   ),
-                  event.on_click(CloseModal),
                 ],
                 [
                   html.img([
