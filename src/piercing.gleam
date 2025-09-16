@@ -1,4 +1,3 @@
-import gleam/option
 import gleam/result
 import gleam/uri
 import lustre

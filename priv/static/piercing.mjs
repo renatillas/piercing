@@ -4434,10 +4434,10 @@ function main() {
       "let_assert",
       FILEPATH,
       "piercing",
-      36,
+      35,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 560, end: 609, pattern_start: 571, pattern_end: 576 }
+      { value: $, start: 540, end: 589, pattern_start: 551, pattern_end: 556 }
     );
   }
   return void 0;

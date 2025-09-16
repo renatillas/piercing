@@ -101,7 +101,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: overlay-fade 3s ease-out forwards;
+      animation: overlay-fade 2s ease-out forwards;
     }
 
     .intro-logo {
@@ -314,21 +314,25 @@
 
     /* Custom Modal Animations */
     @keyframes modal-slide-up {
-      from { 
+      from {
         opacity: 0;
         transform: translateY(30px) scale(0.9);
       }
-      to { 
+
+      to {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
 
     @keyframes metallic-border-flow {
-      0%, 100% { 
+
+      0%,
+      100% {
         background-position: 0% 50%;
       }
-      50% { 
+
+      50% {
         background-position: 100% 50%;
       }
     }
@@ -345,9 +349,9 @@
       left: -2px;
       right: -2px;
       bottom: -2px;
-      background: linear-gradient(45deg, 
-        #c0c0c0, #ffffff, #a9a9a9, #d3d3d3, 
-        #c0c0c0, #ffffff, #a9a9a9, #d3d3d3);
+      background: linear-gradient(45deg,
+          #c0c0c0, #ffffff, #a9a9a9, #d3d3d3,
+          #c0c0c0, #ffffff, #a9a9a9, #d3d3d3);
       background-size: 400% 400%;
       border-radius: inherit;
       z-index: -1;
@@ -363,11 +367,11 @@
       transform: translateX(-50%);
       width: 60px;
       height: 1px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255,255,255,0.6), 
-        transparent);
-      box-shadow: 0 0 6px rgba(255,255,255,0.4);
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.6),
+          transparent);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
