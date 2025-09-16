@@ -1,8 +1,11 @@
+import gleam/result
+import gleam/uri
 import lustre
 import lustre/attribute
+import lustre/effect
 import lustre/element.{type Element}
 import lustre/element/html
-import lustre/event
+import modem
 
 pub type Model {
   Model(route: Route)
@@ -16,22 +19,56 @@ pub type Route {
 }
 
 pub type Msg {
-  Navigate(Route)
+  OnRouteChange(Route)
 }
 
 pub fn main() {
-  let app = lustre.simple(init, update, view)
+  let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
   Nil
 }
 
-fn init(_flags) -> Model {
-  Model(route: Home)
+fn init(_flags) {
+  let route =
+    modem.initial_uri()
+    |> result.map(uri_to_route)
+    |> result.unwrap(Home)
+  #(Model(route: route), modem.init(on_route_change))
 }
 
-fn update(_model: Model, msg: Msg) -> Model {
+fn uri_to_route(uri: uri.Uri) -> Route {
+  uri.path_segments(uri.path)
+  |> fn(path) {
+    case path {
+      [] -> Home
+      ["gallery"] -> Gallery
+      ["about"] -> About
+      ["contact"] -> Contact
+      _ -> Home
+    }
+  }
+}
+
+fn on_route_change(uri: uri.Uri) -> Msg {
+  let route = uri_to_route(uri)
+  OnRouteChange(route)
+}
+
+fn update(_model: Model, msg: Msg) {
   case msg {
-    Navigate(route) -> Model(route: route)
+    OnRouteChange(route) -> #(
+      Model(route: route),
+      modem.replace(
+        case route {
+          Home -> "/"
+          Gallery -> "/gallery"
+          About -> "/about"
+          Contact -> "/contact"
+        },
+        option.None,
+        option.None,
+      ),
+    )
   }
 }
 
@@ -72,39 +109,39 @@ fn navbar() -> Element(Msg) {
           ),
         ],
         [
-          html.button(
+          html.a(
             [
               attribute.class(
                 "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
-              event.on_click(Navigate(Home)),
+              attribute.href("/"),
             ],
             [element.text("INICIO")],
           ),
-          html.button(
+          html.a(
             [
               attribute.class(
                 "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
-              event.on_click(Navigate(Gallery)),
+              attribute.href("/gallery"),
             ],
             [element.text("GALERÍA")],
           ),
-          html.button(
+          html.a(
             [
               attribute.class(
                 "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
-              event.on_click(Navigate(About)),
+              attribute.href("/about"),
             ],
             [element.text("ACERCA")],
           ),
-          html.button(
+          html.a(
             [
               attribute.class(
                 "border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
               ),
-              event.on_click(Navigate(Contact)),
+              attribute.href("/contact"),
             ],
             [element.text("CONTACTO")],
           ),
@@ -149,12 +186,12 @@ fn home_page() -> Element(Msg) {
               ),
             ],
           ),
-          html.button(
+          html.a(
             [
               attribute.class(
                 "bg-gradient-to-r from-gray-600 to-gray-800 text-white border-2 border-white px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold tracking-wide sm:tracking-widest hover:bg-white hover:text-black transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/30 transition-all duration-300",
               ),
-              event.on_click(Navigate(Gallery)),
+              attribute.href("/gallery"),
             ],
             [element.text("VER NUESTRO TRABAJO")],
           ),
