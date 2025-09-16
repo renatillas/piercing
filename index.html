@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kei Te Pinxa - Perforaciones Premium</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/priv/static/piercing.css" />
+  <script type="module" src="/priv/static/piercing.mjs"></script>
+  <style>
+    @font-face {
+      font-family: 'Dark Reborn';
+      src: url('/priv/static/DarkReborn-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Dark Reborn', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-image: url('/priv/static/rtywd.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg,
+          rgba(192, 192, 192, 0.2) 0%,
+          transparent 15%,
+          rgba(255, 255, 255, 0.1) 25%,
+          transparent 35%,
+          rgba(169, 169, 169, 0.15) 50%,
+          transparent 65%,
+          rgba(211, 211, 211, 0.08) 80%,
+          transparent 100%),
+        radial-gradient(ellipse at 20% 30%,
+          rgba(255, 255, 255, 0.3),
+          rgba(192, 192, 192, 0.2) 30%,
+          transparent 60%),
+        radial-gradient(ellipse at 80% 70%,
+          rgba(169, 169, 169, 0.25),
+          rgba(105, 105, 105, 0.15) 40%,
+          transparent 70%),
+        linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 30%, rgba(0, 0, 0, 0.3));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.1) 45%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.1) 55%,
+          transparent 100%);
+      transform: skewX(-20deg) translateX(-50%);
+      animation: metallic-sweep 8s infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes metallic-sweep {
+
+      0%,
+      100% {
+        transform: skewX(-20deg) translateX(-150%);
+        opacity: 0;
+      }
+
+      50% {
+        transform: skewX(-20deg) translateX(150%);
+        opacity: 1;
+      }
+    }
+
+    .opening-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+
+    .metallic-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 20%, rgba(192, 192, 192, 0.6), transparent 2%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.4), transparent 1.5%),
+        radial-gradient(circle at 40% 60%, rgba(169, 169, 169, 0.5), transparent 1%),
+        radial-gradient(circle at 60% 30%, rgba(211, 211, 211, 0.3), transparent 2.5%);
+      opacity: 0;
+      animation: particles-fade 2s 1.5s ease-in-out forwards;
+    }
+
+    @keyframes tribal-spin {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes particles-fade {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .opening-complete {
+      animation: fade-out 0.5s 3.5s ease-out forwards;
+    }
+
+    @keyframes fade-out {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    #app {
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      text-shadow:
+        0 0 4px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.4),
+        0 0 16px rgba(255, 255, 255, 0.3),
+        0 0 32px rgba(255, 255, 255, 0.2),
+        0 0 64px rgba(255, 255, 255, 0.15),
+        2px 2px 8px rgba(0, 0, 0, 0.8),
+        1px 1px 3px rgba(0, 0, 0, 0.9);
+      animation: logo-pulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logo-pulse {
+      0% {
+        text-shadow:
+          0 0 4px rgba(255, 255, 255, 0.5),
+          0 0 8px rgba(255, 255, 255, 0.4),
+          0 0 16px rgba(255, 255, 255, 0.3),
+          0 0 32px rgba(255, 255, 255, 0.2),
+          0 0 64px rgba(255, 255, 255, 0.15),
+          2px 2px 8px rgba(0, 0, 0, 0.8),
+          1px 1px 3px rgba(0, 0, 0, 0.9);
+      }
+
+      100% {
+        text-shadow:
+          0 0 6px rgba(255, 255, 255, 0.7),
+          0 0 12px rgba(255, 255, 255, 0.5),
+          0 0 24px rgba(255, 255, 255, 0.4),
+          0 0 48px rgba(255, 255, 255, 0.3),
+          0 0 96px rgba(255, 255, 255, 0.2),
+          2px 2px 8px rgba(0, 0, 0, 0.8),
+          1px 1px 3px rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    p {
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.3),
+        1px 1px 3px rgba(0, 0, 0, 0.9);
+    }
+
+    .bg-clip-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .text-transparent {
+      color: transparent;
+    }
+  </style>
+</head>
+
+<body class="text-white overflow-x-hidden">
+  <div id="app">
+    <div class="min-h-screen text-white flex items-center justify-center">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          KEI TE PINXA
+        </h1>
+        <p class="text-gray-300">Cargando aplicación...</p>
+        <div class="mt-4">
+          <div class="animate-spin inline-block w-6 h-6 border-2 border-current border-t-transparent rounded-full"
+            role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const path = params.get('path');
+    if (path) {
+      window.history.replaceState(null, null, path);
+    }
+  })();
+</script>
+
+</html>
