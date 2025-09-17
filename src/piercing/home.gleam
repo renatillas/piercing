@@ -1,0 +1,370 @@
+import lustre/attribute
+import lustre/element
+import lustre/element/html
+import lustre/event
+
+pub fn home_page(open_modal_event) {
+  html.div(
+    [
+      attribute.class("relative min-h-screen"),
+    ],
+    [
+      // Hero Section - "Hola, soy Kei" centered
+      html.section(
+        [
+          attribute.class(
+            "relative text-center py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8",
+          ),
+        ],
+        [
+          html.div([attribute.class("max-w-4xl mx-auto")], [
+            // Placeholder avatar (white square with smile as per design)
+            html.div(
+              [
+                attribute.class(
+                  "w-64 h-64 mx-auto mb-8 bg-white rounded-lg flex items-center justify-center",
+                ),
+              ],
+              [
+                html.div(
+                  [
+                    attribute.class("text-black text-6xl"),
+                  ],
+                  [element.text("•   •"), html.br([]), element.text("  ‿  ")],
+                ),
+              ],
+            ),
+            html.h1(
+              [
+                attribute.class(
+                  "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide",
+                ),
+                attribute.style("font-family", "'Dark Reborn', sans-serif"),
+              ],
+              [element.text("ola, soy e")],
+            ),
+            html.p(
+              [
+                attribute.class(
+                  "text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed",
+                ),
+              ],
+              [
+                element.text("Anilladora aprendiz en proceso de convertirse en un profesional más del mundo del body piercing. Cada día me esfuerzo por perfeccionar mis técnicas y brindar el mejor servicio. Mi pasión por el arte corporal me impulsa a seguir creciendo en esta hermosa profesión."),
+              ],
+            ),
+            html.a(
+              [
+                attribute.class(
+                  "inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                ),
+                attribute.href("/about"),
+              ],
+              [element.text("Saber más")],
+            ),
+          ]),
+        ],
+      ),
+
+      // Estéril Section - Left text, right image
+      html.section(
+        [
+          attribute.class("px-4 sm:px-6 lg:px-8 py-12 sm:py-16"),
+        ],
+        [
+          html.div(
+            [
+              attribute.class("max-w-6xl mx-auto"),
+            ],
+            [
+              html.div(
+                [
+                  attribute.class(
+                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center",
+                  ),
+                ],
+                [
+                  // Text content
+                  html.div([attribute.class("order-2 lg:order-1")], [
+                    html.h2(
+                      [
+                        attribute.class(
+                          "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
+                        ),
+                        attribute.style(
+                          "font-family",
+                          "'Dark Reborn', sans-serif",
+                        ),
+                      ],
+                      [element.text("stéri")],
+                    ),
+                    html.p(
+                      [
+                        attribute.class(
+                          "text-xl text-gray-300 mb-8 leading-relaxed",
+                        ),
+                      ],
+                      [
+                        element.text(
+                          "Todo el equipo esterilizado usando tecnología de autoclave",
+                        ),
+                      ],
+                    ),
+                    html.a(
+                      [
+                        attribute.class(
+                          "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                        ),
+                        attribute.href("#"),
+                      ],
+                      [element.text("Saber más")],
+                    ),
+                  ]),
+                  // Image
+                  html.div(
+                    [
+                      attribute.class("order-1 lg:order-2 group cursor-pointer"),
+                      event.on_click(open_modal_event(
+                        "/priv/static/oreja.jpeg",
+                        "Perforaciones de oreja",
+                      )),
+                    ],
+                    [
+                      html.div(
+                        [
+                          attribute.class("relative overflow-hidden rounded-lg"),
+                        ],
+                        [
+                          html.img([
+                            attribute.src("/priv/static/oreja.jpeg"),
+                            attribute.alt("Perforaciones de oreja"),
+                            attribute.class(
+                              "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300",
+                            ),
+                          ]),
+                          html.div(
+                            [
+                              attribute.class(
+                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                              ),
+                            ],
+                            [
+                              html.p([attribute.class("text-sm font-medium")], [
+                                element.text("Perforaciones de oreja"),
+                              ]),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Premium Section - Right text, left image (zigzag pattern)
+      html.section(
+        [
+          attribute.class("px-4 sm:px-6 lg:px-8 py-12 sm:py-16"),
+        ],
+        [
+          html.div(
+            [
+              attribute.class("max-w-6xl mx-auto"),
+            ],
+            [
+              html.div(
+                [
+                  attribute.class(
+                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center",
+                  ),
+                ],
+                [
+                  // Image (left on large screens)
+                  html.div(
+                    [
+                      attribute.class("order-1 lg:order-1 group cursor-pointer"),
+                      event.on_click(open_modal_event(
+                        "/priv/static/ceja.heic",
+                        "Perforaciones faciales",
+                      )),
+                    ],
+                    [
+                      html.div(
+                        [
+                          attribute.class("relative overflow-hidden rounded-lg"),
+                        ],
+                        [
+                          html.img([
+                            attribute.src("/priv/static/ceja.heic"),
+                            attribute.alt("Perforaciones faciales"),
+                            attribute.class(
+                              "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300",
+                            ),
+                          ]),
+                          html.div(
+                            [
+                              attribute.class(
+                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                              ),
+                            ],
+                            [
+                              html.p([attribute.class("text-sm font-medium")], [
+                                element.text("Perforaciones faciales"),
+                              ]),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Text content (right on large screens)
+                  html.div(
+                    [attribute.class("order-2 lg:order-2 lg:text-right")],
+                    [
+                      html.h2(
+                        [
+                          attribute.class(
+                            "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
+                          ),
+                          attribute.style(
+                            "font-family",
+                            "'Dark Reborn', sans-serif",
+                          ),
+                        ],
+                        [element.text("remiu")],
+                      ),
+                      html.p(
+                        [
+                          attribute.class(
+                            "text-xl text-gray-300 mb-8 leading-relaxed",
+                          ),
+                        ],
+                        [
+                          element.text(
+                            "Joyería de titanio y acero quirúrgico de alta calidad",
+                          ),
+                        ],
+                      ),
+                      html.a(
+                        [
+                          attribute.class(
+                            "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                          ),
+                          attribute.href("#"),
+                        ],
+                        [element.text("Saber más")],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Experiencia Section - Left text, right image
+      html.section(
+        [
+          attribute.class("px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:pb-20"),
+        ],
+        [
+          html.div(
+            [
+              attribute.class("max-w-6xl mx-auto"),
+            ],
+            [
+              html.div(
+                [
+                  attribute.class(
+                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center",
+                  ),
+                ],
+                [
+                  // Text content
+                  html.div([attribute.class("order-2 lg:order-1")], [
+                    html.h2(
+                      [
+                        attribute.class(
+                          "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
+                        ),
+                        attribute.style(
+                          "font-family",
+                          "'Dark Reborn', sans-serif",
+                        ),
+                      ],
+                      [element.text("xperienci")],
+                    ),
+                    html.p(
+                      [
+                        attribute.class(
+                          "text-xl text-gray-300 mb-8 leading-relaxed",
+                        ),
+                      ],
+                      [
+                        element.text(
+                          "Más de 2 años de experiencia profesional en perforaciones",
+                        ),
+                      ],
+                    ),
+                    html.a(
+                      [
+                        attribute.class(
+                          "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                        ),
+                        attribute.href("#"),
+                      ],
+                      [element.text("Saber más")],
+                    ),
+                  ]),
+                  // Image
+                  html.div(
+                    [
+                      attribute.class("order-1 lg:order-2 group cursor-pointer"),
+                      event.on_click(open_modal_event(
+                        "/priv/static/cuerpo.heic",
+                        "Perforaciones corporales",
+                      )),
+                    ],
+                    [
+                      html.div(
+                        [
+                          attribute.class("relative overflow-hidden rounded-lg"),
+                        ],
+                        [
+                          html.img([
+                            attribute.src("/priv/static/cuerpo.heic"),
+                            attribute.alt("Perforaciones corporales"),
+                            attribute.class(
+                              "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300",
+                            ),
+                          ]),
+                          html.div(
+                            [
+                              attribute.class(
+                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                              ),
+                            ],
+                            [
+                              html.p([attribute.class("text-sm font-medium")], [
+                                element.text("Perforaciones corporales"),
+                              ]),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  )
+}
