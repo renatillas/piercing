@@ -24,7 +24,7 @@ pub fn modal_view(modal: ModalState, close_modal_event) {
           html.div(
             [
               attribute.class(
-                "relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80",
+                "relative max-w-5xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80",
               ),
             ],
             [

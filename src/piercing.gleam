@@ -14,12 +14,16 @@ import piercing/components/navbar
 import piercing/contact
 import piercing/gallery
 import piercing/home
+import piercing/legal
 
 pub type Route {
   Home
   Gallery
   About
   Contact
+  AvisoLegal
+  PoliticaPrivacidad
+  PoliticaCookies
 }
 
 pub type Msg {
@@ -74,6 +78,9 @@ fn uri_to_route(uri: uri.Uri) -> Route {
       ["gallery"] -> Gallery
       ["about"] -> About
       ["contact"] -> Contact
+      ["aviso-legal"] -> AvisoLegal
+      ["politica-privacidad"] -> PoliticaPrivacidad
+      ["politica-cookies"] -> PoliticaCookies
       _ -> Home
     }
   }
@@ -120,7 +127,7 @@ fn view(model: Model) -> Element(Msg) {
   html.div(
     [
       attribute.class(
-        "min-h-[100dvh] bg-black/80 black text-white flex flex-col",
+        "min-h-[100dvh] bg-black/70 black text-white flex flex-col",
       ),
     ],
     [
@@ -129,7 +136,7 @@ fn view(model: Model) -> Element(Msg) {
       navbar.navbar(),
       html.main([attribute.class("flex-1")], [
         case model.route {
-          Home -> home.home_page(OpenModal)
+          Home -> home.home_page(SetGalleryFilter, ToggleCategory)
           Gallery ->
             gallery.gallery_page(
               model.gallery_filter,
@@ -140,6 +147,9 @@ fn view(model: Model) -> Element(Msg) {
             )
           About -> about.about_page()
           Contact -> contact.contact_page()
+          AvisoLegal -> legal.legal_page(legal.AvisoLegal)
+          PoliticaPrivacidad -> legal.legal_page(legal.PoliticaPrivacidad)
+          PoliticaCookies -> legal.legal_page(legal.PoliticaCookies)
         },
       ]),
       footer.footer(),

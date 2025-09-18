@@ -20,7 +20,7 @@ pub type CategoryType {
 }
 
 pub fn gallery_page(
-  filter: GalleryFilter,
+  filter filter: GalleryFilter,
   filter_event filter_event: fn(GalleryFilter) -> a,
   open_modal_event open_modal_event: fn(String, String) -> a,
   collapsed_categories collapsed_categories: List(CategoryType),
@@ -44,7 +44,7 @@ pub fn gallery_page(
                 ),
                 attribute.style("font-family", "'Dark Reborn', sans-serif"),
               ],
-              [element.text("Explora nuestro trabajo")],
+              [element.text("xplora nuestro trabaj")],
             ),
             // Filter Sidebar and Gallery Grid
             html.div(
@@ -54,7 +54,6 @@ pub fn gallery_page(
                 html.div([attribute.class("lg:w-64 flex-shrink-0")], [
                   html.div([attribute.class("sticky top-24")], [
                     filter_sidebar(
-                      filter,
                       filter_event,
                       collapsed_categories,
                       toggle_category_event,
@@ -75,7 +74,6 @@ pub fn gallery_page(
 }
 
 fn filter_sidebar(
-  current_filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
   collapsed_categories: List(CategoryType),
   toggle_category_event: fn(CategoryType) -> a,
@@ -92,7 +90,6 @@ fn filter_sidebar(
         #("Tragus", Ear),
         #("Daith", Ear),
       ],
-      current_filter,
       filter_event,
       collapsed_categories,
       toggle_category_event,
@@ -108,7 +105,6 @@ fn filter_sidebar(
         #("Bridge", Facial),
         #("Medusa", Facial),
       ],
-      current_filter,
       filter_event,
       collapsed_categories,
       toggle_category_event,
@@ -121,7 +117,6 @@ fn filter_sidebar(
         #("Lengua", Body),
         #("Superficie", Body),
       ],
-      current_filter,
       filter_event,
       collapsed_categories,
       toggle_category_event,
@@ -132,7 +127,6 @@ fn filter_sidebar(
       [
         #("Personalizada", Jewelry),
       ],
-      current_filter,
       filter_event,
       collapsed_categories,
       toggle_category_event,
@@ -144,7 +138,6 @@ fn collapsible_category_section(
   title: String,
   category_type: CategoryType,
   items: List(#(String, GalleryFilter)),
-  current_filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
   collapsed_categories: List(CategoryType),
   toggle_category_event: fn(CategoryType) -> a,

@@ -6,7 +6,7 @@ pub fn about_page() {
   html.div(
     [
       attribute.class(
-        "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8",
+        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8",
       ),
     ],
     [
@@ -21,7 +21,7 @@ pub fn about_page() {
       html.div(
         [
           attribute.class(
-            "max-w-4xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700",
+            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700",
           ),
         ],
         [

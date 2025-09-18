@@ -2,8 +2,9 @@ import lustre/attribute
 import lustre/element
 import lustre/element/html
 import lustre/event
+import piercing/gallery
 
-pub fn home_page(open_modal_event) {
+pub fn home_page(set_category_filter_event, toggle_category_event) {
   html.div(
     [
       attribute.class("relative min-h-screen"),
@@ -17,7 +18,7 @@ pub fn home_page(open_modal_event) {
           ),
         ],
         [
-          html.div([attribute.class("max-w-4xl mx-auto")], [
+          html.div([attribute.class("max-w-6xl mx-auto")], [
             // Placeholder avatar (white square with smile as per design)
             html.div(
               [
@@ -26,27 +27,24 @@ pub fn home_page(open_modal_event) {
                 ),
               ],
               [
-                html.div(
-                  [
-                    attribute.class("text-black text-6xl"),
-                  ],
-                  [element.text("•   •"), html.br([]), element.text("  ‿  ")],
-                ),
+                html.img([
+                  attribute.src("/priv/static/profile_picture.jpg"),
+                  attribute.alt("Avatar de Kei"),
+                ]),
               ],
             ),
             html.h1(
               [
                 attribute.class(
-                  "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide",
+                  "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]",
                 ),
-                attribute.style("font-family", "'Dark Reborn', sans-serif"),
               ],
               [element.text("ola, soy e")],
             ),
             html.p(
               [
                 attribute.class(
-                  "text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed",
+                  "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed",
                 ),
               ],
               [
@@ -76,7 +74,7 @@ pub fn home_page(open_modal_event) {
         [
           html.div(
             [
-              attribute.class("max-w-6xl mx-auto"),
+              attribute.class("max-w-7xl mx-auto"),
             ],
             [
               html.div(
@@ -91,11 +89,7 @@ pub fn home_page(open_modal_event) {
                     html.h2(
                       [
                         attribute.class(
-                          "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
-                        ),
-                        attribute.style(
-                          "font-family",
-                          "'Dark Reborn', sans-serif",
+                          "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
                         ),
                       ],
                       [element.text("stéri")],
@@ -123,13 +117,13 @@ pub fn home_page(open_modal_event) {
                     ),
                   ]),
                   // Image
-                  html.div(
+                  html.a(
                     [
                       attribute.class("order-1 lg:order-2 group cursor-pointer"),
-                      event.on_click(open_modal_event(
-                        "/priv/static/oreja.jpeg",
-                        "Perforaciones de oreja",
-                      )),
+                      event.on_click(set_category_filter_event(gallery.Ear)),
+                      event.on_click(toggle_category_event(gallery.EarCategory)),
+
+                      attribute.href("/gallery"),
                     ],
                     [
                       html.div(
@@ -175,7 +169,7 @@ pub fn home_page(open_modal_event) {
         [
           html.div(
             [
-              attribute.class("max-w-6xl mx-auto"),
+              attribute.class("max-w-7xl mx-auto"),
             ],
             [
               html.div(
@@ -186,13 +180,14 @@ pub fn home_page(open_modal_event) {
                 ],
                 [
                   // Image (left on large screens)
-                  html.div(
+                  html.a(
                     [
                       attribute.class("order-1 lg:order-1 group cursor-pointer"),
-                      event.on_click(open_modal_event(
-                        "/priv/static/ceja.heic",
-                        "Perforaciones faciales",
+                      event.on_click(set_category_filter_event(gallery.Facial)),
+                      event.on_click(toggle_category_event(
+                        gallery.FacialCategory,
                       )),
+                      attribute.href("/gallery"),
                     ],
                     [
                       html.div(
@@ -230,11 +225,7 @@ pub fn home_page(open_modal_event) {
                       html.h2(
                         [
                           attribute.class(
-                            "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
-                          ),
-                          attribute.style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif",
+                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
                           ),
                         ],
                         [element.text("remiu")],
@@ -277,7 +268,7 @@ pub fn home_page(open_modal_event) {
         [
           html.div(
             [
-              attribute.class("max-w-6xl mx-auto"),
+              attribute.class("max-w-7xl mx-auto"),
             ],
             [
               html.div(
@@ -292,11 +283,7 @@ pub fn home_page(open_modal_event) {
                     html.h2(
                       [
                         attribute.class(
-                          "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
-                        ),
-                        attribute.style(
-                          "font-family",
-                          "'Dark Reborn', sans-serif",
+                          "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
                         ),
                       ],
                       [element.text("xperienci")],
@@ -324,13 +311,12 @@ pub fn home_page(open_modal_event) {
                     ),
                   ]),
                   // Image
-                  html.div(
+                  html.a(
                     [
                       attribute.class("order-1 lg:order-2 group cursor-pointer"),
-                      event.on_click(open_modal_event(
-                        "/priv/static/cuerpo.heic",
-                        "Perforaciones corporales",
-                      )),
+                      event.on_click(set_category_filter_event(gallery.Body)),
+                      event.on_click(toggle_category_event(gallery.BodyCategory)),
+                      attribute.href("/gallery"),
                     ],
                     [
                       html.div(

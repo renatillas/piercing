@@ -6,11 +6,12 @@ pub fn footer() {
   html.footer(
     [
       attribute.class(
-        "bg-black/90 border-t border-gray-700 py-8 px-4 sm:px-6 lg:px-8",
+        "relative py-8 px-4 sm:px-6 lg:px-8",
       ),
+      attribute.style("background", "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"),
     ],
     [
-      html.div([attribute.class("max-w-6xl mx-auto")], [
+      html.div([attribute.class("max-w-7xl mx-auto")], [
         html.div(
           [
             attribute.class(
@@ -73,7 +74,7 @@ pub fn footer() {
             ]),
           ],
         ),
-        html.div([attribute.class("border-t border-gray-700 pt-6")], [
+        html.div([attribute.class("pt-6")], [
           html.div(
             [
               attribute.class(
@@ -91,13 +92,22 @@ pub fn footer() {
                 ),
               ]),
               html.div([attribute.class("flex gap-4 text-sm text-gray-400")], [
-                html.a([attribute.class("hover:text-white transition-colors")], [
+                html.a([
+                  attribute.class("hover:text-white transition-colors"),
+                  attribute.href("/aviso-legal"),
+                ], [
                   element.text("Aviso legal"),
                 ]),
-                html.a([attribute.class("hover:text-white transition-colors")], [
+                html.a([
+                  attribute.class("hover:text-white transition-colors"),
+                  attribute.href("/politica-privacidad"),
+                ], [
                   element.text("Política de privacidad"),
                 ]),
-                html.a([attribute.class("hover:text-white transition-colors")], [
+                html.a([
+                  attribute.class("hover:text-white transition-colors"),
+                  attribute.href("/politica-cookies"),
+                ], [
                   element.text("Política de Cookies"),
                 ]),
               ]),

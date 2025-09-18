@@ -1922,8 +1922,14 @@ function figcaption(attrs, children) {
 function figure(attrs, children) {
   return element2("figure", attrs, children);
 }
+function li(attrs, children) {
+  return element2("li", attrs, children);
+}
 function p(attrs, children) {
   return element2("p", attrs, children);
+}
+function ul(attrs, children) {
+  return element2("ul", attrs, children);
 }
 function a(attrs, children) {
   return element2("a", attrs, children);
@@ -4029,7 +4035,7 @@ function about_page() {
   return div(
     toList([
       class$(
-        "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
+        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
       )
     ]),
     toList([
@@ -4044,7 +4050,7 @@ function about_page() {
       div(
         toList([
           class$(
-            "max-w-4xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700"
+            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700"
           )
         ]),
         toList([
@@ -4082,13 +4088,15 @@ function about_page() {
 function footer2() {
   return footer(
     toList([
-      class$(
-        "bg-black/90 border-t border-gray-700 py-8 px-4 sm:px-6 lg:px-8"
+      class$("relative py-8 px-4 sm:px-6 lg:px-8"),
+      style(
+        "background",
+        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
       )
     ]),
     toList([
       div(
-        toList([class$("max-w-6xl mx-auto")]),
+        toList([class$("max-w-7xl mx-auto")]),
         toList([
           div(
             toList([
@@ -4175,7 +4183,7 @@ function footer2() {
             ])
           ),
           div(
-            toList([class$("border-t border-gray-700 pt-6")]),
+            toList([class$("pt-6")]),
             toList([
               div(
                 toList([
@@ -4212,7 +4220,8 @@ function footer2() {
                         toList([
                           class$(
                             "hover:text-white transition-colors"
-                          )
+                          ),
+                          href("/aviso-legal")
                         ]),
                         toList([text2("Aviso legal")])
                       ),
@@ -4220,7 +4229,8 @@ function footer2() {
                         toList([
                           class$(
                             "hover:text-white transition-colors"
-                          )
+                          ),
+                          href("/politica-privacidad")
                         ]),
                         toList([text2("Pol\xEDtica de privacidad")])
                       ),
@@ -4228,7 +4238,8 @@ function footer2() {
                         toList([
                           class$(
                             "hover:text-white transition-colors"
-                          )
+                          ),
+                          href("/politica-cookies")
                         ]),
                         toList([text2("Pol\xEDtica de Cookies")])
                       )
@@ -4310,7 +4321,7 @@ function modal_view(modal, close_modal_event) {
         div(
           toList([
             class$(
-              "relative max-w-4xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
+              "relative max-w-5xl max-h-[90vh] bg-black border-2 border-transparent shadow-2xl shadow-black/80"
             )
           ]),
           toList([
@@ -4428,7 +4439,7 @@ function contact_page() {
   return div(
     toList([
       class$(
-        "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
+        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
       )
     ]),
     toList([
@@ -4443,7 +4454,7 @@ function contact_page() {
       div(
         toList([
           class$(
-            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto"
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto"
           )
         ]),
         toList([
@@ -4590,7 +4601,7 @@ function filter_category_list(items, filter_event) {
     })()
   );
 }
-function collapsible_category_section(title, category_type, items, current_filter, filter_event, collapsed_categories, toggle_category_event) {
+function collapsible_category_section(title, category_type, items, filter_event, collapsed_categories, toggle_category_event) {
   let is_collapsed = contains(collapsed_categories, category_type);
   return div(
     toList([]),
@@ -4622,7 +4633,7 @@ function collapsible_category_section(title, category_type, items, current_filte
     ])
   );
 }
-function filter_sidebar(current_filter, filter_event, collapsed_categories, toggle_category_event) {
+function filter_sidebar(filter_event, collapsed_categories, toggle_category_event) {
   return div(
     toList([class$("space-y-6")]),
     toList([
@@ -4637,7 +4648,6 @@ function filter_sidebar(current_filter, filter_event, collapsed_categories, togg
           ["Tragus", new Ear()],
           ["Daith", new Ear()]
         ]),
-        current_filter,
         filter_event,
         collapsed_categories,
         toggle_category_event
@@ -4653,7 +4663,6 @@ function filter_sidebar(current_filter, filter_event, collapsed_categories, togg
           ["Bridge", new Facial()],
           ["Medusa", new Facial()]
         ]),
-        current_filter,
         filter_event,
         collapsed_categories,
         toggle_category_event
@@ -4666,7 +4675,6 @@ function filter_sidebar(current_filter, filter_event, collapsed_categories, togg
           ["Lengua", new Body()],
           ["Superficie", new Body()]
         ]),
-        current_filter,
         filter_event,
         collapsed_categories,
         toggle_category_event
@@ -4675,7 +4683,6 @@ function filter_sidebar(current_filter, filter_event, collapsed_categories, togg
         "Joyer\xEDa",
         new JewelryCategory(),
         toList([["Personalizada", new Jewelry()]]),
-        current_filter,
         filter_event,
         collapsed_categories,
         toggle_category_event
@@ -4769,7 +4776,7 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
-                toList([text2("Explora nuestro trabajo")])
+                toList([text2("\uE038xplora nuestro trabaj\uE0E4")])
               ),
               div(
                 toList([
@@ -4783,7 +4790,6 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
                         toList([class$("sticky top-24")]),
                         toList([
                           filter_sidebar(
-                            filter3,
                             filter_event,
                             collapsed_categories,
                             toggle_category_event
@@ -4807,7 +4813,7 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
 }
 
 // build/dev/javascript/piercing/piercing/home.mjs
-function home_page(open_modal_event) {
+function home_page(set_category_filter_event, toggle_category_event) {
   return div(
     toList([class$("relative min-h-screen")]),
     toList([
@@ -4819,7 +4825,7 @@ function home_page(open_modal_event) {
         ]),
         toList([
           div(
-            toList([class$("max-w-4xl mx-auto")]),
+            toList([class$("max-w-6xl mx-auto")]),
             toList([
               div(
                 toList([
@@ -4828,12 +4834,10 @@ function home_page(open_modal_event) {
                   )
                 ]),
                 toList([
-                  div(
-                    toList([class$("text-black text-6xl")]),
+                  img(
                     toList([
-                      text2("\u2022   \u2022"),
-                      br(toList([])),
-                      text2("  \u203F  ")
+                      src("/priv/static/profile_picture.jpg"),
+                      alt("Avatar de Kei")
                     ])
                   )
                 ])
@@ -4841,16 +4845,15 @@ function home_page(open_modal_event) {
               h1(
                 toList([
                   class$(
-                    "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide"
-                  ),
-                  style("font-family", "'Dark Reborn', sans-serif")
+                    "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
+                  )
                 ]),
                 toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
               ),
               p(
                 toList([
                   class$(
-                    "text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+                    "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
                   )
                 ]),
                 toList([
@@ -4876,7 +4879,7 @@ function home_page(open_modal_event) {
         toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
         toList([
           div(
-            toList([class$("max-w-6xl mx-auto")]),
+            toList([class$("max-w-7xl mx-auto")]),
             toList([
               div(
                 toList([
@@ -4891,11 +4894,7 @@ function home_page(open_modal_event) {
                       h2(
                         toList([
                           class$(
-                            "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
+                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
                           )
                         ]),
                         toList([text2("\uE004st\xE9ri\uE0FB")])
@@ -4923,17 +4922,18 @@ function home_page(open_modal_event) {
                       )
                     ])
                   ),
-                  div(
+                  a(
                     toList([
                       class$(
                         "order-1 lg:order-2 group cursor-pointer"
                       ),
                       on_click(
-                        open_modal_event(
-                          "/priv/static/oreja.jpeg",
-                          "Perforaciones de oreja"
-                        )
-                      )
+                        set_category_filter_event(new Ear())
+                      ),
+                      on_click(
+                        toggle_category_event(new EarCategory())
+                      ),
+                      href("/gallery")
                     ]),
                     toList([
                       div(
@@ -4981,7 +4981,7 @@ function home_page(open_modal_event) {
         toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
         toList([
           div(
-            toList([class$("max-w-6xl mx-auto")]),
+            toList([class$("max-w-7xl mx-auto")]),
             toList([
               div(
                 toList([
@@ -4990,17 +4990,18 @@ function home_page(open_modal_event) {
                   )
                 ]),
                 toList([
-                  div(
+                  a(
                     toList([
                       class$(
                         "order-1 lg:order-1 group cursor-pointer"
                       ),
                       on_click(
-                        open_modal_event(
-                          "/priv/static/ceja.heic",
-                          "Perforaciones faciales"
-                        )
-                      )
+                        set_category_filter_event(new Facial())
+                      ),
+                      on_click(
+                        toggle_category_event(new FacialCategory())
+                      ),
+                      href("/gallery")
                     ]),
                     toList([
                       div(
@@ -5046,11 +5047,7 @@ function home_page(open_modal_event) {
                       h2(
                         toList([
                           class$(
-                            "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
+                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
                           )
                         ]),
                         toList([text2("\uE00Fremiu\uE0FC")])
@@ -5090,7 +5087,7 @@ function home_page(open_modal_event) {
         ]),
         toList([
           div(
-            toList([class$("max-w-6xl mx-auto")]),
+            toList([class$("max-w-7xl mx-auto")]),
             toList([
               div(
                 toList([
@@ -5105,11 +5102,7 @@ function home_page(open_modal_event) {
                       h2(
                         toList([
                           class$(
-                            "text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
+                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
                           )
                         ]),
                         toList([text2("\uE004xperienci\uE0F0")])
@@ -5137,17 +5130,18 @@ function home_page(open_modal_event) {
                       )
                     ])
                   ),
-                  div(
+                  a(
                     toList([
                       class$(
                         "order-1 lg:order-2 group cursor-pointer"
                       ),
                       on_click(
-                        open_modal_event(
-                          "/priv/static/cuerpo.heic",
-                          "Perforaciones corporales"
-                        )
-                      )
+                        set_category_filter_event(new Body())
+                      ),
+                      on_click(
+                        toggle_category_event(new BodyCategory())
+                      ),
+                      href("/gallery")
                     ]),
                     toList([
                       div(
@@ -5197,6 +5191,903 @@ function home_page(open_modal_event) {
   );
 }
 
+// build/dev/javascript/piercing/piercing/legal.mjs
+var AvisoLegal = class extends CustomType {
+};
+var PoliticaPrivacidad = class extends CustomType {
+};
+var PoliticaCookies = class extends CustomType {
+};
+function aviso_legal_content() {
+  return div(
+    toList([class$("max-w-5xl mx-auto")]),
+    toList([
+      h1(
+        toList([
+          class$(
+            "text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 text-white tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("Aviso Legal")])
+      ),
+      div(
+        toList([
+          class$(
+            "prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-6"
+          )
+        ]),
+        toList([
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("1. Informaci\xF3n General")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este sitio web tiene car\xE1cter meramente informativo y de portfolio profesional. En cumplimiento de la normativa vigente, se informa:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([text2("Titular: Kei Te Pinxa")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Actividad: Servicios de piercing y modificaciones corporales"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Ubicaci\xF3n: C/ Doctor Jaume Segarra, 4, 46019 Valencia, Espa\xF1a"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([text2("Tel\xE9fono: +34 663 73 66 31")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Contacto: @kei_te_pinxa (Instagram)")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Horario: Lunes a S\xE1bado de 14:00 a 20:00h")
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("2. Finalidad del Sitio Web")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este sitio web es un portfolio informativo que muestra nuestro trabajo y proporciona informaci\xF3n sobre nuestros servicios de piercing. No se realizan transacciones comerciales online."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("3. Condiciones de Uso")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "El acceso y navegaci\xF3n por este sitio web es gratuito. El uso del sitio implica la aceptaci\xF3n de estas condiciones:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "La informaci\xF3n mostrada es orientativa y puede estar sujeta a cambios"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Para servicios reales, contactar directamente en el establecimiento"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "El usuario debe usar el sitio de forma responsable y l\xEDcita"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("4. Propiedad Intelectual")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Todos los contenidos de este sitio web (textos, im\xE1genes, fotograf\xEDas, dise\xF1o) son propiedad de Kei Te Pinxa y est\xE1n protegidos por derechos de propiedad intelectual. Queda prohibida su reproducci\xF3n sin autorizaci\xF3n."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("5. Exenci\xF3n de Responsabilidad")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Kei Te Pinxa no garantiza la disponibilidad continua del sitio web ni se responsabiliza de:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Interrupciones t\xE9cnicas o errores en el sitio"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Decisiones tomadas bas\xE1ndose \xFAnicamente en la informaci\xF3n del sitio"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Da\xF1os derivados del uso inadecuado del sitio web"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("6. Enlaces Externos")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este sitio puede contener enlaces a p\xE1ginas de terceros (redes sociales). Kei Te Pinxa no se responsabiliza del contenido o pol\xEDticas de privacidad de estos sitios externos."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("7. Legislaci\xF3n Aplicable")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este aviso legal se rige por la legislaci\xF3n espa\xF1ola. Para cualquier controversia, ser\xE1 competente la jurisdicci\xF3n de Valencia, Espa\xF1a."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("8. Modificaciones")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este aviso legal puede modificarse. La versi\xF3n vigente ser\xE1 siempre la publicada en este sitio web."
+                  )
+                ])
+              ),
+              p(
+                toList([class$("text-sm text-gray-400 mt-4")]),
+                toList([text2("\xDAltima actualizaci\xF3n: Enero 2025")])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function politica_privacidad_content() {
+  return div(
+    toList([class$("max-w-5xl mx-auto")]),
+    toList([
+      h1(
+        toList([
+          class$(
+            "text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 text-white tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("Pol\xEDtica de Privacidad")])
+      ),
+      div(
+        toList([
+          class$(
+            "prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-6"
+          )
+        ]),
+        toList([
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("1. Informaci\xF3n B\xE1sica")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este sitio web es un portfolio informativo. Los datos que pudi\xE9ramos recopilar se tratar\xE1n con total respeto a su privacidad y conforme al RGPD:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([text2("Responsable: Kei Te Pinxa")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Contacto: +34 663 73 66 31 / @kei_te_pinxa"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Ubicaci\xF3n: C/ Doctor Jaume Segarra, 4, Valencia"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("2. Qu\xE9 Datos Recopilamos")])
+              ),
+              p(
+                toList([class$("mb-4")]),
+                toList([text2("En este sitio web podemos recopilar:")])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Datos de navegaci\xF3n: Cookies t\xE9cnicas necesarias para el funcionamiento"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Datos de contacto: Solo si nos contacta por tel\xE9fono o redes sociales"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "No recopilamos datos personales autom\xE1ticamente a trav\xE9s del sitio web"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("3. Para Qu\xE9 Usamos los Datos")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Los datos que pudieran proporcionarse se usan \xFAnicamente para:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Responder a consultas sobre servicios")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Gestionar citas (presencialmente o por tel\xE9fono)"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Mejorar el funcionamiento del sitio web")
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("4. Sus Derechos")])
+              ),
+              p(
+                toList([class$("mb-4")]),
+                toList([text2("Tiene derecho a:")])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Saber qu\xE9 datos tenemos sobre usted")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([text2("Corregir datos incorrectos")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Solicitar la eliminaci\xF3n de sus datos")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Retirar su consentimiento en cualquier momento"
+                      )
+                    ])
+                  )
+                ])
+              ),
+              p(
+                toList([class$("mt-4")]),
+                toList([
+                  text2(
+                    "Para ejercer estos derechos, contacte en +34 663 73 66 31 o visite el estudio."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("5. Seguridad")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Aplicamos medidas de seguridad adecuadas para proteger sus datos personales contra acceso no autorizado, p\xE9rdida o uso indebido."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("6. Cookies")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Este sitio web utiliza \xFAnicamente cookies t\xE9cnicas necesarias para su funcionamiento b\xE1sico. No utilizamos cookies de marketing o an\xE1lisis sin su consentimiento. Consulte nuestra Pol\xEDtica de Cookies para m\xE1s informaci\xF3n."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("7. Terceros")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "No compartimos sus datos personales con terceros, excepto cuando sea legalmente requerido."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("8. Reclamaciones")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Si considera que no tratamos sus datos correctamente, puede presentar una reclamaci\xF3n ante la Agencia Espa\xF1ola de Protecci\xF3n de Datos (www.aepd.es) o contactar con nosotros directamente."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("9. Actualizaciones")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Esta pol\xEDtica puede actualizarse ocasionalmente. La versi\xF3n actual estar\xE1 siempre disponible en este sitio web."
+                  )
+                ])
+              ),
+              p(
+                toList([class$("text-sm text-gray-400 mt-4")]),
+                toList([text2("\xDAltima actualizaci\xF3n: Enero 2025")])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function politica_cookies_content() {
+  return div(
+    toList([class$("max-w-5xl mx-auto")]),
+    toList([
+      h1(
+        toList([
+          class$(
+            "text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 text-white tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("Pol\xEDtica de Cookies")])
+      ),
+      div(
+        toList([
+          class$(
+            "prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-6"
+          )
+        ]),
+        toList([
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("1. \xBFQu\xE9 son las Cookies?")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Las cookies son peque\xF1os archivos que se almacenan en su dispositivo cuando visita nuestro sitio web. Este es un portfolio informativo que utiliza cookies de forma muy limitada."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("2. Cookies que Utilizamos")])
+              ),
+              h3(
+                toList([
+                  class$(
+                    "text-xl font-semibold text-white mb-3 mt-6"
+                  )
+                ]),
+                toList([text2("Cookies T\xE9cnicas (Necesarias)")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Solo utilizamos cookies esenciales para el funcionamiento b\xE1sico del sitio:"
+                  )
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Cookies de sesi\xF3n para la navegaci\xF3n")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Cookies para recordar preferencias de la interfaz"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Estas cookies no requieren consentimiento")
+                    ])
+                  )
+                ])
+              ),
+              h3(
+                toList([
+                  class$(
+                    "text-xl font-semibold text-white mb-3 mt-6"
+                  )
+                ]),
+                toList([text2("Cookies Anal\xEDticas")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Actualmente NO utilizamos cookies de an\xE1lisis como Google Analytics, pero si en el futuro las implement\xE1ramos, solicitaremos su consentimiento."
+                  )
+                ])
+              ),
+              h3(
+                toList([
+                  class$(
+                    "text-xl font-semibold text-white mb-3 mt-6"
+                  )
+                ]),
+                toList([text2("Cookies de Redes Sociales")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Si visita nuestras redes sociales desde el sitio, esos servicios pueden establecer sus propias cookies seg\xFAn sus pol\xEDticas."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("3. Control de Cookies")])
+              ),
+              p(
+                toList([class$("mb-4")]),
+                toList([
+                  text2(
+                    "Usted puede controlar las cookies de las siguientes formas:"
+                  )
+                ])
+              ),
+              h3(
+                toList([
+                  class$(
+                    "text-xl font-semibold text-white mb-3 mt-6"
+                  )
+                ]),
+                toList([text2("En su Navegador:")])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Chrome: Configuraci\xF3n > Privacidad y seguridad > Cookies"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Firefox: Preferencias > Privacidad y Seguridad"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([text2("Safari: Preferencias > Privacidad")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([text2("Edge: Configuraci\xF3n > Privacidad")])
+                  )
+                ])
+              ),
+              p(
+                toList([class$("mt-4 text-sm")]),
+                toList([
+                  text2(
+                    "Nota: Desactivar las cookies t\xE9cnicas puede afectar al funcionamiento del sitio web."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("4. Duraci\xF3n")])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Cookies de sesi\xF3n: Se eliminan al cerrar el navegador"
+                      )
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2("Cookies de preferencias: M\xE1ximo 1 a\xF1o")
+                    ])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Futuras cookies anal\xEDticas: M\xE1ximo 2 a\xF1os (si se implementan)"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("5. Consentimiento")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Las cookies t\xE9cnicas no requieren consentimiento al ser necesarias para el funcionamiento del sitio. Si en el futuro implementamos cookies de an\xE1lisis o marketing, solicitaremos su consentimiento previo con opciones claras para aceptar o rechazar."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("6. Terceros")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Actualmente no utilizamos servicios de terceros que establezcan cookies en nuestro sitio. Los enlaces a redes sociales no establecen cookies hasta que haga clic en ellos."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("7. Actualizaciones")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2(
+                    "Esta pol\xEDtica se actualiza si cambiamos el uso de cookies. Cualquier cambio importante ser\xE1 comunicado en el sitio web."
+                  )
+                ])
+              )
+            ])
+          ),
+          section(
+            toList([]),
+            toList([
+              h2(
+                toList([class$("text-2xl font-bold text-white mb-4")]),
+                toList([text2("8. Contacto")])
+              ),
+              p(
+                toList([]),
+                toList([
+                  text2("Para consultas sobre cookies, contacte:")
+                ])
+              ),
+              ul(
+                toList([class$("list-disc ml-6 space-y-2 mt-3")]),
+                toList([
+                  li(
+                    toList([]),
+                    toList([text2("Tel\xE9fono: +34 663 73 66 31")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([text2("Instagram: @kei_te_pinxa")])
+                  ),
+                  li(
+                    toList([]),
+                    toList([
+                      text2(
+                        "Establecimiento: C/ Doctor Jaume Segarra, 4, Valencia"
+                      )
+                    ])
+                  )
+                ])
+              ),
+              p(
+                toList([class$("text-sm text-gray-400 mt-4")]),
+                toList([
+                  text2(
+                    "\xDAltima actualizaci\xF3n: Enero 2025 - Portfolio informativo"
+                  )
+                ])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function legal_page(page_type) {
+  return div(
+    toList([
+      class$("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12")
+    ]),
+    toList([
+      (() => {
+        if (page_type instanceof AvisoLegal) {
+          return aviso_legal_content();
+        } else if (page_type instanceof PoliticaPrivacidad) {
+          return politica_privacidad_content();
+        } else {
+          return politica_cookies_content();
+        }
+      })()
+    ])
+  );
+}
+
 // build/dev/javascript/piercing/piercing.mjs
 var FILEPATH = "src/piercing.gleam";
 var Home = class extends CustomType {
@@ -5206,6 +6097,12 @@ var Gallery = class extends CustomType {
 var About = class extends CustomType {
 };
 var Contact = class extends CustomType {
+};
+var AvisoLegal2 = class extends CustomType {
+};
+var PoliticaPrivacidad2 = class extends CustomType {
+};
+var PoliticaCookies2 = class extends CustomType {
 };
 var OnRouteChange = class extends CustomType {
   constructor($0) {
@@ -5258,6 +6155,12 @@ function uri_to_route(uri) {
           return new About();
         } else if ($1 === "contact") {
           return new Contact();
+        } else if ($1 === "aviso-legal") {
+          return new AvisoLegal2();
+        } else if ($1 === "politica-privacidad") {
+          return new PoliticaPrivacidad2();
+        } else if ($1 === "politica-cookies") {
+          return new PoliticaCookies2();
         } else {
           return new Home();
         }
@@ -5363,7 +6266,7 @@ function view2(model) {
   return div(
     toList([
       class$(
-        "min-h-[100dvh] bg-black/80 black text-white flex flex-col"
+        "min-h-[100dvh] bg-black/70 black text-white flex flex-col"
       )
     ]),
     toList([
@@ -5377,8 +6280,11 @@ function view2(model) {
             let $ = model.route;
             if ($ instanceof Home) {
               return home_page(
-                (var0, var1) => {
-                  return new OpenModal(var0, var1);
+                (var0) => {
+                  return new SetGalleryFilter(var0);
+                },
+                (var0) => {
+                  return new ToggleCategory(var0);
                 }
               );
             } else if ($ instanceof Gallery) {
@@ -5397,8 +6303,14 @@ function view2(model) {
               );
             } else if ($ instanceof About) {
               return about_page();
-            } else {
+            } else if ($ instanceof Contact) {
               return contact_page();
+            } else if ($ instanceof AvisoLegal2) {
+              return legal_page(new AvisoLegal());
+            } else if ($ instanceof PoliticaPrivacidad2) {
+              return legal_page(new PoliticaPrivacidad());
+            } else {
+              return legal_page(new PoliticaCookies());
             }
           })()
         ])
@@ -5416,10 +6328,10 @@ function main2() {
       "let_assert",
       FILEPATH,
       "piercing",
-      44,
+      48,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 848, end: 897, pattern_start: 859, pattern_end: 864 }
+      { value: $, start: 922, end: 971, pattern_start: 933, pattern_end: 938 }
     );
   }
   return void 0;
