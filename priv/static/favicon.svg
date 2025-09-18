@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <!-- Metallic gradient -->
+    <linearGradient id="metallicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#A9A9A9;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#D3D3D3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C0C0C0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow gradient -->
+    <radialGradient id="shadowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.8" />
+    </radialGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#shadowGradient)" />
+  
+  <!-- Main piercing ring -->
+  <circle cx="16" cy="16" r="10" fill="none" stroke="url(#metallicGradient)" stroke-width="3" filter="url(#glow)" />
+  
+  <!-- Inner ring detail -->
+  <circle cx="16" cy="16" r="7" fill="none" stroke="url(#metallicGradient)" stroke-width="1.5" opacity="0.7" />
+  
+  <!-- Piercing ball/gem on top -->
+  <circle cx="16" cy="6" r="2.5" fill="url(#metallicGradient)" filter="url(#glow)" />
+  
+  <!-- Tribal-inspired spikes -->
+  <path d="M16 2 L18 8 L14 8 Z" fill="url(#metallicGradient)" filter="url(#glow)" />
+  <path d="M26 12 L30 16 L24 18 Z" fill="url(#metallicGradient)" filter="url(#glow)" />
+  <path d="M26 20 L30 16 L24 14 Z" fill="url(#metallicGradient)" filter="url(#glow)" />
+  <path d="M6 12 L2 16 L8 18 Z" fill="url(#metallicGradient)" filter="url(#glow)" />
+  <path d="M6 20 L2 16 L8 14 Z" fill="url(#metallicGradient)" filter="url(#glow)" />
+  
+  <!-- Center decorative element -->
+  <circle cx="16" cy="16" r="3" fill="none" stroke="url(#metallicGradient)" stroke-width="1" />
+  <circle cx="16" cy="16" r="1" fill="url(#metallicGradient)" />
+</svg>
