@@ -6,7 +6,7 @@ pub fn navbar() {
   html.nav(
     [
       attribute.class(
-        "bg-black/50 border-b-2 border-gray-700 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50",
+        "font-[Dark_Reborn] bg-black/50 border-b-2 border-gray-700 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50",
       ),
     ],
     [

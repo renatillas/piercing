@@ -106,15 +106,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                         ),
                       ],
                     ),
-                    html.a(
-                      [
-                        attribute.class(
-                          "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
-                        ),
-                        attribute.href("#"),
-                      ],
-                      [element.text("Saber más")],
-                    ),
                   ]),
                   // Image
                   html.a(
@@ -242,15 +233,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                           ),
                         ],
                       ),
-                      html.a(
-                        [
-                          attribute.class(
-                            "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
-                          ),
-                          attribute.href("#"),
-                        ],
-                        [element.text("Saber más")],
-                      ),
                     ],
                   ),
                 ],
@@ -299,15 +281,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                           "Más de 2 años de experiencia profesional en perforaciones",
                         ),
                       ],
-                    ),
-                    html.a(
-                      [
-                        attribute.class(
-                          "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
-                        ),
-                        attribute.href("#"),
-                      ],
-                      [element.text("Saber más")],
                     ),
                   ]),
                   // Image

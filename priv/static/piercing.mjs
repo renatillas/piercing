@@ -4376,7 +4376,7 @@ function navbar() {
   return nav(
     toList([
       class$(
-        "bg-black/50 border-b-2 border-gray-700 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50"
+        "font-[Dark_Reborn] bg-black/50 border-b-2 border-gray-700 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50"
       )
     ]),
     toList([
@@ -4910,15 +4910,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                             "Todo el equipo esterilizado usando tecnolog\xEDa de autoclave"
                           )
                         ])
-                      ),
-                      a(
-                        toList([
-                          class$(
-                            "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
-                          ),
-                          href("#")
-                        ]),
-                        toList([text2("Saber m\xE1s")])
                       )
                     ])
                   ),
@@ -5063,15 +5054,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                             "Joyer\xEDa de titanio y acero quir\xFArgico de alta calidad"
                           )
                         ])
-                      ),
-                      a(
-                        toList([
-                          class$(
-                            "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
-                          ),
-                          href("#")
-                        ]),
-                        toList([text2("Saber m\xE1s")])
                       )
                     ])
                   )
@@ -5118,15 +5100,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                             "M\xE1s de 2 a\xF1os de experiencia profesional en perforaciones"
                           )
                         ])
-                      ),
-                      a(
-                        toList([
-                          class$(
-                            "inline-block text-white border-2 border-white px-6 py-2 text-base font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
-                          ),
-                          href("#")
-                        ]),
-                        toList([text2("Saber m\xE1s")])
                       )
                     ])
                   ),
