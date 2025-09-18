@@ -2,7 +2,25 @@ import lustre/attribute
 import lustre/element
 import lustre/element/html
 
-pub fn navbar() {
+pub type Route {
+  Home
+  Gallery
+  About
+  Contact
+  AvisoLegal
+  PoliticaPrivacidad
+  PoliticaCookies
+}
+
+fn get_nav_class(current_route: Route, button_route: Route) -> String {
+  let base_class = "nav-button border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide"
+  case current_route == button_route {
+    True -> base_class <> " active"
+    False -> base_class
+  }
+}
+
+pub fn navbar(current_route: Route) {
   html.nav(
     [
       attribute.class(
@@ -30,27 +48,21 @@ pub fn navbar() {
         [
           html.a(
             [
-              attribute.class(
-                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
-              ),
+              attribute.class(get_nav_class(current_route, Gallery)),
               attribute.href("/gallery"),
             ],
             [element.text("GALERÍA")],
           ),
           html.a(
             [
-              attribute.class(
-                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
-              ),
+              attribute.class(get_nav_class(current_route, About)),
               attribute.href("/about"),
             ],
             [element.text("SOBRE MÍ")],
           ),
           html.a(
             [
-              attribute.class(
-                "border-2 border-transparent text-white hover:text-black px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300",
-              ),
+              attribute.class(get_nav_class(current_route, Contact)),
               attribute.href("/contact"),
             ],
             [element.text("CONTACTO")],

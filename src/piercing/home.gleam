@@ -28,7 +28,7 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
               ],
               [
                 html.img([
-                  attribute.src("/priv/static/profile_picture.jpg"),
+                  attribute.src("/priv/static/profile_picture.jpeg"),
                   attribute.alt("Avatar de Kei"),
                 ]),
               ],

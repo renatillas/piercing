@@ -91,6 +91,18 @@ fn on_route_change(uri: uri.Uri) -> Msg {
   OnRouteChange(route)
 }
 
+fn route_to_navbar_route(route: Route) -> navbar.Route {
+  case route {
+    Home -> navbar.Home
+    Gallery -> navbar.Gallery
+    About -> navbar.About
+    Contact -> navbar.Contact
+    AvisoLegal -> navbar.AvisoLegal
+    PoliticaPrivacidad -> navbar.PoliticaPrivacidad
+    PoliticaCookies -> navbar.PoliticaCookies
+  }
+}
+
 fn update(model: Model, msg: Msg) {
   case msg {
     OnRouteChange(route) -> #(Model(..model, route: route), effect.none())
@@ -133,7 +145,7 @@ fn view(model: Model) -> Element(Msg) {
     [
       html.div([attribute.class("fixed-overlay-1")], []),
       html.div([attribute.class("fixed-overlay-2")], []),
-      navbar.navbar(),
+      navbar.navbar(route_to_navbar_route(model.route)),
       html.main([attribute.class("flex-1")], [
         case model.route {
           Home -> home.home_page(SetGalleryFilter, ToggleCategory)

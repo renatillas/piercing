@@ -401,3 +401,38 @@ p {
 .nav-brand a:active {
   transform: scale(0.995);
 }
+
+/* Navbar button interactive effects */
+.nav-button {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+  transform-origin: center;
+}
+
+.nav-button:hover {
+  transform: rotate(-4deg) scale(1.14);
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(255, 255, 255, 0.6),
+    0 0 24px rgba(255, 255, 255, 0.4),
+    0 0 32px rgba(255, 255, 255, 0.2);
+  filter: brightness(1.2);
+}
+
+.nav-button:active {
+  transform: rotate(-4deg) scale(1.08) translateY(2px);
+  transition: all 0.1s ease-out;
+  text-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.6),
+    0 0 12px rgba(255, 255, 255, 0.4),
+    0 0 18px rgba(255, 255, 255, 0.3);
+}
+
+.nav-button.active {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(255, 255, 255, 0.6),
+    0 0 24px rgba(255, 255, 255, 0.4);
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}

@@ -4372,7 +4372,30 @@ function modal_view(modal, close_modal_event) {
 }
 
 // build/dev/javascript/piercing/piercing/components/navbar.mjs
-function navbar() {
+var Home = class extends CustomType {
+};
+var Gallery = class extends CustomType {
+};
+var About = class extends CustomType {
+};
+var Contact = class extends CustomType {
+};
+var AvisoLegal = class extends CustomType {
+};
+var PoliticaPrivacidad = class extends CustomType {
+};
+var PoliticaCookies = class extends CustomType {
+};
+function get_nav_class(current_route, button_route) {
+  let base_class = "nav-button border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide";
+  let $ = isEqual(current_route, button_route);
+  if ($) {
+    return base_class + " active";
+  } else {
+    return base_class;
+  }
+}
+function navbar(current_route) {
   return nav(
     toList([
       class$(
@@ -4403,27 +4426,21 @@ function navbar() {
         toList([
           a(
             toList([
-              class$(
-                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
-              ),
+              class$(get_nav_class(current_route, new Gallery())),
               href("/gallery")
             ]),
             toList([text2("GALER\xCDA")])
           ),
           a(
             toList([
-              class$(
-                "border-2 border-transparent hover:text-black text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
-              ),
+              class$(get_nav_class(current_route, new About())),
               href("/about")
             ]),
             toList([text2("SOBRE M\xCD")])
           ),
           a(
             toList([
-              class$(
-                "border-2 border-transparent text-white hover:text-black px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide hover:border-white hover:bg-white hover:bg-opacity-10 transition-all duration-300"
-              ),
+              class$(get_nav_class(current_route, new Contact())),
               href("/contact")
             ]),
             toList([text2("CONTACTO")])
@@ -4836,7 +4853,7 @@ function home_page(set_category_filter_event, toggle_category_event) {
                 toList([
                   img(
                     toList([
-                      src("/priv/static/profile_picture.jpg"),
+                      src("/priv/static/profile_picture.jpeg"),
                       alt("Avatar de Kei")
                     ])
                   )
@@ -5165,11 +5182,11 @@ function home_page(set_category_filter_event, toggle_category_event) {
 }
 
 // build/dev/javascript/piercing/piercing/legal.mjs
-var AvisoLegal = class extends CustomType {
+var AvisoLegal2 = class extends CustomType {
 };
-var PoliticaPrivacidad = class extends CustomType {
+var PoliticaPrivacidad2 = class extends CustomType {
 };
-var PoliticaCookies = class extends CustomType {
+var PoliticaCookies2 = class extends CustomType {
 };
 function aviso_legal_content() {
   return div(
@@ -6045,9 +6062,9 @@ function legal_page(page_type) {
     ]),
     toList([
       (() => {
-        if (page_type instanceof AvisoLegal) {
+        if (page_type instanceof AvisoLegal2) {
           return aviso_legal_content();
-        } else if (page_type instanceof PoliticaPrivacidad) {
+        } else if (page_type instanceof PoliticaPrivacidad2) {
           return politica_privacidad_content();
         } else {
           return politica_cookies_content();
@@ -6059,19 +6076,19 @@ function legal_page(page_type) {
 
 // build/dev/javascript/piercing/piercing.mjs
 var FILEPATH = "src/piercing.gleam";
-var Home = class extends CustomType {
+var Home2 = class extends CustomType {
 };
-var Gallery = class extends CustomType {
+var Gallery2 = class extends CustomType {
 };
-var About = class extends CustomType {
+var About2 = class extends CustomType {
 };
-var Contact = class extends CustomType {
+var Contact2 = class extends CustomType {
 };
-var AvisoLegal2 = class extends CustomType {
+var AvisoLegal3 = class extends CustomType {
 };
-var PoliticaPrivacidad2 = class extends CustomType {
+var PoliticaPrivacidad3 = class extends CustomType {
 };
-var PoliticaCookies2 = class extends CustomType {
+var PoliticaCookies3 = class extends CustomType {
 };
 var OnRouteChange = class extends CustomType {
   constructor($0) {
@@ -6113,28 +6130,28 @@ function uri_to_route(uri) {
   let _pipe = path_segments(uri.path);
   return ((path) => {
     if (path instanceof Empty) {
-      return new Home();
+      return new Home2();
     } else {
       let $ = path.tail;
       if ($ instanceof Empty) {
         let $1 = path.head;
         if ($1 === "gallery") {
-          return new Gallery();
+          return new Gallery2();
         } else if ($1 === "about") {
-          return new About();
+          return new About2();
         } else if ($1 === "contact") {
-          return new Contact();
+          return new Contact2();
         } else if ($1 === "aviso-legal") {
-          return new AvisoLegal2();
+          return new AvisoLegal3();
         } else if ($1 === "politica-privacidad") {
-          return new PoliticaPrivacidad2();
+          return new PoliticaPrivacidad3();
         } else if ($1 === "politica-cookies") {
-          return new PoliticaCookies2();
+          return new PoliticaCookies3();
         } else {
-          return new Home();
+          return new Home2();
         }
       } else {
-        return new Home();
+        return new Home2();
       }
     }
   })(_pipe);
@@ -6147,7 +6164,7 @@ function init2(_) {
   let _block;
   let _pipe = do_initial_uri();
   let _pipe$1 = map3(_pipe, uri_to_route);
-  _block = unwrap(_pipe$1, new Home());
+  _block = unwrap(_pipe$1, new Home2());
   let route = _block;
   return [
     new Model(
@@ -6163,6 +6180,23 @@ function init2(_) {
     ),
     init(on_route_change)
   ];
+}
+function route_to_navbar_route(route) {
+  if (route instanceof Home2) {
+    return new Home();
+  } else if (route instanceof Gallery2) {
+    return new Gallery();
+  } else if (route instanceof About2) {
+    return new About();
+  } else if (route instanceof Contact2) {
+    return new Contact();
+  } else if (route instanceof AvisoLegal3) {
+    return new AvisoLegal();
+  } else if (route instanceof PoliticaPrivacidad3) {
+    return new PoliticaPrivacidad();
+  } else {
+    return new PoliticaCookies();
+  }
 }
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
@@ -6241,13 +6275,13 @@ function view2(model) {
     toList([
       div(toList([class$("fixed-overlay-1")]), toList([])),
       div(toList([class$("fixed-overlay-2")]), toList([])),
-      navbar(),
+      navbar(route_to_navbar_route(model.route)),
       main(
         toList([class$("flex-1")]),
         toList([
           (() => {
             let $ = model.route;
-            if ($ instanceof Home) {
+            if ($ instanceof Home2) {
               return home_page(
                 (var0) => {
                   return new SetGalleryFilter(var0);
@@ -6256,7 +6290,7 @@ function view2(model) {
                   return new ToggleCategory(var0);
                 }
               );
-            } else if ($ instanceof Gallery) {
+            } else if ($ instanceof Gallery2) {
               return gallery_page(
                 model.gallery_filter,
                 (var0) => {
@@ -6270,16 +6304,16 @@ function view2(model) {
                   return new ToggleCategory(var0);
                 }
               );
-            } else if ($ instanceof About) {
+            } else if ($ instanceof About2) {
               return about_page();
-            } else if ($ instanceof Contact) {
+            } else if ($ instanceof Contact2) {
               return contact_page();
-            } else if ($ instanceof AvisoLegal2) {
-              return legal_page(new AvisoLegal());
-            } else if ($ instanceof PoliticaPrivacidad2) {
-              return legal_page(new PoliticaPrivacidad());
+            } else if ($ instanceof AvisoLegal3) {
+              return legal_page(new AvisoLegal2());
+            } else if ($ instanceof PoliticaPrivacidad3) {
+              return legal_page(new PoliticaPrivacidad2());
             } else {
-              return legal_page(new PoliticaCookies());
+              return legal_page(new PoliticaCookies2());
             }
           })()
         ])
