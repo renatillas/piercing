@@ -4463,6 +4463,10 @@ function navbar(current_route) {
     toList([
       class$(
         "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 sticky top-0 z-50"
+      ),
+      style(
+        "background",
+        "linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
       )
     ]),
     toList([
