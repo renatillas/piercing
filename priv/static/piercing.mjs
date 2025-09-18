@@ -598,24 +598,6 @@ function reverse_and_prepend(loop$prefix, loop$suffix) {
 function reverse(list4) {
   return reverse_and_prepend(list4, toList([]));
 }
-function contains(loop$list, loop$elem) {
-  while (true) {
-    let list4 = loop$list;
-    let elem = loop$elem;
-    if (list4 instanceof Empty) {
-      return false;
-    } else {
-      let first$1 = list4.head;
-      if (isEqual(first$1, elem)) {
-        return true;
-      } else {
-        let rest$1 = list4.tail;
-        loop$list = rest$1;
-        loop$elem = elem;
-      }
-    }
-  }
-}
 function filter_loop(loop$list, loop$fun, loop$acc) {
   while (true) {
     let list4 = loop$list;
@@ -1027,35 +1009,6 @@ function sort(list4, compare5) {
       return merge_all(sequences$1, new Ascending(), compare5);
     }
   }
-}
-function partition_loop(loop$list, loop$categorise, loop$trues, loop$falses) {
-  while (true) {
-    let list4 = loop$list;
-    let categorise = loop$categorise;
-    let trues = loop$trues;
-    let falses = loop$falses;
-    if (list4 instanceof Empty) {
-      return [reverse(trues), reverse(falses)];
-    } else {
-      let first$1 = list4.head;
-      let rest$1 = list4.tail;
-      let $ = categorise(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$categorise = categorise;
-        loop$trues = prepend(first$1, trues);
-        loop$falses = falses;
-      } else {
-        loop$list = rest$1;
-        loop$categorise = categorise;
-        loop$trues = trues;
-        loop$falses = prepend(first$1, falses);
-      }
-    }
-  }
-}
-function partition(list4, categorise) {
-  return partition_loop(list4, categorise, toList([]), toList([]));
 }
 
 // build/dev/javascript/gleam_stdlib/gleam/result.mjs
@@ -4746,14 +4699,6 @@ var Daith = class extends CustomType {
 };
 var Flat = class extends CustomType {
 };
-var EarCategory = class extends CustomType {
-};
-var FacialCategory = class extends CustomType {
-};
-var BodyCategory = class extends CustomType {
-};
-var JewelryCategory = class extends CustomType {
-};
 function gallery_section_card(title, description, filter3, image_src, filter_event) {
   return div(
     toList([
@@ -4777,15 +4722,11 @@ function gallery_section_card(title, description, filter3, image_src, filter_eve
           div(
             toList([
               class$(
-                "absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"
-              )
-            ]),
-            toList([])
-          ),
-          div(
-            toList([
-              class$(
                 "absolute inset-0 flex flex-col justify-end p-6 text-white"
+              ),
+              style(
+                "background",
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
               )
             ]),
             toList([
@@ -4876,21 +4817,6 @@ function gallery_home_page(filter_event) {
     ])
   );
 }
-function reorder_categories_by_expanded(categories, collapsed_categories) {
-  let $ = partition(
-    categories,
-    (category) => {
-      let category_type;
-      category_type = category[1];
-      return !contains(collapsed_categories, category_type);
-    }
-  );
-  let expanded;
-  let collapsed;
-  expanded = $[0];
-  collapsed = $[1];
-  return append2(expanded, collapsed);
-}
 function filter_category_list(items, filter_event, current_filter) {
   return div(
     toList([class$("ml-10 space-y-2")]),
@@ -4909,7 +4835,7 @@ function filter_category_list(items, filter_event, current_filter) {
               class$(
                 "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
                   if (is_active) {
-                    return " bg-white/20 font-bold";
+                    return " pl-3 bg-white/20 font-bold";
                   } else {
                     return "";
                   }
@@ -4934,8 +4860,7 @@ function filter_category_list(items, filter_event, current_filter) {
     })()
   );
 }
-function collapsible_category_section(title, category_type, items, filter_event, collapsed_categories, toggle_category_event, current_filter) {
-  let is_collapsed = contains(collapsed_categories, category_type);
+function collapsible_category_section(title, items, items_filter, filter_event, current_filter) {
   return div(
     toList([]),
     toList([
@@ -4943,22 +4868,38 @@ function collapsible_category_section(title, category_type, items, filter_event,
         toList([
           class$(
             "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded"
-          ),
-          on_click(toggle_category_event(category_type))
+          )
         ]),
         toList([
           h3(
             toList([
-              class$("text-2xl font-bold text-white tracking-wide"),
-              style("font-family", "'Dark Reborn', sans-serif")
+              class$(
+                "text-2xl font-bold text-white tracking-wide" + (() => {
+                  if (items_filter instanceof Ear && current_filter instanceof Ear) {
+                    return " font-bold text-shadow-lg text-shadow-white/50";
+                  } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
+                    return " font-bold text-shadow-lg text-shadow-white/50";
+                  } else if (items_filter instanceof Body && current_filter instanceof Body) {
+                    return " font-bold text-shadow-lg text-shadow-white/50";
+                  } else {
+                    return "";
+                  }
+                })()
+              ),
+              style("font-family", "'Dark Reborn', sans-serif"),
+              on_click(filter_event(items_filter))
             ]),
             toList([
               text2(
                 (() => {
-                  if (is_collapsed) {
-                    return title;
-                  } else {
+                  if (items_filter instanceof Ear && current_filter instanceof Ear) {
                     return "\uE00F" + drop_start(title, 1) + " \u2727";
+                  } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
+                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                  } else if (items_filter instanceof Body && current_filter instanceof Body) {
+                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                  } else {
+                    return title;
                   }
                 })()
               )
@@ -4967,83 +4908,17 @@ function collapsible_category_section(title, category_type, items, filter_event,
         ])
       ),
       (() => {
-        if (is_collapsed) {
-          return div(toList([]), toList([]));
-        } else {
+        if (items_filter instanceof Ear && current_filter instanceof Ear) {
           return filter_category_list(items, filter_event, current_filter);
+        } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
+          return filter_category_list(items, filter_event, current_filter);
+        } else if (items_filter instanceof Body && current_filter instanceof Body) {
+          return filter_category_list(items, filter_event, current_filter);
+        } else {
+          return div(toList([]), toList([]));
         }
       })()
     ])
-  );
-}
-function filter_sidebar(filter_event, collapsed_categories, toggle_category_event, current_filter) {
-  let categories = toList([
-    [
-      "Perforaciones de oreja",
-      new EarCategory(),
-      toList([
-        ["L\xF3bulo", new Ear(new Lobulo())],
-        ["H\xE9lix", new Ear(new Helix())],
-        ["Industrial", new Ear(new Industrial())],
-        ["Conch", new Ear(new Conch())],
-        ["Tragus", new Ear(new Tragus())],
-        ["Daith", new Ear(new Daith())],
-        ["Flat", new Ear(new Flat())]
-      ])
-    ],
-    [
-      "Perforaciones faciales",
-      new FacialCategory(),
-      toList([
-        ["Nostril", new Facial(new Nostril())],
-        ["Septum", new Facial(new Septum())],
-        ["Labret", new Facial(new Labret())],
-        ["Ceja", new Facial(new Ceja())],
-        ["Bridge", new Facial(new Bridge())],
-        ["Medusa", new Facial(new Medusa())],
-        ["Venom", new Facial(new Venom())]
-      ])
-    ],
-    [
-      "Perforaciones corporales",
-      new BodyCategory(),
-      toList([
-        ["Ombligo", new Body(new Ombligo())],
-        ["Lengua", new Body(new Lengua())],
-        ["Superficie", new Body(new Superficie())],
-        ["Microdermal", new Body(new Microdermal())]
-      ])
-    ]
-  ]);
-  let ordered_categories = reorder_categories_by_expanded(
-    categories,
-    collapsed_categories
-  );
-  return div(
-    toList([class$("space-y-6")]),
-    (() => {
-      let _pipe = ordered_categories;
-      return map(
-        _pipe,
-        (category) => {
-          let title;
-          let category_type;
-          let items;
-          title = category[0];
-          category_type = category[1];
-          items = category[2];
-          return collapsible_category_section(
-            title,
-            category_type,
-            items,
-            filter_event,
-            collapsed_categories,
-            toggle_category_event,
-            current_filter
-          );
-        }
-      );
-    })()
   );
 }
 function get_filtered_images(filter3) {
@@ -5234,7 +5109,74 @@ function gallery_grid(filter3, open_modal_event) {
     })()
   );
 }
-function gallery_filtered_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
+var categories = /* @__PURE__ */ toList([
+  [
+    "Perforaciones de oreja",
+    /* @__PURE__ */ new Ear(/* @__PURE__ */ new EarAll()),
+    /* @__PURE__ */ toList([
+      ["L\xF3bulo", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Lobulo())],
+      ["H\xE9lix", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Helix())],
+      ["Industrial", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Industrial())],
+      ["Conch", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Conch())],
+      ["Tragus", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Tragus())],
+      ["Daith", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Daith())],
+      ["Flat", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Flat())]
+    ])
+  ],
+  [
+    "Perforaciones faciales",
+    /* @__PURE__ */ new Facial(/* @__PURE__ */ new FacialAll()),
+    /* @__PURE__ */ toList([
+      ["Nostril", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Nostril())],
+      ["Septum", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Septum())],
+      ["Labret", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Labret())],
+      ["Ceja", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Ceja())],
+      ["Bridge", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Bridge())],
+      ["Medusa", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Medusa())],
+      ["Venom", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Venom())]
+    ])
+  ],
+  [
+    "Perforaciones corporales",
+    /* @__PURE__ */ new Body(/* @__PURE__ */ new BodyAll()),
+    /* @__PURE__ */ toList([
+      ["Ombligo", /* @__PURE__ */ new Body(/* @__PURE__ */ new Ombligo())],
+      ["Lengua", /* @__PURE__ */ new Body(/* @__PURE__ */ new Lengua())],
+      ["Superficie", /* @__PURE__ */ new Body(/* @__PURE__ */ new Superficie())],
+      [
+        "Microdermal",
+        /* @__PURE__ */ new Body(/* @__PURE__ */ new Microdermal())
+      ]
+    ])
+  ]
+]);
+function filter_sidebar(filter_event, current_filter) {
+  return div(
+    toList([class$("space-y-6")]),
+    (() => {
+      let _pipe = categories;
+      return map(
+        _pipe,
+        (category) => {
+          let title;
+          let filter3;
+          let items;
+          title = category[0];
+          filter3 = category[1];
+          items = category[2];
+          return collapsible_category_section(
+            title,
+            items,
+            filter3,
+            filter_event,
+            current_filter
+          );
+        }
+      );
+    })()
+  );
+}
+function gallery_filtered_page(filter3, filter_event, open_modal_event) {
   return div(
     toList([class$("min-h-screen")]),
     toList([
@@ -5247,9 +5189,8 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event, collapse
               h1(
                 toList([
                   class$(
-                    "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide"
-                  ),
-                  style("font-family", "'Dark Reborn', sans-serif")
+                    "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide font-[Dark_Reborn]"
+                  )
                 ]),
                 toList([text2("Explora nuestro trabajo")])
               ),
@@ -5263,14 +5204,7 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event, collapse
                     toList([
                       div(
                         toList([class$("sticky top-24")]),
-                        toList([
-                          filter_sidebar(
-                            filter_event,
-                            collapsed_categories,
-                            toggle_category_event,
-                            filter3
-                          )
-                        ])
+                        toList([filter_sidebar(filter_event, filter3)])
                       )
                     ])
                   ),
@@ -5287,22 +5221,16 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event, collapse
     ])
   );
 }
-function gallery_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
+function gallery_page(filter3, filter_event, open_modal_event) {
   if (filter3 instanceof All) {
     return gallery_home_page(filter_event);
   } else {
-    return gallery_filtered_page(
-      filter3,
-      filter_event,
-      open_modal_event,
-      collapsed_categories,
-      toggle_category_event
-    );
+    return gallery_filtered_page(filter3, filter_event, open_modal_event);
   }
 }
 
 // build/dev/javascript/piercing/piercing/home.mjs
-function home_page(set_category_filter_event, toggle_category_event) {
+function home_page(set_category_filter_event) {
   return div(
     toList([class$("relative min-h-screen")]),
     toList([
@@ -5442,9 +5370,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                           new Ear(new EarAll())
                         )
                       ),
-                      on_click(
-                        toggle_category_event(new EarCategory())
-                      ),
                       href("/gallery")
                     ]),
                     toList([
@@ -5511,9 +5436,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         set_category_filter_event(
                           new Ear(new EarAll())
                         )
-                      ),
-                      on_click(
-                        toggle_category_event(new FacialCategory())
                       ),
                       href("/gallery")
                     ]),
@@ -5635,9 +5557,6 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         set_category_filter_event(
                           new Body(new BodyAll())
                         )
-                      ),
-                      on_click(
-                        toggle_category_event(new BodyCategory())
                       ),
                       href("/gallery")
                     ]),
@@ -6619,19 +6538,12 @@ var SetGalleryFilter = class extends CustomType {
     this[0] = $0;
   }
 };
-var ToggleCategory = class extends CustomType {
-  constructor($0) {
-    super();
-    this[0] = $0;
-  }
-};
 var Model = class extends CustomType {
-  constructor(route, modal, gallery_filter, collapsed_categories) {
+  constructor(route, modal, gallery_filter) {
     super();
     this.route = route;
     this.modal = modal;
     this.gallery_filter = gallery_filter;
-    this.collapsed_categories = collapsed_categories;
   }
 };
 function uri_to_route(uri) {
@@ -6675,17 +6587,7 @@ function init2(_) {
   _block = unwrap(_pipe$1, new Home2());
   let route = _block;
   return [
-    new Model(
-      route,
-      new Closed(),
-      new All(),
-      toList([
-        new EarCategory(),
-        new BodyCategory(),
-        new FacialCategory(),
-        new JewelryCategory()
-      ])
-    ),
+    new Model(route, new Closed(), new All()),
     init(on_route_change)
   ];
 }
@@ -6709,68 +6611,22 @@ function route_to_navbar_route(route) {
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
     let route = msg[0];
-    return [
-      new Model(
-        route,
-        model.modal,
-        model.gallery_filter,
-        model.collapsed_categories
-      ),
-      none()
-    ];
+    return [new Model(route, model.modal, model.gallery_filter), none()];
   } else if (msg instanceof OpenModal) {
     let src2 = msg[0];
     let alt2 = msg[1];
     return [
-      new Model(
-        model.route,
-        new Open(src2, alt2),
-        model.gallery_filter,
-        model.collapsed_categories
-      ),
+      new Model(model.route, new Open(src2, alt2), model.gallery_filter),
       none()
     ];
   } else if (msg instanceof CloseModal) {
     return [
-      new Model(
-        model.route,
-        new Closed(),
-        model.gallery_filter,
-        model.collapsed_categories
-      ),
-      none()
-    ];
-  } else if (msg instanceof SetGalleryFilter) {
-    let filter3 = msg[0];
-    return [
-      new Model(model.route, model.modal, filter3, model.collapsed_categories),
+      new Model(model.route, new Closed(), model.gallery_filter),
       none()
     ];
   } else {
-    let category = msg[0];
-    let all_categories = toList([
-      new EarCategory(),
-      new BodyCategory(),
-      new FacialCategory(),
-      new JewelryCategory()
-    ]);
-    let _block;
-    let $ = contains(model.collapsed_categories, category);
-    if ($) {
-      _block = filter(
-        all_categories,
-        (c) => {
-          return !isEqual(c, category);
-        }
-      );
-    } else {
-      _block = all_categories;
-    }
-    let new_collapsed = _block;
-    return [
-      new Model(model.route, model.modal, model.gallery_filter, new_collapsed),
-      none()
-    ];
+    let filter3 = msg[0];
+    return [new Model(model.route, model.modal, filter3), none()];
   }
 }
 function view2(model) {
@@ -6793,9 +6649,6 @@ function view2(model) {
               return home_page(
                 (var0) => {
                   return new SetGalleryFilter(var0);
-                },
-                (var0) => {
-                  return new ToggleCategory(var0);
                 }
               );
             } else if ($ instanceof Gallery2) {
@@ -6806,10 +6659,6 @@ function view2(model) {
                 },
                 (var0, var1) => {
                   return new OpenModal(var0, var1);
-                },
-                model.collapsed_categories,
-                (var0) => {
-                  return new ToggleCategory(var0);
                 }
               );
             } else if ($ instanceof About2) {
@@ -6839,10 +6688,10 @@ function main2() {
       "let_assert",
       FILEPATH,
       "piercing",
-      48,
+      45,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 922, end: 971, pattern_start: 933, pattern_end: 938 }
+      { value: $, start: 811, end: 860, pattern_start: 822, pattern_end: 827 }
     );
   }
   return void 0;

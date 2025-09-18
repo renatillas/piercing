@@ -1,4 +1,3 @@
-import gleam/list
 import gleam/result
 import gleam/uri
 import lustre
@@ -31,7 +30,6 @@ pub type Msg {
   OpenModal(String, String)
   CloseModal
   SetGalleryFilter(gallery.GalleryFilter)
-  ToggleCategory(gallery.CategoryType)
 }
 
 pub type Model {
@@ -39,7 +37,6 @@ pub type Model {
     route: Route,
     modal: modal.ModalState,
     gallery_filter: gallery.GalleryFilter,
-    collapsed_categories: List(gallery.CategoryType),
   )
 }
 
@@ -55,17 +52,7 @@ fn init(_flags) {
     |> result.map(uri_to_route)
     |> result.unwrap(Home)
   #(
-    Model(
-      route: route,
-      modal: modal.Closed,
-      gallery_filter: gallery.All,
-      collapsed_categories: [
-        gallery.EarCategory,
-        gallery.BodyCategory,
-        gallery.FacialCategory,
-        gallery.JewelryCategory,
-      ],
-    ),
+    Model(route: route, modal: modal.Closed, gallery_filter: gallery.All),
     modem.init(on_route_change),
   )
 }
@@ -115,23 +102,6 @@ fn update(model: Model, msg: Msg) {
       Model(..model, gallery_filter: filter),
       effect.none(),
     )
-    ToggleCategory(category) -> {
-      let all_categories = [
-        gallery.EarCategory,
-        gallery.BodyCategory,
-        gallery.FacialCategory,
-        gallery.JewelryCategory,
-      ]
-      let new_collapsed = case
-        list.contains(model.collapsed_categories, category)
-      {
-        // If clicking on expanded category, collapse all
-        False -> all_categories
-        // If clicking on collapsed category, expand it and collapse all others
-        True -> list.filter(all_categories, fn(c) { c != category })
-      }
-      #(Model(..model, collapsed_categories: new_collapsed), effect.none())
-    }
   }
 }
 
@@ -148,14 +118,12 @@ fn view(model: Model) -> Element(Msg) {
       navbar.navbar(route_to_navbar_route(model.route)),
       html.main([attribute.class("flex-1")], [
         case model.route {
-          Home -> home.home_page(SetGalleryFilter, ToggleCategory)
+          Home -> home.home_page(SetGalleryFilter)
           Gallery ->
             gallery.gallery_page(
               model.gallery_filter,
               filter_event: SetGalleryFilter,
               open_modal_event: OpenModal,
-              collapsed_categories: model.collapsed_categories,
-              toggle_category_event: ToggleCategory,
             )
           About -> about.about_page()
           Contact -> contact.contact_page()

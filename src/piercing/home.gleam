@@ -4,7 +4,7 @@ import lustre/element/html
 import lustre/event
 import piercing/gallery
 
-pub fn home_page(set_category_filter_event, toggle_category_event) {
+pub fn home_page(set_category_filter_event) {
   html.div(
     [
       attribute.class("relative min-h-screen"),
@@ -142,7 +142,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
-                      event.on_click(toggle_category_event(gallery.EarCategory)),
 
                       attribute.href("/gallery"),
                     ],
@@ -207,9 +206,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
-                      event.on_click(toggle_category_event(
-                        gallery.FacialCategory,
-                      )),
                       attribute.href("/gallery"),
                     ],
                     [
@@ -322,7 +318,6 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                       event.on_click(
                         set_category_filter_event(gallery.Body(gallery.BodyAll)),
                       ),
-                      event.on_click(toggle_category_event(gallery.BodyCategory)),
                       attribute.href("/gallery"),
                     ],
                     [

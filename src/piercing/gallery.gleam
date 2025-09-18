@@ -5,6 +5,45 @@ import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
 
+const categories = [
+  #(
+    "Perforaciones de oreja",
+    Ear(EarAll),
+    [
+      #("Lóbulo", Ear(Lobulo)),
+      #("Hélix", Ear(Helix)),
+      #("Industrial", Ear(Industrial)),
+      #("Conch", Ear(Conch)),
+      #("Tragus", Ear(Tragus)),
+      #("Daith", Ear(Daith)),
+      #("Flat", Ear(Flat)),
+    ],
+  ),
+  #(
+    "Perforaciones faciales",
+    Facial(FacialAll),
+    [
+      #("Nostril", Facial(Nostril)),
+      #("Septum", Facial(Septum)),
+      #("Labret", Facial(Labret)),
+      #("Ceja", Facial(Ceja)),
+      #("Bridge", Facial(Bridge)),
+      #("Medusa", Facial(Medusa)),
+      #("Venom", Facial(Venom)),
+    ],
+  ),
+  #(
+    "Perforaciones corporales",
+    Body(BodyAll),
+    [
+      #("Ombligo", Body(Ombligo)),
+      #("Lengua", Body(Lengua)),
+      #("Superficie", Body(Superficie)),
+      #("Microdermal", Body(Microdermal)),
+    ],
+  ),
+]
+
 pub type GalleryFilter {
   All
   Ear(Ear)
@@ -42,30 +81,14 @@ pub type Ear {
   Flat
 }
 
-pub type CategoryType {
-  EarCategory
-  FacialCategory
-  BodyCategory
-  JewelryCategory
-}
-
 pub fn gallery_page(
   filter filter: GalleryFilter,
   filter_event filter_event: fn(GalleryFilter) -> a,
   open_modal_event open_modal_event: fn(String, String) -> a,
-  collapsed_categories collapsed_categories: List(CategoryType),
-  toggle_category_event toggle_category_event: fn(CategoryType) -> a,
 ) -> Element(a) {
   case filter {
     All -> gallery_home_page(filter_event)
-    _ ->
-      gallery_filtered_page(
-        filter,
-        filter_event,
-        open_modal_event,
-        collapsed_categories,
-        toggle_category_event,
-      )
+    _ -> gallery_filtered_page(filter, filter_event, open_modal_event)
   }
 }
 
@@ -138,15 +161,11 @@ fn gallery_section_card(
         html.div(
           [
             attribute.class(
-              "absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300",
-            ),
-          ],
-          [],
-        ),
-        html.div(
-          [
-            attribute.class(
               "absolute inset-0 flex flex-col justify-end p-6 text-white",
+            ),
+            attribute.style(
+              "background",
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)",
             ),
           ],
           [
@@ -185,8 +204,6 @@ fn gallery_filtered_page(
   filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
   open_modal_event: fn(String, String) -> a,
-  collapsed_categories: List(CategoryType),
-  toggle_category_event: fn(CategoryType) -> a,
 ) -> Element(a) {
   html.div(
     [
@@ -202,9 +219,8 @@ fn gallery_filtered_page(
             html.h1(
               [
                 attribute.class(
-                  "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide",
+                  "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide font-[Dark_Reborn]",
                 ),
-                attribute.style("font-family", "'Dark Reborn', sans-serif"),
               ],
               [element.text("Explora nuestro trabajo")],
             ),
@@ -215,12 +231,7 @@ fn gallery_filtered_page(
                 // Sidebar with filters
                 html.div([attribute.class("lg:w-64 flex-shrink-0")], [
                   html.div([attribute.class("sticky top-24")], [
-                    filter_sidebar(
-                      filter_event,
-                      collapsed_categories,
-                      toggle_category_event,
-                      filter,
-                    ),
+                    filter_sidebar(filter_event, filter),
                   ]),
                 ]),
                 // Gallery Grid
@@ -238,116 +249,74 @@ fn gallery_filtered_page(
 
 fn filter_sidebar(
   filter_event: fn(GalleryFilter) -> a,
-  collapsed_categories: List(CategoryType),
-  toggle_category_event: fn(CategoryType) -> a,
   current_filter: GalleryFilter,
 ) -> Element(a) {
-  let categories = [
-    #("Perforaciones de oreja", EarCategory, [
-      #("Lóbulo", Ear(Lobulo)),
-      #("Hélix", Ear(Helix)),
-      #("Industrial", Ear(Industrial)),
-      #("Conch", Ear(Conch)),
-      #("Tragus", Ear(Tragus)),
-      #("Daith", Ear(Daith)),
-      #("Flat", Ear(Flat)),
-    ]),
-    #("Perforaciones faciales", FacialCategory, [
-      #("Nostril", Facial(Nostril)),
-      #("Septum", Facial(Septum)),
-      #("Labret", Facial(Labret)),
-      #("Ceja", Facial(Ceja)),
-      #("Bridge", Facial(Bridge)),
-      #("Medusa", Facial(Medusa)),
-      #("Venom", Facial(Venom)),
-    ]),
-    #("Perforaciones corporales", BodyCategory, [
-      #("Ombligo", Body(Ombligo)),
-      #("Lengua", Body(Lengua)),
-      #("Superficie", Body(Superficie)),
-      #("Microdermal", Body(Microdermal)),
-    ]),
-  ]
-
-  let ordered_categories =
-    reorder_categories_by_expanded(categories, collapsed_categories)
-
   html.div(
     [attribute.class("space-y-6")],
-    ordered_categories
+    categories
       |> list.map(fn(category) {
-        let #(title, category_type, items) = category
+        let #(title, filter, items) = category
         collapsible_category_section(
           title,
-          category_type,
           items,
+          filter,
           filter_event,
-          collapsed_categories,
-          toggle_category_event,
           current_filter,
         )
       }),
   )
 }
 
-fn reorder_categories_by_expanded(
-  categories: List(#(String, CategoryType, List(#(String, GalleryFilter)))),
-  collapsed_categories: List(CategoryType),
-) -> List(#(String, CategoryType, List(#(String, GalleryFilter)))) {
-  let #(expanded, collapsed) =
-    list.partition(categories, fn(category) {
-      let #(_, category_type, _) = category
-      !list.contains(collapsed_categories, category_type)
-    })
-
-  list.append(expanded, collapsed)
-}
-
 fn collapsible_category_section(
   title: String,
-  category_type: CategoryType,
   items: List(#(String, GalleryFilter)),
+  items_filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
-  collapsed_categories: List(CategoryType),
-  toggle_category_event: fn(CategoryType) -> a,
   current_filter: GalleryFilter,
 ) -> Element(a) {
-  let is_collapsed = list.contains(collapsed_categories, category_type)
-
   html.div([], [
     html.button(
       [
         attribute.class(
           "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded",
         ),
-        event.on_click(toggle_category_event(category_type)),
       ],
       [
         html.h3(
           [
-            attribute.class("text-2xl font-bold text-white tracking-wide"),
+            attribute.class(
+              "text-2xl font-bold text-white tracking-wide"
+              <> case current_filter, items_filter {
+                Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
+                  " font-bold text-shadow-lg text-shadow-white/50"
+                _, _ -> ""
+              },
+            ),
             attribute.style("font-family", "'Dark Reborn', sans-serif"),
+            event.on_click(filter_event(items_filter)),
           ],
           [
-            element.text(case is_collapsed {
-              True -> title
-              False -> "" <> string.drop_start(title, 1) <> " ✧"
+            element.text(case current_filter, items_filter {
+              Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
+                "" <> string.drop_start(title, 1) <> " ✧"
+              _, _ -> title
             }),
           ],
         ),
       ],
     ),
-    case is_collapsed {
-      True -> html.div([], [])
-      False -> filter_category_list(items, filter_event, current_filter)
+    case current_filter, items_filter {
+      Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
+        filter_category_list(items, filter_event, current_filter)
+      _, _ -> html.div([], [])
     },
   ])
 }
 
 fn filter_category_list(
-  items: List(#(String, GalleryFilter)), 
-  filter_event, 
-  current_filter: GalleryFilter
+  items: List(#(String, GalleryFilter)),
+  filter_event,
+  current_filter: GalleryFilter,
 ) {
   html.div(
     [attribute.class("ml-10 space-y-2")],
@@ -360,16 +329,18 @@ fn filter_category_list(
             attribute.class(
               "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300"
               <> case is_active {
-                True -> " bg-white/20 font-bold"
+                True -> " pl-3 bg-white/20 font-bold"
                 False -> ""
-              }
+              },
             ),
             event.on_click(filter_event(filter)),
           ],
-          [element.text(case is_active {
-            True -> "✧ " <> name
-            False -> name
-          })],
+          [
+            element.text(case is_active {
+              True -> "✧ " <> name
+              False -> name
+            }),
+          ],
         )
       }),
   )
