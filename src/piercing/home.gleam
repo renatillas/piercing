@@ -50,7 +50,9 @@ pub fn home_page(open_modal_event) {
                 ),
               ],
               [
-                element.text("Anilladora aprendiz en proceso de convertirse en un profesional más del mundo del body piercing. Cada día me esfuerzo por perfeccionar mis técnicas y brindar el mejor servicio. Mi pasión por el arte corporal me impulsa a seguir creciendo en esta hermosa profesión."),
+                element.text(
+                  "Anilladora aprendiz en proceso de convertirse en un profesional más del mundo del body piercing. Cada día me esfuerzo por perfeccionar mis técnicas y brindar el mejor servicio. Mi pasión por el arte corporal me impulsa a seguir creciendo en esta hermosa profesión.",
+                ),
               ],
             ),
             html.a(
