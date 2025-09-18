@@ -5314,51 +5314,81 @@ function home_page(set_category_filter_event, toggle_category_event) {
         ]),
         toList([
           div(
-            toList([class$("max-w-6xl mx-auto")]),
+            toList([class$("max-w-7xl mx-auto")]),
             toList([
               div(
                 toList([
                   class$(
-                    "w-64 h-64 mx-auto mb-8 bg-white rounded-lg flex items-center justify-center"
+                    "grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center"
                   )
                 ]),
                 toList([
-                  img(
+                  div(
                     toList([
-                      src("/priv/static/profile_picture.jpeg"),
-                      alt("Avatar de Kei")
+                      class$(
+                        "order-1 lg:order-1 flex justify-center"
+                      )
+                    ]),
+                    toList([
+                      div(
+                        toList([
+                          class$(
+                            "w-80 h-96 lg:w-96 lg:h-[32rem] bg-white rounded-lg flex items-center justify-center overflow-hidden"
+                          )
+                        ]),
+                        toList([
+                          img(
+                            toList([
+                              src(
+                                "/priv/static/profile_picture.jpeg"
+                              ),
+                              alt("Avatar de Kei"),
+                              class$("w-full h-full object-cover")
+                            ])
+                          )
+                        ])
+                      )
+                    ])
+                  ),
+                  div(
+                    toList([
+                      class$(
+                        "order-2 lg:order-2 text-center lg:text-left"
+                      )
+                    ]),
+                    toList([
+                      h1(
+                        toList([
+                          class$(
+                            "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
+                          )
+                        ]),
+                        toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
+                      ),
+                      p(
+                        toList([
+                          class$(
+                            "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+                          )
+                        ]),
+                        toList([
+                          text2(
+                            "Anilladora aprendiz en proceso de convertirse en un profesional m\xE1s del mundo del body piercing. Cada d\xEDa me esfuerzo por perfeccionar mis t\xE9cnicas y brindar el mejor servicio. Mi pasi\xF3n por el arte corporal me impulsa a seguir creciendo en esta hermosa profesi\xF3n."
+                          )
+                        ])
+                      ),
+                      a(
+                        toList([
+                          class$(
+                            "inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                          ),
+                          href("/about")
+                        ]),
+                        toList([text2("Saber m\xE1s")])
+                      )
                     ])
                   )
                 ])
-              ),
-              h1(
-                toList([
-                  class$(
-                    "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
-                  )
-                ]),
-                toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
-              ),
-              p(
-                toList([
-                  class$(
-                    "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
-                  )
-                ]),
-                toList([
-                  text2(
-                    "Anilladora aprendiz en proceso de convertirse en un profesional m\xE1s del mundo del body piercing. Cada d\xEDa me esfuerzo por perfeccionar mis t\xE9cnicas y brindar el mejor servicio. Mi pasi\xF3n por el arte corporal me impulsa a seguir creciendo en esta hermosa profesi\xF3n."
-                  )
-                ])
-              ),
-              a(
-                toList([
-                  class$(
-                    "inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
-                  ),
-                  href("/about")
-                ]),
-                toList([text2("Saber m\xE1s")])
               )
             ])
           )
