@@ -12,11 +12,20 @@ pub type GalleryFilter {
   Jewelry
 }
 
+pub type CategoryType {
+  EarCategory
+  FacialCategory
+  BodyCategory
+  JewelryCategory
+}
+
 pub fn gallery_page(
   filter: GalleryFilter,
-  filter_event filter_event,
-  open_modal_event open_modal_event,
-) {
+  filter_event filter_event: fn(GalleryFilter) -> a,
+  open_modal_event open_modal_event: fn(String, String) -> a,
+  collapsed_categories collapsed_categories: List(CategoryType),
+  toggle_category_event toggle_category_event: fn(CategoryType) -> a,
+) -> Element(a) {
   html.div(
     [
       attribute.class("min-h-screen"),
@@ -44,7 +53,12 @@ pub fn gallery_page(
                 // Sidebar with filters
                 html.div([attribute.class("lg:w-64 flex-shrink-0")], [
                   html.div([attribute.class("sticky top-24")], [
-                    filter_sidebar(filter, filter_event),
+                    filter_sidebar(
+                      filter,
+                      filter_event,
+                      collapsed_categories,
+                      toggle_category_event,
+                    ),
                   ]),
                 ]),
                 // Gallery Grid
@@ -63,110 +77,116 @@ pub fn gallery_page(
 fn filter_sidebar(
   current_filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
+  collapsed_categories: List(CategoryType),
+  toggle_category_event: fn(CategoryType) -> a,
 ) -> Element(a) {
   html.div([attribute.class("space-y-6")], [
-    // Main categories
-    html.div([], [
-      html.h3(
-        [
-          attribute.class("text-2xl font-bold text-white mb-4 tracking-wide"),
-          attribute.style("font-family", "'Dark Reborn', sans-serif"),
-        ],
-        [element.text("Perforaciones de oreja")],
-      ),
-      filter_category_list(
-        [
-          #("Lóbulo", Ear),
-          #("Hélix", Ear),
-          #("Industrial", Ear),
-          #("Conch", Ear),
-          #("Tragus", Ear),
-          #("Daith", Ear),
-        ],
-        current_filter,
-        filter_event,
-      ),
-    ]),
-    html.div([], [
-      html.h3(
-        [
-          attribute.class("text-2xl font-bold text-white mb-4 tracking-wide"),
-          attribute.style("font-family", "'Dark Reborn', sans-serif"),
-        ],
-        [element.text("Faciales")],
-      ),
-      filter_category_list(
-        [
-          #("Nostril", Facial),
-          #("Septum", Facial),
-          #("Labret", Facial),
-          #("Ceja", Facial),
-          #("Bridge", Facial),
-          #("Medusa", Facial),
-        ],
-        current_filter,
-        filter_event,
-      ),
-    ]),
-    html.div([], [
-      html.h3(
-        [
-          attribute.class("text-2xl font-bold text-white mb-4 tracking-wide"),
-          attribute.style("font-family", "'Dark Reborn', sans-serif"),
-        ],
-        [element.text("Corporales")],
-      ),
-      filter_category_list(
-        [
-          #("Ombligo", Body),
-          #("Lengua", Body),
-          #("Superficie", Body),
-        ],
-        current_filter,
-        filter_event,
-      ),
-    ]),
-    html.div([], [
-      html.h3(
-        [
-          attribute.class("text-2xl font-bold text-white mb-4 tracking-wide"),
-          attribute.style("font-family", "'Dark Reborn', sans-serif"),
-        ],
-        [element.text("Joyería")],
-      ),
-      filter_category_list(
-        [
-          #("Personalizada", Jewelry),
-        ],
-        current_filter,
-        filter_event,
-      ),
-    ]),
+    collapsible_category_section(
+      "Perforaciones de oreja",
+      EarCategory,
+      [
+        #("Lóbulo", Ear),
+        #("Hélix", Ear),
+        #("Industrial", Ear),
+        #("Conch", Ear),
+        #("Tragus", Ear),
+        #("Daith", Ear),
+      ],
+      current_filter,
+      filter_event,
+      collapsed_categories,
+      toggle_category_event,
+    ),
+    collapsible_category_section(
+      "Faciales",
+      FacialCategory,
+      [
+        #("Nostril", Facial),
+        #("Septum", Facial),
+        #("Labret", Facial),
+        #("Ceja", Facial),
+        #("Bridge", Facial),
+        #("Medusa", Facial),
+      ],
+      current_filter,
+      filter_event,
+      collapsed_categories,
+      toggle_category_event,
+    ),
+    collapsible_category_section(
+      "Corporales",
+      BodyCategory,
+      [
+        #("Ombligo", Body),
+        #("Lengua", Body),
+        #("Superficie", Body),
+      ],
+      current_filter,
+      filter_event,
+      collapsed_categories,
+      toggle_category_event,
+    ),
+    collapsible_category_section(
+      "Joyería",
+      JewelryCategory,
+      [
+        #("Personalizada", Jewelry),
+      ],
+      current_filter,
+      filter_event,
+      collapsed_categories,
+      toggle_category_event,
+    ),
   ])
 }
 
-fn filter_category_list(
+fn collapsible_category_section(
+  title: String,
+  category_type: CategoryType,
   items: List(#(String, GalleryFilter)),
   current_filter: GalleryFilter,
-  filter_event,
-) {
+  filter_event: fn(GalleryFilter) -> a,
+  collapsed_categories: List(CategoryType),
+  toggle_category_event: fn(CategoryType) -> a,
+) -> Element(a) {
+  let is_collapsed = list.contains(collapsed_categories, category_type)
+
+  html.div([], [
+    html.button(
+      [
+        attribute.class(
+          "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded",
+        ),
+        event.on_click(toggle_category_event(category_type)),
+      ],
+      [
+        html.h3(
+          [
+            attribute.class("text-2xl font-bold text-white tracking-wide"),
+            attribute.style("font-family", "'Dark Reborn', sans-serif"),
+          ],
+          [element.text(title)],
+        ),
+      ],
+    ),
+    case is_collapsed {
+      True -> html.div([], [])
+      False -> filter_category_list(items, filter_event)
+    },
+  ])
+}
+
+fn filter_category_list(items: List(#(String, GalleryFilter)), filter_event) {
   html.div(
-    [attribute.class("space-y-2")],
+    [attribute.class("ml-10 space-y-2")],
     items
       |> list.map(fn(item) {
         let #(name, filter) = item
-        let is_active = case current_filter {
-          All -> False
-          _ -> current_filter == filter
-        }
         html.button(
           [
-            attribute.class(case is_active {
-              True ->
-                "block w-full text-left px-3 py-2 text-white bg-white/20 border border-white/40 hover:bg-white/30 transition-all duration-300"
-              False ->
-                "block w-full text-left px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300"
-            }),
+            attribute.class(
+              "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300",
+            ),
             event.on_click(filter_event(filter)),
           ],
           [element.text(name)],

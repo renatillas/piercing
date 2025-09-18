@@ -534,6 +534,24 @@ function reverse_and_prepend(loop$prefix, loop$suffix) {
 function reverse(list4) {
   return reverse_and_prepend(list4, toList([]));
 }
+function contains(loop$list, loop$elem) {
+  while (true) {
+    let list4 = loop$list;
+    let elem = loop$elem;
+    if (list4 instanceof Empty) {
+      return false;
+    } else {
+      let first$1 = list4.head;
+      if (isEqual(first$1, elem)) {
+        return true;
+      } else {
+        let rest$1 = list4.tail;
+        loop$list = rest$1;
+        loop$elem = elem;
+      }
+    }
+  }
+}
 function filter_loop(loop$list, loop$fun, loop$acc) {
   while (true) {
     let list4 = loop$list;
@@ -4420,12 +4438,12 @@ function contact_page() {
             "text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
           )
         ]),
-        toList([text2("CONTACTO")])
+        toList([text2("\uE036ontacta con nosotro\uE136")])
       ),
       div(
         toList([
           class$(
-            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto"
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto"
           )
         ]),
         toList([
@@ -4442,7 +4460,7 @@ function contact_page() {
                     "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide"
                   )
                 ]),
-                toList([text2("HORARIOS")])
+                toList([text2("Horarios")])
               ),
               p(
                 toList([class$("text-gray-300 mb-2")]),
@@ -4467,7 +4485,7 @@ function contact_page() {
                     "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide"
                   )
                 ]),
-                toList([text2("TEL\xC9FONO")])
+                toList([text2("Tel\xE9fono")])
               ),
               p(
                 toList([class$("text-gray-300")]),
@@ -4488,7 +4506,7 @@ function contact_page() {
                     "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide"
                   )
                 ]),
-                toList([text2("DIRECCI\xD3N")])
+                toList([text2("Direcci\xF3n")])
               ),
               p(
                 toList([class$("text-gray-300")]),
@@ -4497,6 +4515,27 @@ function contact_page() {
                   br(toList([])),
                   text2("46019 Valencia, Espa\xF1a")
                 ])
+              )
+            ])
+          ),
+          div(
+            toList([
+              class$(
+                "p-4 sm:p-6 lg:p-8 border border-gray-700 text-center hover:border-white hover:-translate-y-2 transition-all duration-300"
+              )
+            ]),
+            toList([
+              h3(
+                toList([
+                  class$(
+                    "mb-3 sm:mb-4 text-white text-lg sm:text-xl font-bold tracking-wide"
+                  )
+                ]),
+                toList([text2("Instagram")])
+              ),
+              p(
+                toList([class$("text-gray-300")]),
+                toList([text2("@kei_te_pinxa")])
               )
             ])
           )
@@ -4517,9 +4556,17 @@ var Body = class extends CustomType {
 };
 var Jewelry = class extends CustomType {
 };
-function filter_category_list(items, current_filter, filter_event) {
+var EarCategory = class extends CustomType {
+};
+var FacialCategory = class extends CustomType {
+};
+var BodyCategory = class extends CustomType {
+};
+var JewelryCategory = class extends CustomType {
+};
+function filter_category_list(items, filter_event) {
   return div(
-    toList([class$("space-y-2")]),
+    toList([class$("ml-10 space-y-2")]),
     (() => {
       let _pipe = items;
       return map(
@@ -4529,23 +4576,10 @@ function filter_category_list(items, current_filter, filter_event) {
           let filter3;
           name = item[0];
           filter3 = item[1];
-          let _block;
-          if (current_filter instanceof All) {
-            _block = false;
-          } else {
-            _block = isEqual(current_filter, filter3);
-          }
-          let is_active = _block;
           return button(
             toList([
               class$(
-                (() => {
-                  if (is_active) {
-                    return "block w-full text-left px-3 py-2 text-white bg-white/20 border border-white/40 hover:bg-white/30 transition-all duration-300";
-                  } else {
-                    return "block w-full text-left px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300";
-                  }
-                })()
+                "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300"
               ),
               on_click(filter_event(filter3))
             ]),
@@ -4556,103 +4590,95 @@ function filter_category_list(items, current_filter, filter_event) {
     })()
   );
 }
-function filter_sidebar(current_filter, filter_event) {
+function collapsible_category_section(title, category_type, items, current_filter, filter_event, collapsed_categories, toggle_category_event) {
+  let is_collapsed = contains(collapsed_categories, category_type);
+  return div(
+    toList([]),
+    toList([
+      button(
+        toList([
+          class$(
+            "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded"
+          ),
+          on_click(toggle_category_event(category_type))
+        ]),
+        toList([
+          h3(
+            toList([
+              class$("text-2xl font-bold text-white tracking-wide"),
+              style("font-family", "'Dark Reborn', sans-serif")
+            ]),
+            toList([text2(title)])
+          )
+        ])
+      ),
+      (() => {
+        if (is_collapsed) {
+          return div(toList([]), toList([]));
+        } else {
+          return filter_category_list(items, filter_event);
+        }
+      })()
+    ])
+  );
+}
+function filter_sidebar(current_filter, filter_event, collapsed_categories, toggle_category_event) {
   return div(
     toList([class$("space-y-6")]),
     toList([
-      div(
-        toList([]),
+      collapsible_category_section(
+        "Perforaciones de oreja",
+        new EarCategory(),
         toList([
-          h3(
-            toList([
-              class$(
-                "text-2xl font-bold text-white mb-4 tracking-wide"
-              ),
-              style("font-family", "'Dark Reborn', sans-serif")
-            ]),
-            toList([text2("Perforaciones de oreja")])
-          ),
-          filter_category_list(
-            toList([
-              ["L\xF3bulo", new Ear()],
-              ["H\xE9lix", new Ear()],
-              ["Industrial", new Ear()],
-              ["Conch", new Ear()],
-              ["Tragus", new Ear()],
-              ["Daith", new Ear()]
-            ]),
-            current_filter,
-            filter_event
-          )
-        ])
+          ["L\xF3bulo", new Ear()],
+          ["H\xE9lix", new Ear()],
+          ["Industrial", new Ear()],
+          ["Conch", new Ear()],
+          ["Tragus", new Ear()],
+          ["Daith", new Ear()]
+        ]),
+        current_filter,
+        filter_event,
+        collapsed_categories,
+        toggle_category_event
       ),
-      div(
-        toList([]),
+      collapsible_category_section(
+        "Faciales",
+        new FacialCategory(),
         toList([
-          h3(
-            toList([
-              class$(
-                "text-2xl font-bold text-white mb-4 tracking-wide"
-              ),
-              style("font-family", "'Dark Reborn', sans-serif")
-            ]),
-            toList([text2("Faciales")])
-          ),
-          filter_category_list(
-            toList([
-              ["Nostril", new Facial()],
-              ["Septum", new Facial()],
-              ["Labret", new Facial()],
-              ["Ceja", new Facial()],
-              ["Bridge", new Facial()],
-              ["Medusa", new Facial()]
-            ]),
-            current_filter,
-            filter_event
-          )
-        ])
+          ["Nostril", new Facial()],
+          ["Septum", new Facial()],
+          ["Labret", new Facial()],
+          ["Ceja", new Facial()],
+          ["Bridge", new Facial()],
+          ["Medusa", new Facial()]
+        ]),
+        current_filter,
+        filter_event,
+        collapsed_categories,
+        toggle_category_event
       ),
-      div(
-        toList([]),
+      collapsible_category_section(
+        "Corporales",
+        new BodyCategory(),
         toList([
-          h3(
-            toList([
-              class$(
-                "text-2xl font-bold text-white mb-4 tracking-wide"
-              ),
-              style("font-family", "'Dark Reborn', sans-serif")
-            ]),
-            toList([text2("Corporales")])
-          ),
-          filter_category_list(
-            toList([
-              ["Ombligo", new Body()],
-              ["Lengua", new Body()],
-              ["Superficie", new Body()]
-            ]),
-            current_filter,
-            filter_event
-          )
-        ])
+          ["Ombligo", new Body()],
+          ["Lengua", new Body()],
+          ["Superficie", new Body()]
+        ]),
+        current_filter,
+        filter_event,
+        collapsed_categories,
+        toggle_category_event
       ),
-      div(
-        toList([]),
-        toList([
-          h3(
-            toList([
-              class$(
-                "text-2xl font-bold text-white mb-4 tracking-wide"
-              ),
-              style("font-family", "'Dark Reborn', sans-serif")
-            ]),
-            toList([text2("Joyer\xEDa")])
-          ),
-          filter_category_list(
-            toList([["Personalizada", new Jewelry()]]),
-            current_filter,
-            filter_event
-          )
-        ])
+      collapsible_category_section(
+        "Joyer\xEDa",
+        new JewelryCategory(),
+        toList([["Personalizada", new Jewelry()]]),
+        current_filter,
+        filter_event,
+        collapsed_categories,
+        toggle_category_event
       )
     ])
   );
@@ -4726,7 +4752,7 @@ function gallery_grid(filter3, open_modal_event) {
     })()
   );
 }
-function gallery_page(filter3, filter_event, open_modal_event) {
+function gallery_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
   return div(
     toList([class$("min-h-screen")]),
     toList([
@@ -4755,7 +4781,14 @@ function gallery_page(filter3, filter_event, open_modal_event) {
                     toList([
                       div(
                         toList([class$("sticky top-24")]),
-                        toList([filter_sidebar(filter3, filter_event)])
+                        toList([
+                          filter_sidebar(
+                            filter3,
+                            filter_event,
+                            collapsed_categories,
+                            toggle_category_event
+                          )
+                        ])
                       )
                     ])
                   ),
@@ -5195,12 +5228,19 @@ var SetGalleryFilter = class extends CustomType {
     this[0] = $0;
   }
 };
+var ToggleCategory = class extends CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+};
 var Model = class extends CustomType {
-  constructor(route, modal, gallery_filter) {
+  constructor(route, modal, gallery_filter, collapsed_categories) {
     super();
     this.route = route;
     this.modal = modal;
     this.gallery_filter = gallery_filter;
+    this.collapsed_categories = collapsed_categories;
   }
 };
 function uri_to_route(uri) {
@@ -5238,29 +5278,85 @@ function init2(_) {
   _block = unwrap(_pipe$1, new Home());
   let route = _block;
   return [
-    new Model(route, new Closed(), new All()),
+    new Model(
+      route,
+      new Closed(),
+      new All(),
+      toList([
+        new EarCategory(),
+        new BodyCategory(),
+        new FacialCategory(),
+        new JewelryCategory()
+      ])
+    ),
     init(on_route_change)
   ];
 }
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
     let route = msg[0];
-    return [new Model(route, model.modal, model.gallery_filter), none()];
+    return [
+      new Model(
+        route,
+        model.modal,
+        model.gallery_filter,
+        model.collapsed_categories
+      ),
+      none()
+    ];
   } else if (msg instanceof OpenModal) {
     let src2 = msg[0];
     let alt2 = msg[1];
     return [
-      new Model(model.route, new Open(src2, alt2), model.gallery_filter),
+      new Model(
+        model.route,
+        new Open(src2, alt2),
+        model.gallery_filter,
+        model.collapsed_categories
+      ),
       none()
     ];
   } else if (msg instanceof CloseModal) {
     return [
-      new Model(model.route, new Closed(), model.gallery_filter),
+      new Model(
+        model.route,
+        new Closed(),
+        model.gallery_filter,
+        model.collapsed_categories
+      ),
+      none()
+    ];
+  } else if (msg instanceof SetGalleryFilter) {
+    let filter3 = msg[0];
+    return [
+      new Model(model.route, model.modal, filter3, model.collapsed_categories),
       none()
     ];
   } else {
-    let filter3 = msg[0];
-    return [new Model(model.route, model.modal, filter3), none()];
+    let category = msg[0];
+    let all_categories = toList([
+      new EarCategory(),
+      new BodyCategory(),
+      new FacialCategory(),
+      new JewelryCategory()
+    ]);
+    let _block;
+    let $ = contains(model.collapsed_categories, category);
+    if ($) {
+      _block = filter(
+        all_categories,
+        (c) => {
+          return !isEqual(c, category);
+        }
+      );
+    } else {
+      _block = all_categories;
+    }
+    let new_collapsed = _block;
+    return [
+      new Model(model.route, model.modal, model.gallery_filter, new_collapsed),
+      none()
+    ];
   }
 }
 function view2(model) {
@@ -5293,6 +5389,10 @@ function view2(model) {
                 },
                 (var0, var1) => {
                   return new OpenModal(var0, var1);
+                },
+                model.collapsed_categories,
+                (var0) => {
+                  return new ToggleCategory(var0);
                 }
               );
             } else if ($ instanceof About) {
@@ -5316,10 +5416,10 @@ function main2() {
       "let_assert",
       FILEPATH,
       "piercing",
-      41,
+      44,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 737, end: 786, pattern_start: 748, pattern_end: 753 }
+      { value: $, start: 848, end: 897, pattern_start: 859, pattern_end: 864 }
     );
   }
   return void 0;
