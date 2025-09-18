@@ -4042,10 +4042,10 @@ function about_page() {
       h2(
         toList([
           class$(
-            "text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "font-[Dark_Reborn] text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
           )
         ]),
-        toList([text2("Sobre m\xED")])
+        toList([text2("\uE094obre m\uE12C")])
       ),
       div(
         toList([
@@ -4446,7 +4446,7 @@ function contact_page() {
       h2(
         toList([
           class$(
-            "text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "font-[Dark_Reborn] text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
           )
         ]),
         toList([text2("\uE036ontacta con nosotro\uE136")])

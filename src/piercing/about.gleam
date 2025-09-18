@@ -13,10 +13,10 @@ pub fn about_page() {
       html.h2(
         [
           attribute.class(
-            "text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white",
+            "font-[Dark_Reborn] text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white",
           ),
         ],
-        [element.text("Sobre mí")],
+        [element.text("obre m")],
       ),
       html.div(
         [
