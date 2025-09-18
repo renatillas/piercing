@@ -4,6 +4,8 @@ import lustre/element/html
 import lustre/event
 import piercing/gallery
 
+// TODO: Añadir neotribal al home
+
 pub fn home_page(set_category_filter_event) {
   html.div(
     [
@@ -113,28 +115,33 @@ pub fn home_page(set_category_filter_event) {
                 ],
                 [
                   // Text content
-                  html.div([attribute.class("order-2 lg:order-1")], [
-                    html.h2(
-                      [
-                        attribute.class(
-                          "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
-                        ),
-                      ],
-                      [element.text("stéri")],
-                    ),
-                    html.p(
-                      [
-                        attribute.class(
-                          "text-xl text-gray-300 mb-8 leading-relaxed",
-                        ),
-                      ],
-                      [
-                        element.text(
-                          "Todo el equipo esterilizado usando tecnología de autoclave",
-                        ),
-                      ],
-                    ),
-                  ]),
+                  html.div(
+                    [
+                      attribute.class("justify-items-center order-2 lg:order-1"),
+                    ],
+                    [
+                      html.h2(
+                        [
+                          attribute.class(
+                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
+                          ),
+                        ],
+                        [element.text("stéri")],
+                      ),
+                      html.p(
+                        [
+                          attribute.class(
+                            "text-xl text-gray-300 mb-8 leading-relaxed",
+                          ),
+                        ],
+                        [
+                          element.text(
+                            "Todo el equipo esterilizado usando tecnología de autoclave",
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   // Image
                   html.a(
                     [
@@ -202,7 +209,9 @@ pub fn home_page(set_category_filter_event) {
                   // Image (left on large screens)
                   html.a(
                     [
-                      attribute.class("order-1 lg:order-1 group cursor-pointer"),
+                      attribute.class(
+                        "justify-items-center order-1 lg:order-1 group cursor-pointer",
+                      ),
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
@@ -289,28 +298,31 @@ pub fn home_page(set_category_filter_event) {
                 ],
                 [
                   // Text content
-                  html.div([attribute.class("order-2 lg:order-1")], [
-                    html.h2(
-                      [
-                        attribute.class(
-                          "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide",
-                        ),
-                      ],
-                      [element.text("xperienci")],
-                    ),
-                    html.p(
-                      [
-                        attribute.class(
-                          "text-xl text-gray-300 mb-8 leading-relaxed",
-                        ),
-                      ],
-                      [
-                        element.text(
-                          "Más de 2 años de experiencia profesional en perforaciones",
-                        ),
-                      ],
-                    ),
-                  ]),
+                  html.div(
+                    [attribute.class("justify-items-center order-2 lg:order-1")],
+                    [
+                      html.h2(
+                        [
+                          attribute.class(
+                            "font-[Dark_Reborn] text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide",
+                          ),
+                        ],
+                        [element.text("xperienci")],
+                      ),
+                      html.p(
+                        [
+                          attribute.class(
+                            "text-xl text-gray-300 mb-8 leading-relaxed",
+                          ),
+                        ],
+                        [
+                          element.text(
+                            "Más de 2 años de experiencia profesional en perforaciones",
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   // Image
                   html.a(
                     [

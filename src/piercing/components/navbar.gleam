@@ -14,7 +14,7 @@ pub type Route {
 
 fn get_nav_class(current_route: Route, button_route: Route) -> String {
   let base_class =
-    "nav-button border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide"
+    "nav-button border-2 border-transparent text-white px-2 py-1 lg:text-2xl sm:px-4 sm:py-2 sm:text-base font-bold tracking-wide"
   case current_route == button_route {
     True -> base_class <> " active"
     False -> base_class
@@ -63,21 +63,21 @@ pub fn navbar(current_route: Route) {
                   attribute.class(get_nav_class(current_route, Gallery)),
                   attribute.href("/gallery"),
                 ],
-                [element.text("GALERÍA")],
+                [element.text(set_text_gallery(current_route))],
               ),
               html.a(
                 [
                   attribute.class(get_nav_class(current_route, About)),
                   attribute.href("/about"),
                 ],
-                [element.text("SOBRE MÍ")],
+                [element.text(set_text_about(current_route))],
               ),
               html.a(
                 [
                   attribute.class(get_nav_class(current_route, Contact)),
                   attribute.href("/contact"),
                 ],
-                [element.text("CONTACTO")],
+                [element.text(set_text_contact(current_route))],
               ),
             ],
           ),
@@ -85,4 +85,25 @@ pub fn navbar(current_route: Route) {
       ),
     ],
   )
+}
+
+fn set_text_contact(route: Route) -> String {
+  case route {
+    Contact -> "CONACTO"
+    _ -> "CONTACTO"
+  }
+}
+
+fn set_text_gallery(route: Route) -> String {
+  case route {
+    Gallery -> "GALRÍA"
+    _ -> "GALERÍA"
+  }
+}
+
+fn set_text_about(route: Route) -> String {
+  case route {
+    About -> "SORE MI"
+    _ -> "SOBRE MI"
+  }
 }

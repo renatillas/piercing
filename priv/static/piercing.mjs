@@ -394,33 +394,6 @@ var Gt = class extends CustomType {
 };
 
 // build/dev/javascript/gleam_stdlib/gleam/string.mjs
-function slice(string5, idx, len) {
-  let $ = len <= 0;
-  if ($) {
-    return "";
-  } else {
-    let $1 = idx < 0;
-    if ($1) {
-      let translated_idx = string_length(string5) + idx;
-      let $2 = translated_idx < 0;
-      if ($2) {
-        return "";
-      } else {
-        return string_slice(string5, translated_idx, len);
-      }
-    } else {
-      return string_slice(string5, idx, len);
-    }
-  }
-}
-function drop_start(string5, num_graphemes) {
-  let $ = num_graphemes <= 0;
-  if ($) {
-    return string5;
-  } else {
-    return slice(string5, num_graphemes, string_length(string5));
-  }
-}
 function concat_loop(loop$strings, loop$accumulator) {
   while (true) {
     let strings = loop$strings;
@@ -493,21 +466,6 @@ function identity(x) {
 function to_string(term) {
   return term.toString();
 }
-function string_length(string5) {
-  if (string5 === "") {
-    return 0;
-  }
-  const iterator = graphemes_iterator(string5);
-  if (iterator) {
-    let i = 0;
-    for (const _ of iterator) {
-      i++;
-    }
-    return i;
-  } else {
-    return string5.match(/./gsu).length;
-  }
-}
 function graphemes(string5) {
   const iterator = graphemes_iterator(string5);
   if (iterator) {
@@ -525,28 +483,6 @@ function graphemes_iterator(string5) {
 }
 function split(xs, pattern) {
   return List.fromArray(xs.split(pattern));
-}
-function string_slice(string5, idx, len) {
-  if (len <= 0 || idx >= string5.length) {
-    return "";
-  }
-  const iterator = graphemes_iterator(string5);
-  if (iterator) {
-    while (idx-- > 0) {
-      iterator.next();
-    }
-    let result = "";
-    while (len-- > 0) {
-      const v = iterator.next().value;
-      if (v === void 0) {
-        break;
-      }
-      result += v.segment;
-    }
-    return result;
-  } else {
-    return string5.match(/./gsu).slice(idx, idx + len).join("");
-  }
 }
 function starts_with(haystack, needle) {
   return haystack.startsWith(needle);
@@ -4450,12 +4386,33 @@ var PoliticaPrivacidad = class extends CustomType {
 var PoliticaCookies = class extends CustomType {
 };
 function get_nav_class(current_route, button_route) {
-  let base_class = "nav-button border-2 border-transparent text-white px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold tracking-wide";
+  let base_class = "nav-button border-2 border-transparent text-white px-2 py-1 lg:text-2xl sm:px-4 sm:py-2 sm:text-base font-bold tracking-wide";
   let $ = isEqual(current_route, button_route);
   if ($) {
     return base_class + " active";
   } else {
     return base_class;
+  }
+}
+function set_text_contact(route) {
+  if (route instanceof Contact) {
+    return "CON\uE047ACTO";
+  } else {
+    return "CONTACTO";
+  }
+}
+function set_text_gallery(route) {
+  if (route instanceof Gallery) {
+    return "GAL\uE038R\xCDA";
+  } else {
+    return "GALER\xCDA";
+  }
+}
+function set_text_about(route) {
+  if (route instanceof About) {
+    return "SO\uE035RE MI";
+  } else {
+    return "SOBRE MI";
   }
 }
 function navbar(current_route) {
@@ -4503,21 +4460,21 @@ function navbar(current_route) {
                   class$(get_nav_class(current_route, new Gallery())),
                   href("/gallery")
                 ]),
-                toList([text2("GALER\xCDA")])
+                toList([text2(set_text_gallery(current_route))])
               ),
               a(
                 toList([
                   class$(get_nav_class(current_route, new About())),
                   href("/about")
                 ]),
-                toList([text2("SOBRE M\xCD")])
+                toList([text2(set_text_about(current_route))])
               ),
               a(
                 toList([
                   class$(get_nav_class(current_route, new Contact())),
                   href("/contact")
                 ]),
-                toList([text2("CONTACTO")])
+                toList([text2(set_text_contact(current_route))])
               )
             ])
           )
@@ -4739,7 +4696,7 @@ function gallery_section_card(title, description, filter3, image_src, filter_eve
               ),
               style(
                 "background",
-                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)"
               )
             ]),
             toList([
@@ -4906,11 +4863,11 @@ function collapsible_category_section(title, items, items_filter, filter_event, 
               text2(
                 (() => {
                   if (items_filter instanceof Ear && current_filter instanceof Ear) {
-                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                    return "\uE00Ferforaciones " + title + " \u2727";
                   } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
-                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                    return "\uE00Ferforaciones " + title + " \u2727";
                   } else if (items_filter instanceof Body && current_filter instanceof Body) {
-                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                    return "\uE00Ferforaciones " + title + " \u2727";
                   } else {
                     return title;
                   }
@@ -5125,7 +5082,7 @@ function gallery_grid(filter3, open_modal_event) {
 }
 var categories = /* @__PURE__ */ toList([
   [
-    "Perforaciones de oreja",
+    "Oreja",
     /* @__PURE__ */ new Ear(/* @__PURE__ */ new EarAll()),
     /* @__PURE__ */ toList([
       ["L\xF3bulo", /* @__PURE__ */ new Ear(/* @__PURE__ */ new Lobulo())],
@@ -5138,7 +5095,7 @@ var categories = /* @__PURE__ */ toList([
     ])
   ],
   [
-    "Perforaciones faciales",
+    "Faciales",
     /* @__PURE__ */ new Facial(/* @__PURE__ */ new FacialAll()),
     /* @__PURE__ */ toList([
       ["Nostril", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Nostril())],
@@ -5152,7 +5109,7 @@ var categories = /* @__PURE__ */ toList([
     ])
   ],
   [
-    "Perforaciones corporales",
+    "Corporales",
     /* @__PURE__ */ new Body(/* @__PURE__ */ new BodyAll()),
     /* @__PURE__ */ toList([
       ["Ombligo", /* @__PURE__ */ new Body(/* @__PURE__ */ new Ombligo())],
@@ -5350,7 +5307,11 @@ function home_page(set_category_filter_event) {
                 ]),
                 toList([
                   div(
-                    toList([class$("order-2 lg:order-1")]),
+                    toList([
+                      class$(
+                        "justify-items-center order-2 lg:order-1"
+                      )
+                    ]),
                     toList([
                       h2(
                         toList([
@@ -5444,7 +5405,7 @@ function home_page(set_category_filter_event) {
                   a(
                     toList([
                       class$(
-                        "order-1 lg:order-1 group cursor-pointer"
+                        "justify-items-center order-1 lg:order-1 group cursor-pointer"
                       ),
                       on_click(
                         set_category_filter_event(
@@ -5538,12 +5499,16 @@ function home_page(set_category_filter_event) {
                 ]),
                 toList([
                   div(
-                    toList([class$("order-2 lg:order-1")]),
+                    toList([
+                      class$(
+                        "justify-items-center order-2 lg:order-1"
+                      )
+                    ]),
                     toList([
                       h2(
                         toList([
                           class$(
-                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
+                            "font-[Dark_Reborn] text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide"
                           )
                         ]),
                         toList([text2("\uE004xperienci\uE0F0")])
@@ -6647,7 +6612,7 @@ function view2(model) {
   return div(
     toList([
       class$(
-        "min-h-[100dvh] bg-black/70 black text-white flex flex-col"
+        "min-h-[100dvh] bg-black/85 black text-white flex flex-col"
       )
     ]),
     toList([

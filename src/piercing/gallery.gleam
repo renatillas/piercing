@@ -1,5 +1,4 @@
 import gleam/list
-import gleam/string
 import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
@@ -7,7 +6,7 @@ import lustre/event
 
 const categories = [
   #(
-    "Perforaciones de oreja",
+    "Oreja",
     Ear(EarAll),
     [
       #("Lóbulo", Ear(Lobulo)),
@@ -20,7 +19,7 @@ const categories = [
     ],
   ),
   #(
-    "Perforaciones faciales",
+    "Faciales",
     Facial(FacialAll),
     [
       #("Nostril", Facial(Nostril)),
@@ -34,7 +33,7 @@ const categories = [
     ],
   ),
   #(
-    "Perforaciones corporales",
+    "Corporales",
     Body(BodyAll),
     [
       #("Ombligo", Body(Ombligo)),
@@ -165,7 +164,7 @@ fn gallery_section_card(
             ),
             attribute.style(
               "background",
-              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)",
             ),
           ],
           [
@@ -298,7 +297,7 @@ fn collapsible_category_section(
           [
             element.text(case current_filter, items_filter {
               Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
-                "" <> string.drop_start(title, 1) <> " ✧"
+                "erforaciones " <> title <> " ✧"
               _, _ -> title
             }),
           ],
