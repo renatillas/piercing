@@ -5,10 +5,11 @@ import lustre/element/html
 pub fn footer() {
   html.footer(
     [
-      attribute.class(
-        "relative py-8 px-4 sm:px-6 lg:px-8",
+      attribute.class("relative py-8 px-4 sm:px-6 lg:px-8"),
+      attribute.style(
+        "background",
+        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)",
       ),
-      attribute.style("background", "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"),
     ],
     [
       html.div([attribute.class("max-w-7xl mx-auto")], [
@@ -34,7 +35,7 @@ pub fn footer() {
                 element.text("+34 663 73 66 31"),
               ]),
               html.p([attribute.class("text-gray-300 mb-2")], [
-                element.text("@kei_te_pinxa"),
+                element.text("@keitepinxa"),
               ]),
             ]),
             // Hours
@@ -92,24 +93,33 @@ pub fn footer() {
                 ),
               ]),
               html.div([attribute.class("flex gap-4 text-sm text-gray-400")], [
-                html.a([
-                  attribute.class("hover:text-white transition-colors"),
-                  attribute.href("/aviso-legal"),
-                ], [
-                  element.text("Aviso legal"),
-                ]),
-                html.a([
-                  attribute.class("hover:text-white transition-colors"),
-                  attribute.href("/politica-privacidad"),
-                ], [
-                  element.text("Política de privacidad"),
-                ]),
-                html.a([
-                  attribute.class("hover:text-white transition-colors"),
-                  attribute.href("/politica-cookies"),
-                ], [
-                  element.text("Política de Cookies"),
-                ]),
+                html.a(
+                  [
+                    attribute.class("hover:text-white transition-colors"),
+                    attribute.href("/aviso-legal"),
+                  ],
+                  [
+                    element.text("Aviso legal"),
+                  ],
+                ),
+                html.a(
+                  [
+                    attribute.class("hover:text-white transition-colors"),
+                    attribute.href("/politica-privacidad"),
+                  ],
+                  [
+                    element.text("Política de privacidad"),
+                  ],
+                ),
+                html.a(
+                  [
+                    attribute.class("hover:text-white transition-colors"),
+                    attribute.href("/politica-cookies"),
+                  ],
+                  [
+                    element.text("Política de Cookies"),
+                  ],
+                ),
               ]),
             ],
           ),

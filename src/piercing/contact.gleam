@@ -106,7 +106,7 @@ pub fn contact_page() {
                 [element.text("Instagram")],
               ),
               html.p([attribute.class("text-gray-300")], [
-                element.text("@kei_te_pinxa"),
+                element.text("@keitepinxa"),
               ]),
             ],
           ),

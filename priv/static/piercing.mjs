@@ -4126,7 +4126,7 @@ function footer2() {
                   ),
                   p(
                     toList([class$("text-gray-300 mb-2")]),
-                    toList([text2("@kei_te_pinxa")])
+                    toList([text2("@keitepinxa")])
                   )
                 ])
               ),
@@ -4546,7 +4546,7 @@ function contact_page() {
               ),
               p(
                 toList([class$("text-gray-300")]),
-                toList([text2("@kei_te_pinxa")])
+                toList([text2("@keitepinxa")])
               )
             ])
           )
@@ -5235,9 +5235,7 @@ function aviso_legal_content() {
                   ),
                   li(
                     toList([]),
-                    toList([
-                      text2("Contacto: @kei_te_pinxa (Instagram)")
-                    ])
+                    toList([text2("Contacto: @keitepinxa (Instagram)")])
                   ),
                   li(
                     toList([]),
@@ -5480,9 +5478,7 @@ function politica_privacidad_content() {
                   li(
                     toList([]),
                     toList([
-                      text2(
-                        "Contacto: +34 663 73 66 31 / @kei_te_pinxa"
-                      )
+                      text2("Contacto: +34 663 73 66 31 / @keitepinxa")
                     ])
                   ),
                   li(
@@ -6015,7 +6011,7 @@ function politica_cookies_content() {
                   ),
                   li(
                     toList([]),
-                    toList([text2("Instagram: @kei_te_pinxa")])
+                    toList([text2("Instagram: @keitepinxa")])
                   ),
                   li(
                     toList([]),
