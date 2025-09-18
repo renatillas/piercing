@@ -4686,11 +4686,11 @@ var Medusa = class extends CustomType {
 };
 var Venom = class extends CustomType {
 };
+var Lengua = class extends CustomType {
+};
 var BodyAll = class extends CustomType {
 };
 var Ombligo = class extends CustomType {
-};
-var Lengua = class extends CustomType {
 };
 var Superficie = class extends CustomType {
 };
@@ -4884,18 +4884,18 @@ function collapsible_category_section(title, items, items_filter, filter_event, 
           )
         ]),
         toList([
-          h3(
+          h2(
             toList([
               class$(
                 "text-2xl font-bold text-white tracking-wide" + (() => {
                   if (items_filter instanceof Ear && current_filter instanceof Ear) {
-                    return " font-bold text-shadow-lg text-shadow-white/50";
+                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
                   } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
-                    return " font-bold text-shadow-lg text-shadow-white/50";
+                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
                   } else if (items_filter instanceof Body && current_filter instanceof Body) {
-                    return " font-bold text-shadow-lg text-shadow-white/50";
+                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
                   } else {
-                    return "";
+                    return "text-shadow-none!";
                   }
                 })()
               ),
@@ -4973,25 +4973,26 @@ function get_filtered_images(filter3) {
     ["/priv/static/ceja-2.jpeg", "Perforaci\xF3n de ceja", new Facial(new Ceja())],
     ["/priv/static/venom.jpeg", "Perforaci\xF3n venom", new Facial(new Venom())],
     [
+      "/priv/static/lengua-1.jpeg",
+      "Perforaci\xF3n de lengua",
+      new Facial(new Lengua())
+    ],
+    [
+      "/priv/static/lengua-2.jpeg",
+      "Perforaci\xF3n de lengua",
+      new Facial(new Lengua())
+    ],
+    [
       "/priv/static/ombligo.jpeg",
       "Perforaci\xF3n de ombligo",
       new Body(new Ombligo())
     ],
     [
-      "/priv/static/lengua-1.jpeg",
-      "Perforaci\xF3n de lengua",
-      new Body(new Lengua())
-    ],
-    [
-      "/priv/static/lengua-2.jpeg",
-      "Perforaci\xF3n de lengua",
-      new Body(new Lengua())
-    ],
-    [
       "/priv/static/microdermal.jpeg",
       "Microdermal",
       new Body(new Microdermal())
-    ]
+    ],
+    ["/priv/static/cuerpo.heic", "Surface", new Body(new Superficie())]
   ]);
   if (filter3 instanceof All) {
     return all_images;
@@ -5146,7 +5147,8 @@ var categories = /* @__PURE__ */ toList([
       ["Ceja", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Ceja())],
       ["Bridge", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Bridge())],
       ["Medusa", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Medusa())],
-      ["Venom", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Venom())]
+      ["Venom", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Venom())],
+      ["Lengua", /* @__PURE__ */ new Facial(/* @__PURE__ */ new Lengua())]
     ])
   ],
   [
@@ -5154,7 +5156,6 @@ var categories = /* @__PURE__ */ toList([
     /* @__PURE__ */ new Body(/* @__PURE__ */ new BodyAll()),
     /* @__PURE__ */ toList([
       ["Ombligo", /* @__PURE__ */ new Body(/* @__PURE__ */ new Ombligo())],
-      ["Lengua", /* @__PURE__ */ new Body(/* @__PURE__ */ new Lengua())],
       ["Superficie", /* @__PURE__ */ new Body(/* @__PURE__ */ new Superficie())],
       [
         "Microdermal",

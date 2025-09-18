@@ -30,6 +30,7 @@ const categories = [
       #("Bridge", Facial(Bridge)),
       #("Medusa", Facial(Medusa)),
       #("Venom", Facial(Venom)),
+      #("Lengua", Facial(Lengua)),
     ],
   ),
   #(
@@ -37,7 +38,6 @@ const categories = [
     Body(BodyAll),
     [
       #("Ombligo", Body(Ombligo)),
-      #("Lengua", Body(Lengua)),
       #("Superficie", Body(Superficie)),
       #("Microdermal", Body(Microdermal)),
     ],
@@ -60,12 +60,12 @@ pub type Facial {
   Bridge
   Medusa
   Venom
+  Lengua
 }
 
 pub type Body {
   BodyAll
   Ombligo
-  Lengua
   Superficie
   Microdermal
 }
@@ -282,14 +282,14 @@ fn collapsible_category_section(
         ),
       ],
       [
-        html.h3(
+        html.h2(
           [
             attribute.class(
               "text-2xl font-bold text-white tracking-wide"
               <> case current_filter, items_filter {
                 Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
-                  " font-bold text-shadow-lg text-shadow-white/50"
-                _, _ -> ""
+                  " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                _, _ -> "text-shadow-none!"
               },
             ),
             attribute.style("font-family", "'Dark Reborn', sans-serif"),
@@ -400,12 +400,13 @@ fn get_filtered_images(
     #("/priv/static/ceja-1.heic", "Perforación de ceja", Facial(Ceja)),
     #("/priv/static/ceja-2.jpeg", "Perforación de ceja", Facial(Ceja)),
     #("/priv/static/venom.jpeg", "Perforación venom", Facial(Venom)),
+    #("/priv/static/lengua-1.jpeg", "Perforación de lengua", Facial(Lengua)),
+    #("/priv/static/lengua-2.jpeg", "Perforación de lengua", Facial(Lengua)),
 
     // Body piercings  
     #("/priv/static/ombligo.jpeg", "Perforación de ombligo", Body(Ombligo)),
-    #("/priv/static/lengua-1.jpeg", "Perforación de lengua", Body(Lengua)),
-    #("/priv/static/lengua-2.jpeg", "Perforación de lengua", Body(Lengua)),
     #("/priv/static/microdermal.jpeg", "Microdermal", Body(Microdermal)),
+    #("/priv/static/cuerpo.heic", "Surface", Body(Superficie)),
   ]
 
   case filter {
