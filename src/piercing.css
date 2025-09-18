@@ -17,11 +17,22 @@
 body {
   font-family: 'Glancyr', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-image: url('/priv/static/rtywd.webp');
-  background-size: 102%;
+  background-size: cover;
   background-position: calc(50% + 13px) center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Mobile-specific background adjustments */
+@media (max-width: 768px) {
+  body {
+    background-size: cover;
+    background-attachment: scroll;
+    background-position: calc(50% + 13px) center;
+  }
 }
 
 @keyframes metallic-sweep {
