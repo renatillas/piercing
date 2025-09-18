@@ -25,7 +25,7 @@ pub fn navbar(current_route: Route) {
   html.nav(
     [
       attribute.class(
-        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 sticky top-0 z-50",
+        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 lg:pt-5 sm:py-4 sticky top-0 z-50",
       ),
       attribute.style(
         "background",
@@ -36,7 +36,7 @@ pub fn navbar(current_route: Route) {
       html.div(
         [
           attribute.class(
-            "flex flex-col sm:flex-row justify-items-center justify-between items-center max-w-7xl mx-auto w-full relative",
+            "flex flex-col sm:flex-row justify-items-center justify-between items-center mx-auto w-full relative",
           ),
         ],
         [

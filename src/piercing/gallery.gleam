@@ -215,14 +215,6 @@ fn gallery_filtered_page(
         ],
         [
           html.div([attribute.class("max-w-7xl mx-auto")], [
-            html.h1(
-              [
-                attribute.class(
-                  "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide font-[Dark_Reborn]",
-                ),
-              ],
-              [element.text("Explora nuestro trabajo")],
-            ),
             // Filter Sidebar and Gallery Grid
             html.div(
               [attribute.class("flex flex-col lg:flex-row gap-8 lg:gap-12")],

@@ -13,7 +13,7 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
-    --container-3xl: 48rem;
+    --container-md: 28rem;
     --container-5xl: 64rem;
     --container-7xl: 80rem;
     --text-sm: 0.875rem;
@@ -268,24 +268,6 @@
   .order-2 {
     order: 2;
   }
-  .container {
-    width: 100%;
-    @media (width >= 40rem) {
-      max-width: 40rem;
-    }
-    @media (width >= 48rem) {
-      max-width: 48rem;
-    }
-    @media (width >= 64rem) {
-      max-width: 64rem;
-    }
-    @media (width >= 80rem) {
-      max-width: 80rem;
-    }
-    @media (width >= 96rem) {
-      max-width: 96rem;
-    }
-  }
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
@@ -388,17 +370,20 @@
   .w-full {
     width: 100%;
   }
-  .max-w-3xl {
-    max-width: var(--container-3xl);
-  }
   .max-w-5xl {
     max-width: var(--container-5xl);
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
   }
+  .max-w-\[30\%\] {
+    max-width: 30%;
+  }
   .max-w-full {
     max-width: 100%;
+  }
+  .max-w-md {
+    max-width: var(--container-md);
   }
   .max-w-none {
     max-width: none;
@@ -474,6 +459,9 @@
       margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .self-center {
+    align-self: center;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -535,12 +523,6 @@
     background-color: color-mix(in srgb, #000 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-    }
-  }
-  .bg-black\/70 {
-    background-color: color-mix(in srgb, #000 70%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-black) 70%, transparent);
     }
   }
   .bg-black\/80 {
@@ -638,6 +620,9 @@
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
+  }
   .pl-3 {
     padding-left: calc(var(--spacing) * 3);
   }
@@ -723,6 +708,10 @@
   }
   .opacity-90 {
     opacity: 90%;
+  }
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-2xl {
     --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
@@ -1171,6 +1160,11 @@
       padding-block: calc(var(--spacing) * 20);
     }
   }
+  .lg\:pt-5 {
+    @media (width >= 64rem) {
+      padding-top: calc(var(--spacing) * 5);
+    }
+  }
   .lg\:pb-20 {
     @media (width >= 64rem) {
       padding-bottom: calc(var(--spacing) * 20);
@@ -1481,7 +1475,7 @@ p {
 }
 .nav-button:hover {
   transform: rotate(-4deg) scale(1.14);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.6), 0 0 24px rgba(255, 255, 255, 0.4), 0 0 32px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 8px rgba(255, 192, 203, 0.9), 0 0 16px rgba(255, 192, 203, 0.7), 0 0 24px rgba(255, 192, 203, 0.5), 0 0 32px rgba(255, 192, 203, 0.3);
   filter: brightness(1.2);
 }
 .nav-button:active {
@@ -1530,6 +1524,10 @@ p {
   100% {
     border-image: linear-gradient(90deg, rgba(169, 169, 169, 0.5), rgba(255, 255, 255, 0.9), rgba(211, 211, 211, 0.8), rgba(192, 192, 192, 0.7), rgba(255, 255, 255, 0.95), rgba(169, 169, 169, 0.5)) 1;
   }
+}
+.shadow {
+  filter: drop-shadow(0px 0px 13px #ffffff);
+  filter: drop-shadow(0px 0px 5px #fcc0cb);
 }
 @property --tw-rotate-x {
   syntax: "*";

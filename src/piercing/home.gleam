@@ -4,8 +4,6 @@ import lustre/element/html
 import lustre/event
 import piercing/gallery
 
-// TODO: Añadir neotribal al home
-
 pub fn home_page(set_category_filter_event) {
   html.div(
     [
@@ -52,14 +50,14 @@ pub fn home_page(set_category_filter_event) {
                 html.div(
                   [
                     attribute.class(
-                      "order-2 lg:order-2 text-center lg:text-left",
+                      "flex flex-col order-2 lg:order-2 text-center  lg:text-left",
                     ),
                   ],
                   [
                     html.h1(
                       [
                         attribute.class(
-                          "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]",
+                          "pb-3 text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]",
                         ),
                       ],
                       [element.text("ola, soy e")],
@@ -67,7 +65,7 @@ pub fn home_page(set_category_filter_event) {
                     html.p(
                       [
                         attribute.class(
-                          "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed",
+                          "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed",
                         ),
                       ],
                       [
@@ -79,7 +77,7 @@ pub fn home_page(set_category_filter_event) {
                     html.a(
                       [
                         attribute.class(
-                          "inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                          "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
                         ),
                         attribute.href("/about"),
                       ],
@@ -87,11 +85,8 @@ pub fn home_page(set_category_filter_event) {
                     ),
                   ],
                 ),
-                // Close text content div
               ],
-              // Close grid items
             ),
-            // Close grid container
           ]),
         ],
       ),
@@ -149,7 +144,10 @@ pub fn home_page(set_category_filter_event) {
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
-
+                      attribute.style(
+                        "background",
+                        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)",
+                      ),
                       attribute.href("/gallery"),
                     ],
                     [
@@ -168,11 +166,15 @@ pub fn home_page(set_category_filter_event) {
                           html.div(
                             [
                               attribute.class(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                                "absolute bottom-0 left-0 right-0 text-white p-4",
+                              ),
+                              attribute.style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)",
                               ),
                             ],
                             [
-                              html.p([attribute.class("text-sm font-medium")], [
+                              html.p([attribute.class("text-xl font-medium")], [
                                 element.text("Perforaciones de oreja"),
                               ]),
                             ],
@@ -231,11 +233,15 @@ pub fn home_page(set_category_filter_event) {
                           html.div(
                             [
                               attribute.class(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                                "absolute bottom-0 left-0 right-0 text-white p-4",
+                              ),
+                              attribute.style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)",
                               ),
                             ],
                             [
-                              html.p([attribute.class("text-sm font-medium")], [
+                              html.p([attribute.class("text-xl font-medium")], [
                                 element.text("Perforaciones faciales"),
                               ]),
                             ],
@@ -350,11 +356,15 @@ pub fn home_page(set_category_filter_event) {
                           html.div(
                             [
                               attribute.class(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4",
+                                "absolute bottom-0 left-0 right-0 text-white p-4",
+                              ),
+                              attribute.style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)",
                               ),
                             ],
                             [
-                              html.p([attribute.class("text-sm font-medium")], [
+                              html.p([attribute.class("text-xl font-medium")], [
                                 element.text("Perforaciones corporales"),
                               ]),
                             ],

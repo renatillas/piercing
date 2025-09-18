@@ -4072,12 +4072,14 @@ function footer2() {
     toList([class$("relative")]),
     toList([
       div(
-        toList([class$("w-full overflow-hidden flex justify-center")]),
+        toList([
+          class$("w-full overflow-hidden flex justify-center z-50")
+        ]),
         toList([
           img(
             toList([
               src("/priv/static/footer-divisor.png"),
-              class$("max-w-7xl h-auto object-cover"),
+              class$("shadow max-w-7xl h-auto object-cover"),
               alt("Footer divisor")
             ])
           )
@@ -4419,7 +4421,7 @@ function navbar(current_route) {
   return nav(
     toList([
       class$(
-        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 sticky top-0 z-50"
+        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 lg:pt-5 sm:py-4 sticky top-0 z-50"
       ),
       style(
         "background",
@@ -4430,7 +4432,7 @@ function navbar(current_route) {
       div(
         toList([
           class$(
-            "flex flex-col sm:flex-row justify-items-center justify-between items-center max-w-7xl mx-auto w-full relative"
+            "flex flex-col sm:flex-row justify-items-center justify-between items-center mx-auto w-full relative"
           )
         ]),
         toList([
@@ -5157,14 +5159,6 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
           div(
             toList([class$("max-w-7xl mx-auto")]),
             toList([
-              h1(
-                toList([
-                  class$(
-                    "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide font-[Dark_Reborn]"
-                  )
-                ]),
-                toList([text2("Explora nuestro trabajo")])
-              ),
               div(
                 toList([
                   class$("flex flex-col lg:flex-row gap-8 lg:gap-12")
@@ -5252,14 +5246,14 @@ function home_page(set_category_filter_event) {
                   div(
                     toList([
                       class$(
-                        "order-2 lg:order-2 text-center lg:text-left"
+                        "flex flex-col order-2 lg:order-2 text-center  lg:text-left"
                       )
                     ]),
                     toList([
                       h1(
                         toList([
                           class$(
-                            "text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
+                            "pb-3 text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
                           )
                         ]),
                         toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
@@ -5267,7 +5261,7 @@ function home_page(set_category_filter_event) {
                       p(
                         toList([
                           class$(
-                            "text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+                            "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed"
                           )
                         ]),
                         toList([
@@ -5279,7 +5273,7 @@ function home_page(set_category_filter_event) {
                       a(
                         toList([
                           class$(
-                            "inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                            "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
                           ),
                           href("/about")
                         ]),
@@ -5345,6 +5339,10 @@ function home_page(set_category_filter_event) {
                           new Ear(new EarAll())
                         )
                       ),
+                      style(
+                        "background",
+                        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)"
+                      ),
                       href("/gallery")
                     ]),
                     toList([
@@ -5367,13 +5365,17 @@ function home_page(set_category_filter_event) {
                           div(
                             toList([
                               class$(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4"
+                                "absolute bottom-0 left-0 right-0 text-white p-4"
+                              ),
+                              style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
                               )
                             ]),
                             toList([
                               p(
                                 toList([
-                                  class$("text-sm font-medium")
+                                  class$("text-xl font-medium")
                                 ]),
                                 toList([text2("Perforaciones de oreja")])
                               )
@@ -5434,13 +5436,17 @@ function home_page(set_category_filter_event) {
                           div(
                             toList([
                               class$(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4"
+                                "absolute bottom-0 left-0 right-0 text-white p-4"
+                              ),
+                              style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
                               )
                             ]),
                             toList([
                               p(
                                 toList([
-                                  class$("text-sm font-medium")
+                                  class$("text-xl font-medium")
                                 ]),
                                 toList([text2("Perforaciones faciales")])
                               )
@@ -5561,13 +5567,17 @@ function home_page(set_category_filter_event) {
                           div(
                             toList([
                               class$(
-                                "absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4"
+                                "absolute bottom-0 left-0 right-0 text-white p-4"
+                              ),
+                              style(
+                                "background",
+                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
                               )
                             ]),
                             toList([
                               p(
                                 toList([
-                                  class$("text-sm font-medium")
+                                  class$("text-xl font-medium")
                                 ]),
                                 toList([
                                   text2("Perforaciones corporales")

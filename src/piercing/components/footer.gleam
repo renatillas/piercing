@@ -9,13 +9,16 @@ pub fn footer() {
     ],
     [
       // Footer divisor image
-      html.div([attribute.class("w-full overflow-hidden flex justify-center")], [
-        html.img([
-          attribute.src("/priv/static/footer-divisor.png"),
-          attribute.class("max-w-7xl h-auto object-cover"),
-          attribute.alt("Footer divisor"),
-        ]),
-      ]),
+      html.div(
+        [attribute.class("w-full overflow-hidden flex justify-center z-50")],
+        [
+          html.img([
+            attribute.src("/priv/static/footer-divisor.png"),
+            attribute.class("shadow max-w-7xl h-auto object-cover"),
+            attribute.alt("Footer divisor"),
+          ]),
+        ],
+      ),
       // Footer content
       html.div(
         [
