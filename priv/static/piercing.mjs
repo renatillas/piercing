@@ -4462,51 +4462,60 @@ function navbar(current_route) {
   return nav(
     toList([
       class$(
-        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50"
+        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 sticky top-0 z-50"
       )
     ]),
     toList([
       div(
-        toList([class$("nav-brand mb-2 sm:mb-0")]),
-        toList([
-          a(
-            toList([
-              class$(
-                "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white"
-              ),
-              href("/")
-            ]),
-            toList([text2("\uE072EI \uE193 PINX\uE01A")])
-          )
-        ])
-      ),
-      div(
         toList([
           class$(
-            "flex flex-wrap gap-2 sm:gap-4 lg:gap-8 justify-center sm:justify-end"
+            "flex flex-col sm:flex-row justify-items-center justify-between items-center max-w-7xl mx-auto w-full relative"
           )
         ]),
         toList([
-          a(
+          div(
+            toList([class$("nav-brand mb-2 sm:mb-0 sm:left-0")]),
             toList([
-              class$(get_nav_class(current_route, new Gallery())),
-              href("/gallery")
-            ]),
-            toList([text2("GALER\xCDA")])
+              a(
+                toList([
+                  class$(
+                    "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white"
+                  ),
+                  href("/")
+                ]),
+                toList([text2("\uE072EI \uE193 PINX\uE01A")])
+              )
+            ])
           ),
-          a(
+          div(
             toList([
-              class$(get_nav_class(current_route, new About())),
-              href("/about")
+              class$(
+                "flex flex-wrap gap-2 sm:gap-4 lg:gap-8 justify-center"
+              )
             ]),
-            toList([text2("SOBRE M\xCD")])
-          ),
-          a(
             toList([
-              class$(get_nav_class(current_route, new Contact())),
-              href("/contact")
-            ]),
-            toList([text2("CONTACTO")])
+              a(
+                toList([
+                  class$(get_nav_class(current_route, new Gallery())),
+                  href("/gallery")
+                ]),
+                toList([text2("GALER\xCDA")])
+              ),
+              a(
+                toList([
+                  class$(get_nav_class(current_route, new About())),
+                  href("/about")
+                ]),
+                toList([text2("SOBRE M\xCD")])
+              ),
+              a(
+                toList([
+                  class$(get_nav_class(current_route, new Contact())),
+                  href("/contact")
+                ]),
+                toList([text2("CONTACTO")])
+              )
+            ])
           )
         ])
       )
