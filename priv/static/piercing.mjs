@@ -5405,7 +5405,7 @@ function home_page(set_category_filter_event) {
                   a(
                     toList([
                       class$(
-                        "justify-items-center order-1 lg:order-1 group cursor-pointer"
+                        "order-1 lg:order-1 group cursor-pointer"
                       ),
                       on_click(
                         set_category_filter_event(
@@ -5452,7 +5452,9 @@ function home_page(set_category_filter_event) {
                   ),
                   div(
                     toList([
-                      class$("order-2 lg:order-2 lg:text-right")
+                      class$(
+                        "justify-items-center order-2 lg:order-2 lg:text-right"
+                      )
                     ]),
                     toList([
                       h2(

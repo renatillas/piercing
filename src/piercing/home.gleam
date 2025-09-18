@@ -209,9 +209,7 @@ pub fn home_page(set_category_filter_event) {
                   // Image (left on large screens)
                   html.a(
                     [
-                      attribute.class(
-                        "justify-items-center order-1 lg:order-1 group cursor-pointer",
-                      ),
+                      attribute.class("order-1 lg:order-1 group cursor-pointer"),
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
@@ -248,7 +246,11 @@ pub fn home_page(set_category_filter_event) {
                   ),
                   // Text content (right on large screens)
                   html.div(
-                    [attribute.class("order-2 lg:order-2 lg:text-right")],
+                    [
+                      attribute.class(
+                        "justify-items-center order-2 lg:order-2 lg:text-right",
+                      ),
+                    ],
                     [
                       html.h2(
                         [
