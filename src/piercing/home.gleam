@@ -111,7 +111,9 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                   html.a(
                     [
                       attribute.class("order-1 lg:order-2 group cursor-pointer"),
-                      event.on_click(set_category_filter_event(gallery.Ear)),
+                      event.on_click(
+                        set_category_filter_event(gallery.Ear(gallery.EarAll)),
+                      ),
                       event.on_click(toggle_category_event(gallery.EarCategory)),
 
                       attribute.href("/gallery"),
@@ -174,7 +176,9 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                   html.a(
                     [
                       attribute.class("order-1 lg:order-1 group cursor-pointer"),
-                      event.on_click(set_category_filter_event(gallery.Facial)),
+                      event.on_click(
+                        set_category_filter_event(gallery.Ear(gallery.EarAll)),
+                      ),
                       event.on_click(toggle_category_event(
                         gallery.FacialCategory,
                       )),
@@ -187,7 +191,7 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                         ],
                         [
                           html.img([
-                            attribute.src("/priv/static/ceja.heic"),
+                            attribute.src("/priv/static/ceja-1.heic"),
                             attribute.alt("Perforaciones faciales"),
                             attribute.class(
                               "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300",
@@ -287,7 +291,9 @@ pub fn home_page(set_category_filter_event, toggle_category_event) {
                   html.a(
                     [
                       attribute.class("order-1 lg:order-2 group cursor-pointer"),
-                      event.on_click(set_category_filter_event(gallery.Body)),
+                      event.on_click(
+                        set_category_filter_event(gallery.Body(gallery.BodyAll)),
+                      ),
                       event.on_click(toggle_category_event(gallery.BodyCategory)),
                       attribute.href("/gallery"),
                     ],

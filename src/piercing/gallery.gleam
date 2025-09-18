@@ -1,4 +1,5 @@
 import gleam/list
+import gleam/string
 import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
@@ -6,10 +7,39 @@ import lustre/event
 
 pub type GalleryFilter {
   All
-  Ear
-  Facial
-  Body
-  Jewelry
+  Ear(Ear)
+  Facial(Facial)
+  Body(Body)
+}
+
+pub type Facial {
+  FacialAll
+  Nostril
+  Septum
+  Labret
+  Ceja
+  Bridge
+  Medusa
+  Venom
+}
+
+pub type Body {
+  BodyAll
+  Ombligo
+  Lengua
+  Superficie
+  Microdermal
+}
+
+pub type Ear {
+  EarAll
+  Lobulo
+  Helix
+  Industrial
+  Conch
+  Tragus
+  Daith
+  Flat
 }
 
 pub type CategoryType {
@@ -25,6 +55,138 @@ pub fn gallery_page(
   open_modal_event open_modal_event: fn(String, String) -> a,
   collapsed_categories collapsed_categories: List(CategoryType),
   toggle_category_event toggle_category_event: fn(CategoryType) -> a,
+) -> Element(a) {
+  case filter {
+    All -> gallery_home_page(filter_event)
+    _ ->
+      gallery_filtered_page(
+        filter,
+        filter_event,
+        open_modal_event,
+        collapsed_categories,
+        toggle_category_event,
+      )
+  }
+}
+
+fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
+  html.div([attribute.class("min-h-screen")], [
+    html.div([attribute.class("px-4 sm:px-6 lg:px-8 py-8 sm:py-12")], [
+      html.div([attribute.class("max-w-7xl mx-auto")], [
+        html.h1(
+          [
+            attribute.class(
+              "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide",
+            ),
+            attribute.style("font-family", "'Dark Reborn', sans-serif"),
+          ],
+          [element.text("Explora nuestro trabajo")],
+        ),
+        html.div(
+          [attribute.class("grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12")],
+          [
+            gallery_section_card(
+              "Perforaciones de oreja",
+              "Hélix, tragus, conch y más",
+              Ear(EarAll),
+              "/priv/static/lobulo.jpeg",
+              filter_event,
+            ),
+            gallery_section_card(
+              "Perforaciones faciales",
+              "Nariz, cejas, labios y lengua",
+              Facial(FacialAll),
+              "/priv/static/nostril-1.jpeg",
+              filter_event,
+            ),
+            gallery_section_card(
+              "Perforaciones corporales",
+              "Ombligo y dermales",
+              Body(BodyAll),
+              "/priv/static/ombligo.jpeg",
+              filter_event,
+            ),
+          ],
+        ),
+      ]),
+    ]),
+  ])
+}
+
+fn gallery_section_card(
+  title: String,
+  description: String,
+  filter: GalleryFilter,
+  image_src: String,
+  filter_event: fn(GalleryFilter) -> a,
+) -> Element(a) {
+  html.div(
+    [
+      attribute.class(
+        "gallery-section-card relative group cursor-pointer overflow-hidden",
+      ),
+    ],
+    [
+      html.div([attribute.class("relative aspect-[4/3] overflow-hidden")], [
+        html.img([
+          attribute.src(image_src),
+          attribute.class(
+            "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out",
+          ),
+          attribute.alt(title),
+        ]),
+        html.div(
+          [
+            attribute.class(
+              "absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300",
+            ),
+          ],
+          [],
+        ),
+        html.div(
+          [
+            attribute.class(
+              "absolute inset-0 flex flex-col justify-end p-6 text-white",
+            ),
+          ],
+          [
+            html.h3(
+              [
+                attribute.class(
+                  "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform group-hover:scale-105 transition-transform duration-300",
+                ),
+                attribute.style("font-family", "'Dark Reborn', sans-serif"),
+              ],
+              [element.text(title)],
+            ),
+            html.p(
+              [
+                attribute.class(
+                  "text-lg opacity-90 group-hover:opacity-100 transition-opacity duration-300",
+                ),
+              ],
+              [element.text(description)],
+            ),
+          ],
+        ),
+      ]),
+      html.button(
+        [
+          attribute.class("absolute inset-0 w-full h-full"),
+          event.on_click(filter_event(filter)),
+        ],
+        [],
+      ),
+    ],
+  )
+}
+
+fn gallery_filtered_page(
+  filter: GalleryFilter,
+  filter_event: fn(GalleryFilter) -> a,
+  open_modal_event: fn(String, String) -> a,
+  collapsed_categories: List(CategoryType),
+  toggle_category_event: fn(CategoryType) -> a,
 ) -> Element(a) {
   html.div(
     [
@@ -44,7 +206,7 @@ pub fn gallery_page(
                 ),
                 attribute.style("font-family", "'Dark Reborn', sans-serif"),
               ],
-              [element.text("xplora nuestro trabaj")],
+              [element.text("Explora nuestro trabajo")],
             ),
             // Filter Sidebar and Gallery Grid
             html.div(
@@ -57,6 +219,7 @@ pub fn gallery_page(
                       filter_event,
                       collapsed_categories,
                       toggle_category_event,
+                      filter,
                     ),
                   ]),
                 ]),
@@ -77,61 +240,67 @@ fn filter_sidebar(
   filter_event: fn(GalleryFilter) -> a,
   collapsed_categories: List(CategoryType),
   toggle_category_event: fn(CategoryType) -> a,
+  current_filter: GalleryFilter,
 ) -> Element(a) {
-  html.div([attribute.class("space-y-6")], [
-    collapsible_category_section(
-      "Perforaciones de oreja",
-      EarCategory,
-      [
-        #("Lóbulo", Ear),
-        #("Hélix", Ear),
-        #("Industrial", Ear),
-        #("Conch", Ear),
-        #("Tragus", Ear),
-        #("Daith", Ear),
-      ],
-      filter_event,
-      collapsed_categories,
-      toggle_category_event,
-    ),
-    collapsible_category_section(
-      "Faciales",
-      FacialCategory,
-      [
-        #("Nostril", Facial),
-        #("Septum", Facial),
-        #("Labret", Facial),
-        #("Ceja", Facial),
-        #("Bridge", Facial),
-        #("Medusa", Facial),
-      ],
-      filter_event,
-      collapsed_categories,
-      toggle_category_event,
-    ),
-    collapsible_category_section(
-      "Corporales",
-      BodyCategory,
-      [
-        #("Ombligo", Body),
-        #("Lengua", Body),
-        #("Superficie", Body),
-      ],
-      filter_event,
-      collapsed_categories,
-      toggle_category_event,
-    ),
-    collapsible_category_section(
-      "Joyería",
-      JewelryCategory,
-      [
-        #("Personalizada", Jewelry),
-      ],
-      filter_event,
-      collapsed_categories,
-      toggle_category_event,
-    ),
-  ])
+  let categories = [
+    #("Perforaciones de oreja", EarCategory, [
+      #("Lóbulo", Ear(Lobulo)),
+      #("Hélix", Ear(Helix)),
+      #("Industrial", Ear(Industrial)),
+      #("Conch", Ear(Conch)),
+      #("Tragus", Ear(Tragus)),
+      #("Daith", Ear(Daith)),
+      #("Flat", Ear(Flat)),
+    ]),
+    #("Perforaciones faciales", FacialCategory, [
+      #("Nostril", Facial(Nostril)),
+      #("Septum", Facial(Septum)),
+      #("Labret", Facial(Labret)),
+      #("Ceja", Facial(Ceja)),
+      #("Bridge", Facial(Bridge)),
+      #("Medusa", Facial(Medusa)),
+      #("Venom", Facial(Venom)),
+    ]),
+    #("Perforaciones corporales", BodyCategory, [
+      #("Ombligo", Body(Ombligo)),
+      #("Lengua", Body(Lengua)),
+      #("Superficie", Body(Superficie)),
+      #("Microdermal", Body(Microdermal)),
+    ]),
+  ]
+
+  let ordered_categories =
+    reorder_categories_by_expanded(categories, collapsed_categories)
+
+  html.div(
+    [attribute.class("space-y-6")],
+    ordered_categories
+      |> list.map(fn(category) {
+        let #(title, category_type, items) = category
+        collapsible_category_section(
+          title,
+          category_type,
+          items,
+          filter_event,
+          collapsed_categories,
+          toggle_category_event,
+          current_filter,
+        )
+      }),
+  )
+}
+
+fn reorder_categories_by_expanded(
+  categories: List(#(String, CategoryType, List(#(String, GalleryFilter)))),
+  collapsed_categories: List(CategoryType),
+) -> List(#(String, CategoryType, List(#(String, GalleryFilter)))) {
+  let #(expanded, collapsed) =
+    list.partition(categories, fn(category) {
+      let #(_, category_type, _) = category
+      !list.contains(collapsed_categories, category_type)
+    })
+
+  list.append(expanded, collapsed)
 }
 
 fn collapsible_category_section(
@@ -141,6 +310,7 @@ fn collapsible_category_section(
   filter_event: fn(GalleryFilter) -> a,
   collapsed_categories: List(CategoryType),
   toggle_category_event: fn(CategoryType) -> a,
+  current_filter: GalleryFilter,
 ) -> Element(a) {
   let is_collapsed = list.contains(collapsed_categories, category_type)
 
@@ -158,31 +328,48 @@ fn collapsible_category_section(
             attribute.class("text-2xl font-bold text-white tracking-wide"),
             attribute.style("font-family", "'Dark Reborn', sans-serif"),
           ],
-          [element.text(title)],
+          [
+            element.text(case is_collapsed {
+              True -> title
+              False -> "" <> string.drop_start(title, 1) <> " ✧"
+            }),
+          ],
         ),
       ],
     ),
     case is_collapsed {
       True -> html.div([], [])
-      False -> filter_category_list(items, filter_event)
+      False -> filter_category_list(items, filter_event, current_filter)
     },
   ])
 }
 
-fn filter_category_list(items: List(#(String, GalleryFilter)), filter_event) {
+fn filter_category_list(
+  items: List(#(String, GalleryFilter)), 
+  filter_event, 
+  current_filter: GalleryFilter
+) {
   html.div(
     [attribute.class("ml-10 space-y-2")],
     items
       |> list.map(fn(item) {
         let #(name, filter) = item
+        let is_active = filter == current_filter
         html.button(
           [
             attribute.class(
-              "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300",
+              "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300"
+              <> case is_active {
+                True -> " bg-white/20 font-bold"
+                False -> ""
+              }
             ),
             event.on_click(filter_event(filter)),
           ],
-          [element.text(name)],
+          [element.text(case is_active {
+            True -> "✧ " <> name
+            False -> name
+          })],
         )
       }),
   )
@@ -227,20 +414,60 @@ fn get_filtered_images(
   filter: GalleryFilter,
 ) -> List(#(String, String, GalleryFilter)) {
   let all_images = [
-    #("/priv/static/oreja.jpeg", "Perforación de oreja - Hélix", Ear),
-    #("/priv/static/oreja.jpeg", "Perforación de oreja - Lóbulo", Ear),
-    #("/priv/static/oreja.jpeg", "Perforación de oreja - Tragus", Ear),
-    #("/priv/static/oreja.jpeg", "Perforación de oreja - Conch", Ear),
-    #("/priv/static/ceja.heic", "Perforación de ceja", Facial),
-    #("/priv/static/lengua.jpeg", "Perforación de lengua", Facial),
-    #("/priv/static/lengua.jpeg", "Perforación de labio", Facial),
-    #("/priv/static/cuerpo.heic", "Perforación de ombligo", Body),
-    #("/priv/static/cuerpo.heic", "Perforación superficie", Body),
-    #("/priv/static/lengua.jpeg", "Joyería personalizada", Jewelry),
+    // Ear piercings
+    #("/priv/static/lobulo.jpeg", "Perforación de lóbulo", Ear(Lobulo)),
+    #("/priv/static/flat.jpeg", "Perforación flat", Ear(Flat)),
+    #("/priv/static/industrial.jpeg", "Perforación industrial", Ear(Industrial)),
+    #("/priv/static/oreja.jpeg", "Perforación hélix", Ear(Helix)),
+
+    // Facial piercings
+    #("/priv/static/nostril-1.jpeg", "Perforación nostril", Facial(Nostril)),
+    #("/priv/static/nostril-2.jpeg", "Perforación nostril", Facial(Nostril)),
+    #("/priv/static/nostril-3.jpeg", "Perforación nostril", Facial(Nostril)),
+    #("/priv/static/nostril-4.jpeg", "Perforación nostril", Facial(Nostril)),
+    #("/priv/static/nostril-5.jpeg", "Perforación nostril", Facial(Nostril)),
+    #("/priv/static/ceja-1.heic", "Perforación de ceja", Facial(Ceja)),
+    #("/priv/static/ceja-2.jpeg", "Perforación de ceja", Facial(Ceja)),
+    #("/priv/static/venom.jpeg", "Perforación venom", Facial(Venom)),
+
+    // Body piercings  
+    #("/priv/static/ombligo.jpeg", "Perforación de ombligo", Body(Ombligo)),
+    #("/priv/static/lengua-1.jpeg", "Perforación de lengua", Body(Lengua)),
+    #("/priv/static/lengua-2.jpeg", "Perforación de lengua", Body(Lengua)),
+    #("/priv/static/microdermal.jpeg", "Microdermal", Body(Microdermal)),
   ]
 
   case filter {
     All -> all_images
+    // Broad category filters
+    Ear(EarAll) ->
+      all_images
+      |> list.filter(fn(img) {
+        let #(_, _, img_filter) = img
+        case img_filter {
+          Ear(_) -> True
+          _ -> False
+        }
+      })
+    Facial(FacialAll) ->
+      all_images
+      |> list.filter(fn(img) {
+        let #(_, _, img_filter) = img
+        case img_filter {
+          Facial(_) -> True
+          _ -> False
+        }
+      })
+    Body(BodyAll) ->
+      all_images
+      |> list.filter(fn(img) {
+        let #(_, _, img_filter) = img
+        case img_filter {
+          Body(_) -> True
+          _ -> False
+        }
+      })
+    // Specific subcategory filters
     specific_filter ->
       all_images
       |> list.filter(fn(img) {

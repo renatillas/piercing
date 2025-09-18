@@ -394,6 +394,33 @@ var Gt = class extends CustomType {
 };
 
 // build/dev/javascript/gleam_stdlib/gleam/string.mjs
+function slice(string5, idx, len) {
+  let $ = len <= 0;
+  if ($) {
+    return "";
+  } else {
+    let $1 = idx < 0;
+    if ($1) {
+      let translated_idx = string_length(string5) + idx;
+      let $2 = translated_idx < 0;
+      if ($2) {
+        return "";
+      } else {
+        return string_slice(string5, translated_idx, len);
+      }
+    } else {
+      return string_slice(string5, idx, len);
+    }
+  }
+}
+function drop_start(string5, num_graphemes) {
+  let $ = num_graphemes <= 0;
+  if ($) {
+    return string5;
+  } else {
+    return slice(string5, num_graphemes, string_length(string5));
+  }
+}
 function concat_loop(loop$strings, loop$accumulator) {
   while (true) {
     let strings = loop$strings;
@@ -466,6 +493,21 @@ function identity(x) {
 function to_string(term) {
   return term.toString();
 }
+function string_length(string5) {
+  if (string5 === "") {
+    return 0;
+  }
+  const iterator = graphemes_iterator(string5);
+  if (iterator) {
+    let i = 0;
+    for (const _ of iterator) {
+      i++;
+    }
+    return i;
+  } else {
+    return string5.match(/./gsu).length;
+  }
+}
 function graphemes(string5) {
   const iterator = graphemes_iterator(string5);
   if (iterator) {
@@ -483,6 +525,28 @@ function graphemes_iterator(string5) {
 }
 function split(xs, pattern) {
   return List.fromArray(xs.split(pattern));
+}
+function string_slice(string5, idx, len) {
+  if (len <= 0 || idx >= string5.length) {
+    return "";
+  }
+  const iterator = graphemes_iterator(string5);
+  if (iterator) {
+    while (idx-- > 0) {
+      iterator.next();
+    }
+    let result = "";
+    while (len-- > 0) {
+      const v = iterator.next().value;
+      if (v === void 0) {
+        break;
+      }
+      result += v.segment;
+    }
+    return result;
+  } else {
+    return string5.match(/./gsu).slice(idx, idx + len).join("");
+  }
 }
 function starts_with(haystack, needle) {
   return haystack.startsWith(needle);
@@ -963,6 +1027,35 @@ function sort(list4, compare5) {
       return merge_all(sequences$1, new Ascending(), compare5);
     }
   }
+}
+function partition_loop(loop$list, loop$categorise, loop$trues, loop$falses) {
+  while (true) {
+    let list4 = loop$list;
+    let categorise = loop$categorise;
+    let trues = loop$trues;
+    let falses = loop$falses;
+    if (list4 instanceof Empty) {
+      return [reverse(trues), reverse(falses)];
+    } else {
+      let first$1 = list4.head;
+      let rest$1 = list4.tail;
+      let $ = categorise(first$1);
+      if ($) {
+        loop$list = rest$1;
+        loop$categorise = categorise;
+        loop$trues = prepend(first$1, trues);
+        loop$falses = falses;
+      } else {
+        loop$list = rest$1;
+        loop$categorise = categorise;
+        loop$trues = trues;
+        loop$falses = prepend(first$1, falses);
+      }
+    }
+  }
+}
+function partition(list4, categorise) {
+  return partition_loop(list4, categorise, toList([]), toList([]));
 }
 
 // build/dev/javascript/gleam_stdlib/gleam/result.mjs
@@ -4087,161 +4180,178 @@ function about_page() {
 // build/dev/javascript/piercing/piercing/components/footer.mjs
 function footer2() {
   return footer(
-    toList([
-      class$("relative py-8 px-4 sm:px-6 lg:px-8"),
-      style(
-        "background",
-        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
-      )
-    ]),
+    toList([class$("relative")]),
     toList([
       div(
-        toList([class$("max-w-7xl mx-auto")]),
+        toList([class$("w-full overflow-hidden flex justify-center")]),
+        toList([
+          img(
+            toList([
+              src("/priv/static/footer-divisor.png"),
+              class$("max-w-7xl h-auto object-cover"),
+              alt("Footer divisor")
+            ])
+          )
+        ])
+      ),
+      div(
+        toList([
+          class$("relative py-8 px-4 sm:px-6 lg:px-8"),
+          style(
+            "background",
+            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
+          )
+        ]),
         toList([
           div(
-            toList([
-              class$(
-                "grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8"
-              )
-            ]),
-            toList([
-              div(
-                toList([class$("text-center md:text-left")]),
-                toList([
-                  h4(
-                    toList([
-                      class$(
-                        "text-xl font-bold text-white mb-4 tracking-wide"
-                      ),
-                      style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif"
-                      )
-                    ]),
-                    toList([text2("CONTACTO")])
-                  ),
-                  p(
-                    toList([class$("text-gray-300 mb-2")]),
-                    toList([text2("+34 663 73 66 31")])
-                  ),
-                  p(
-                    toList([class$("text-gray-300 mb-2")]),
-                    toList([text2("@keitepinxa")])
-                  )
-                ])
-              ),
-              div(
-                toList([class$("text-center md:text-left")]),
-                toList([
-                  h4(
-                    toList([
-                      class$(
-                        "text-xl font-bold text-white mb-4 tracking-wide"
-                      ),
-                      style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif"
-                      )
-                    ]),
-                    toList([text2("HORARIO")])
-                  ),
-                  p(
-                    toList([class$("text-gray-300 mb-2")]),
-                    toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
-                  ),
-                  p(
-                    toList([class$("text-gray-300")]),
-                    toList([text2("Domingo: Cerrado")])
-                  )
-                ])
-              ),
-              div(
-                toList([class$("text-center md:text-left")]),
-                toList([
-                  h4(
-                    toList([
-                      class$(
-                        "text-xl font-bold text-white mb-4 tracking-wide"
-                      ),
-                      style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif"
-                      )
-                    ]),
-                    toList([text2("DIRECCI\xD3N")])
-                  ),
-                  p(
-                    toList([class$("text-gray-300")]),
-                    toList([
-                      text2("C/ Doctor Jaume Segarra, 4"),
-                      br(toList([])),
-                      text2("46019 Valencia, Espa\xF1a")
-                    ])
-                  )
-                ])
-              )
-            ])
-          ),
-          div(
-            toList([class$("pt-6")]),
+            toList([class$("max-w-7xl mx-auto")]),
             toList([
               div(
                 toList([
                   class$(
-                    "flex flex-col md:flex-row justify-between items-center gap-4"
+                    "grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8"
                   )
                 ]),
                 toList([
                   div(
                     toList([class$("text-center md:text-left")]),
                     toList([
-                      p(
+                      h4(
                         toList([
-                          class$("text-gray-400 text-sm"),
+                          class$(
+                            "text-xl font-bold text-white mb-4 tracking-wide"
+                          ),
                           style(
                             "font-family",
                             "'Dark Reborn', sans-serif"
                           )
                         ]),
-                        toList([
-                          text2(
-                            "Piercer y modificadora corporal desde 2023"
-                          )
-                        ])
+                        toList([text2("CONTACTO")])
+                      ),
+                      p(
+                        toList([class$("text-gray-300 mb-2")]),
+                        toList([text2("+34 663 73 66 31")])
+                      ),
+                      p(
+                        toList([class$("text-gray-300 mb-2")]),
+                        toList([text2("@keitepinxa")])
                       )
                     ])
                   ),
                   div(
+                    toList([class$("text-center md:text-left")]),
                     toList([
-                      class$("flex gap-4 text-sm text-gray-400")
+                      h4(
+                        toList([
+                          class$(
+                            "text-xl font-bold text-white mb-4 tracking-wide"
+                          ),
+                          style(
+                            "font-family",
+                            "'Dark Reborn', sans-serif"
+                          )
+                        ]),
+                        toList([text2("HORARIO")])
+                      ),
+                      p(
+                        toList([class$("text-gray-300 mb-2")]),
+                        toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
+                      ),
+                      p(
+                        toList([class$("text-gray-300")]),
+                        toList([text2("Domingo: Cerrado")])
+                      )
+                    ])
+                  ),
+                  div(
+                    toList([class$("text-center md:text-left")]),
+                    toList([
+                      h4(
+                        toList([
+                          class$(
+                            "text-xl font-bold text-white mb-4 tracking-wide"
+                          ),
+                          style(
+                            "font-family",
+                            "'Dark Reborn', sans-serif"
+                          )
+                        ]),
+                        toList([text2("DIRECCI\xD3N")])
+                      ),
+                      p(
+                        toList([class$("text-gray-300")]),
+                        toList([
+                          text2("C/ Doctor Jaume Segarra, 4"),
+                          br(toList([])),
+                          text2("46019 Valencia, Espa\xF1a")
+                        ])
+                      )
+                    ])
+                  )
+                ])
+              ),
+              div(
+                toList([class$("pt-6")]),
+                toList([
+                  div(
+                    toList([
+                      class$(
+                        "flex flex-col md:flex-row justify-between items-center gap-4"
+                      )
                     ]),
                     toList([
-                      a(
+                      div(
+                        toList([class$("text-center md:text-left")]),
                         toList([
-                          class$(
-                            "hover:text-white transition-colors"
-                          ),
-                          href("/aviso-legal")
-                        ]),
-                        toList([text2("Aviso legal")])
+                          p(
+                            toList([
+                              class$("text-gray-400 text-sm"),
+                              style(
+                                "font-family",
+                                "'Dark Reborn', sans-serif"
+                              )
+                            ]),
+                            toList([
+                              text2(
+                                "Piercer y modificadora corporal desde 2023"
+                              )
+                            ])
+                          )
+                        ])
                       ),
-                      a(
+                      div(
                         toList([
-                          class$(
-                            "hover:text-white transition-colors"
-                          ),
-                          href("/politica-privacidad")
+                          class$("flex gap-4 text-sm text-gray-400")
                         ]),
-                        toList([text2("Pol\xEDtica de privacidad")])
-                      ),
-                      a(
                         toList([
-                          class$(
-                            "hover:text-white transition-colors"
+                          a(
+                            toList([
+                              class$(
+                                "hover:text-white transition-colors"
+                              ),
+                              href("/aviso-legal")
+                            ]),
+                            toList([text2("Aviso legal")])
                           ),
-                          href("/politica-cookies")
-                        ]),
-                        toList([text2("Pol\xEDtica de Cookies")])
+                          a(
+                            toList([
+                              class$(
+                                "hover:text-white transition-colors"
+                              ),
+                              href("/politica-privacidad")
+                            ]),
+                            toList([text2("Pol\xEDtica de privacidad")])
+                          ),
+                          a(
+                            toList([
+                              class$(
+                                "hover:text-white transition-colors"
+                              ),
+                              href("/politica-cookies")
+                            ]),
+                            toList([text2("Pol\xEDtica de Cookies")])
+                          )
+                        ])
                       )
                     ])
                   )
@@ -4399,7 +4509,7 @@ function navbar(current_route) {
   return nav(
     toList([
       class$(
-        "font-[Dark_Reborn] bg-black/50 border-b-2 border-gray-700 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50"
+        "font-[Dark_Reborn] bg-black/50 navbar-metallic-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50"
       )
     ]),
     toList([
@@ -4577,12 +4687,64 @@ function contact_page() {
 var All = class extends CustomType {
 };
 var Ear = class extends CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
 };
 var Facial = class extends CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
 };
 var Body = class extends CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
 };
-var Jewelry = class extends CustomType {
+var FacialAll = class extends CustomType {
+};
+var Nostril = class extends CustomType {
+};
+var Septum = class extends CustomType {
+};
+var Labret = class extends CustomType {
+};
+var Ceja = class extends CustomType {
+};
+var Bridge = class extends CustomType {
+};
+var Medusa = class extends CustomType {
+};
+var Venom = class extends CustomType {
+};
+var BodyAll = class extends CustomType {
+};
+var Ombligo = class extends CustomType {
+};
+var Lengua = class extends CustomType {
+};
+var Superficie = class extends CustomType {
+};
+var Microdermal = class extends CustomType {
+};
+var EarAll = class extends CustomType {
+};
+var Lobulo = class extends CustomType {
+};
+var Helix = class extends CustomType {
+};
+var Industrial = class extends CustomType {
+};
+var Conch = class extends CustomType {
+};
+var Tragus = class extends CustomType {
+};
+var Daith = class extends CustomType {
+};
+var Flat = class extends CustomType {
 };
 var EarCategory = class extends CustomType {
 };
@@ -4592,7 +4754,144 @@ var BodyCategory = class extends CustomType {
 };
 var JewelryCategory = class extends CustomType {
 };
-function filter_category_list(items, filter_event) {
+function gallery_section_card(title, description, filter3, image_src, filter_event) {
+  return div(
+    toList([
+      class$(
+        "gallery-section-card relative group cursor-pointer overflow-hidden"
+      )
+    ]),
+    toList([
+      div(
+        toList([class$("relative aspect-[4/3] overflow-hidden")]),
+        toList([
+          img(
+            toList([
+              src(image_src),
+              class$(
+                "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+              ),
+              alt(title)
+            ])
+          ),
+          div(
+            toList([
+              class$(
+                "absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"
+              )
+            ]),
+            toList([])
+          ),
+          div(
+            toList([
+              class$(
+                "absolute inset-0 flex flex-col justify-end p-6 text-white"
+              )
+            ]),
+            toList([
+              h3(
+                toList([
+                  class$(
+                    "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform group-hover:scale-105 transition-transform duration-300"
+                  ),
+                  style("font-family", "'Dark Reborn', sans-serif")
+                ]),
+                toList([text2(title)])
+              ),
+              p(
+                toList([
+                  class$(
+                    "text-lg opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                  )
+                ]),
+                toList([text2(description)])
+              )
+            ])
+          )
+        ])
+      ),
+      button(
+        toList([
+          class$("absolute inset-0 w-full h-full"),
+          on_click(filter_event(filter3))
+        ]),
+        toList([])
+      )
+    ])
+  );
+}
+function gallery_home_page(filter_event) {
+  return div(
+    toList([class$("min-h-screen")]),
+    toList([
+      div(
+        toList([class$("px-4 sm:px-6 lg:px-8 py-8 sm:py-12")]),
+        toList([
+          div(
+            toList([class$("max-w-7xl mx-auto")]),
+            toList([
+              h1(
+                toList([
+                  class$(
+                    "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide"
+                  ),
+                  style("font-family", "'Dark Reborn', sans-serif")
+                ]),
+                toList([text2("Explora nuestro trabajo")])
+              ),
+              div(
+                toList([
+                  class$(
+                    "grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
+                  )
+                ]),
+                toList([
+                  gallery_section_card(
+                    "Perforaciones de oreja",
+                    "H\xE9lix, tragus, conch y m\xE1s",
+                    new Ear(new EarAll()),
+                    "/priv/static/lobulo.jpeg",
+                    filter_event
+                  ),
+                  gallery_section_card(
+                    "Perforaciones faciales",
+                    "Nariz, cejas, labios y lengua",
+                    new Facial(new FacialAll()),
+                    "/priv/static/nostril-1.jpeg",
+                    filter_event
+                  ),
+                  gallery_section_card(
+                    "Perforaciones corporales",
+                    "Ombligo y dermales",
+                    new Body(new BodyAll()),
+                    "/priv/static/ombligo.jpeg",
+                    filter_event
+                  )
+                ])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function reorder_categories_by_expanded(categories, collapsed_categories) {
+  let $ = partition(
+    categories,
+    (category) => {
+      let category_type;
+      category_type = category[1];
+      return !contains(collapsed_categories, category_type);
+    }
+  );
+  let expanded;
+  let collapsed;
+  expanded = $[0];
+  collapsed = $[1];
+  return append2(expanded, collapsed);
+}
+function filter_category_list(items, filter_event, current_filter) {
   return div(
     toList([class$("ml-10 space-y-2")]),
     (() => {
@@ -4604,21 +4903,38 @@ function filter_category_list(items, filter_event) {
           let filter3;
           name = item[0];
           filter3 = item[1];
+          let is_active = isEqual(filter3, current_filter);
           return button(
             toList([
               class$(
-                "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300"
+                "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
+                  if (is_active) {
+                    return " bg-white/20 font-bold";
+                  } else {
+                    return "";
+                  }
+                })()
               ),
               on_click(filter_event(filter3))
             ]),
-            toList([text2(name)])
+            toList([
+              text2(
+                (() => {
+                  if (is_active) {
+                    return "\u2727 " + name;
+                  } else {
+                    return name;
+                  }
+                })()
+              )
+            ])
           );
         }
       );
     })()
   );
 }
-function collapsible_category_section(title, category_type, items, filter_event, collapsed_categories, toggle_category_event) {
+function collapsible_category_section(title, category_type, items, filter_event, collapsed_categories, toggle_category_event, current_filter) {
   let is_collapsed = contains(collapsed_categories, category_type);
   return div(
     toList([]),
@@ -4636,7 +4952,17 @@ function collapsible_category_section(title, category_type, items, filter_event,
               class$("text-2xl font-bold text-white tracking-wide"),
               style("font-family", "'Dark Reborn', sans-serif")
             ]),
-            toList([text2(title)])
+            toList([
+              text2(
+                (() => {
+                  if (is_collapsed) {
+                    return title;
+                  } else {
+                    return "\uE00F" + drop_start(title, 1) + " \u2727";
+                  }
+                })()
+              )
+            ])
           )
         ])
       ),
@@ -4644,95 +4970,227 @@ function collapsible_category_section(title, category_type, items, filter_event,
         if (is_collapsed) {
           return div(toList([]), toList([]));
         } else {
-          return filter_category_list(items, filter_event);
+          return filter_category_list(items, filter_event, current_filter);
         }
       })()
     ])
   );
 }
-function filter_sidebar(filter_event, collapsed_categories, toggle_category_event) {
+function filter_sidebar(filter_event, collapsed_categories, toggle_category_event, current_filter) {
+  let categories = toList([
+    [
+      "Perforaciones de oreja",
+      new EarCategory(),
+      toList([
+        ["L\xF3bulo", new Ear(new Lobulo())],
+        ["H\xE9lix", new Ear(new Helix())],
+        ["Industrial", new Ear(new Industrial())],
+        ["Conch", new Ear(new Conch())],
+        ["Tragus", new Ear(new Tragus())],
+        ["Daith", new Ear(new Daith())],
+        ["Flat", new Ear(new Flat())]
+      ])
+    ],
+    [
+      "Perforaciones faciales",
+      new FacialCategory(),
+      toList([
+        ["Nostril", new Facial(new Nostril())],
+        ["Septum", new Facial(new Septum())],
+        ["Labret", new Facial(new Labret())],
+        ["Ceja", new Facial(new Ceja())],
+        ["Bridge", new Facial(new Bridge())],
+        ["Medusa", new Facial(new Medusa())],
+        ["Venom", new Facial(new Venom())]
+      ])
+    ],
+    [
+      "Perforaciones corporales",
+      new BodyCategory(),
+      toList([
+        ["Ombligo", new Body(new Ombligo())],
+        ["Lengua", new Body(new Lengua())],
+        ["Superficie", new Body(new Superficie())],
+        ["Microdermal", new Body(new Microdermal())]
+      ])
+    ]
+  ]);
+  let ordered_categories = reorder_categories_by_expanded(
+    categories,
+    collapsed_categories
+  );
   return div(
     toList([class$("space-y-6")]),
-    toList([
-      collapsible_category_section(
-        "Perforaciones de oreja",
-        new EarCategory(),
-        toList([
-          ["L\xF3bulo", new Ear()],
-          ["H\xE9lix", new Ear()],
-          ["Industrial", new Ear()],
-          ["Conch", new Ear()],
-          ["Tragus", new Ear()],
-          ["Daith", new Ear()]
-        ]),
-        filter_event,
-        collapsed_categories,
-        toggle_category_event
-      ),
-      collapsible_category_section(
-        "Faciales",
-        new FacialCategory(),
-        toList([
-          ["Nostril", new Facial()],
-          ["Septum", new Facial()],
-          ["Labret", new Facial()],
-          ["Ceja", new Facial()],
-          ["Bridge", new Facial()],
-          ["Medusa", new Facial()]
-        ]),
-        filter_event,
-        collapsed_categories,
-        toggle_category_event
-      ),
-      collapsible_category_section(
-        "Corporales",
-        new BodyCategory(),
-        toList([
-          ["Ombligo", new Body()],
-          ["Lengua", new Body()],
-          ["Superficie", new Body()]
-        ]),
-        filter_event,
-        collapsed_categories,
-        toggle_category_event
-      ),
-      collapsible_category_section(
-        "Joyer\xEDa",
-        new JewelryCategory(),
-        toList([["Personalizada", new Jewelry()]]),
-        filter_event,
-        collapsed_categories,
-        toggle_category_event
-      )
-    ])
+    (() => {
+      let _pipe = ordered_categories;
+      return map(
+        _pipe,
+        (category) => {
+          let title;
+          let category_type;
+          let items;
+          title = category[0];
+          category_type = category[1];
+          items = category[2];
+          return collapsible_category_section(
+            title,
+            category_type,
+            items,
+            filter_event,
+            collapsed_categories,
+            toggle_category_event,
+            current_filter
+          );
+        }
+      );
+    })()
   );
 }
 function get_filtered_images(filter3) {
   let all_images = toList([
-    ["/priv/static/oreja.jpeg", "Perforaci\xF3n de oreja - H\xE9lix", new Ear()],
-    ["/priv/static/oreja.jpeg", "Perforaci\xF3n de oreja - L\xF3bulo", new Ear()],
-    ["/priv/static/oreja.jpeg", "Perforaci\xF3n de oreja - Tragus", new Ear()],
-    ["/priv/static/oreja.jpeg", "Perforaci\xF3n de oreja - Conch", new Ear()],
-    ["/priv/static/ceja.heic", "Perforaci\xF3n de ceja", new Facial()],
-    ["/priv/static/lengua.jpeg", "Perforaci\xF3n de lengua", new Facial()],
-    ["/priv/static/lengua.jpeg", "Perforaci\xF3n de labio", new Facial()],
-    ["/priv/static/cuerpo.heic", "Perforaci\xF3n de ombligo", new Body()],
-    ["/priv/static/cuerpo.heic", "Perforaci\xF3n superficie", new Body()],
-    ["/priv/static/lengua.jpeg", "Joyer\xEDa personalizada", new Jewelry()]
+    ["/priv/static/lobulo.jpeg", "Perforaci\xF3n de l\xF3bulo", new Ear(new Lobulo())],
+    ["/priv/static/flat.jpeg", "Perforaci\xF3n flat", new Ear(new Flat())],
+    [
+      "/priv/static/industrial.jpeg",
+      "Perforaci\xF3n industrial",
+      new Ear(new Industrial())
+    ],
+    ["/priv/static/oreja.jpeg", "Perforaci\xF3n h\xE9lix", new Ear(new Helix())],
+    [
+      "/priv/static/nostril-1.jpeg",
+      "Perforaci\xF3n nostril",
+      new Facial(new Nostril())
+    ],
+    [
+      "/priv/static/nostril-2.jpeg",
+      "Perforaci\xF3n nostril",
+      new Facial(new Nostril())
+    ],
+    [
+      "/priv/static/nostril-3.jpeg",
+      "Perforaci\xF3n nostril",
+      new Facial(new Nostril())
+    ],
+    [
+      "/priv/static/nostril-4.jpeg",
+      "Perforaci\xF3n nostril",
+      new Facial(new Nostril())
+    ],
+    [
+      "/priv/static/nostril-5.jpeg",
+      "Perforaci\xF3n nostril",
+      new Facial(new Nostril())
+    ],
+    ["/priv/static/ceja-1.heic", "Perforaci\xF3n de ceja", new Facial(new Ceja())],
+    ["/priv/static/ceja-2.jpeg", "Perforaci\xF3n de ceja", new Facial(new Ceja())],
+    ["/priv/static/venom.jpeg", "Perforaci\xF3n venom", new Facial(new Venom())],
+    [
+      "/priv/static/ombligo.jpeg",
+      "Perforaci\xF3n de ombligo",
+      new Body(new Ombligo())
+    ],
+    [
+      "/priv/static/lengua-1.jpeg",
+      "Perforaci\xF3n de lengua",
+      new Body(new Lengua())
+    ],
+    [
+      "/priv/static/lengua-2.jpeg",
+      "Perforaci\xF3n de lengua",
+      new Body(new Lengua())
+    ],
+    [
+      "/priv/static/microdermal.jpeg",
+      "Microdermal",
+      new Body(new Microdermal())
+    ]
   ]);
   if (filter3 instanceof All) {
     return all_images;
+  } else if (filter3 instanceof Ear) {
+    let $ = filter3[0];
+    if ($ instanceof EarAll) {
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          if (img_filter instanceof Ear) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    } else {
+      let specific_filter = filter3;
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          return isEqual(img_filter, specific_filter);
+        }
+      );
+    }
+  } else if (filter3 instanceof Facial) {
+    let $ = filter3[0];
+    if ($ instanceof FacialAll) {
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          if (img_filter instanceof Facial) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    } else {
+      let specific_filter = filter3;
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          return isEqual(img_filter, specific_filter);
+        }
+      );
+    }
   } else {
-    let specific_filter = filter3;
-    let _pipe = all_images;
-    return filter(
-      _pipe,
-      (img2) => {
-        let img_filter;
-        img_filter = img2[2];
-        return isEqual(img_filter, specific_filter);
-      }
-    );
+    let $ = filter3[0];
+    if ($ instanceof BodyAll) {
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          if (img_filter instanceof Body) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    } else {
+      let specific_filter = filter3;
+      let _pipe = all_images;
+      return filter(
+        _pipe,
+        (img2) => {
+          let img_filter;
+          img_filter = img2[2];
+          return isEqual(img_filter, specific_filter);
+        }
+      );
+    }
   }
 }
 function gallery_grid(filter3, open_modal_event) {
@@ -4776,7 +5234,7 @@ function gallery_grid(filter3, open_modal_event) {
     })()
   );
 }
-function gallery_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
+function gallery_filtered_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
   return div(
     toList([class$("min-h-screen")]),
     toList([
@@ -4793,7 +5251,7 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
-                toList([text2("\uE038xplora nuestro trabaj\uE0E4")])
+                toList([text2("Explora nuestro trabajo")])
               ),
               div(
                 toList([
@@ -4809,7 +5267,8 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
                           filter_sidebar(
                             filter_event,
                             collapsed_categories,
-                            toggle_category_event
+                            toggle_category_event,
+                            filter3
                           )
                         ])
                       )
@@ -4827,6 +5286,19 @@ function gallery_page(filter3, filter_event, open_modal_event, collapsed_categor
       )
     ])
   );
+}
+function gallery_page(filter3, filter_event, open_modal_event, collapsed_categories, toggle_category_event) {
+  if (filter3 instanceof All) {
+    return gallery_home_page(filter_event);
+  } else {
+    return gallery_filtered_page(
+      filter3,
+      filter_event,
+      open_modal_event,
+      collapsed_categories,
+      toggle_category_event
+    );
+  }
 }
 
 // build/dev/javascript/piercing/piercing/home.mjs
@@ -4936,7 +5408,9 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         "order-1 lg:order-2 group cursor-pointer"
                       ),
                       on_click(
-                        set_category_filter_event(new Ear())
+                        set_category_filter_event(
+                          new Ear(new EarAll())
+                        )
                       ),
                       on_click(
                         toggle_category_event(new EarCategory())
@@ -5004,7 +5478,9 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         "order-1 lg:order-1 group cursor-pointer"
                       ),
                       on_click(
-                        set_category_filter_event(new Facial())
+                        set_category_filter_event(
+                          new Ear(new EarAll())
+                        )
                       ),
                       on_click(
                         toggle_category_event(new FacialCategory())
@@ -5021,7 +5497,7 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         toList([
                           img(
                             toList([
-                              src("/priv/static/ceja.heic"),
+                              src("/priv/static/ceja-1.heic"),
                               alt("Perforaciones faciales"),
                               class$(
                                 "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
@@ -5126,7 +5602,9 @@ function home_page(set_category_filter_event, toggle_category_event) {
                         "order-1 lg:order-2 group cursor-pointer"
                       ),
                       on_click(
-                        set_category_filter_event(new Body())
+                        set_category_filter_event(
+                          new Body(new BodyAll())
+                        )
                       ),
                       on_click(
                         toggle_category_event(new BodyCategory())
