@@ -40,7 +40,7 @@ pub fn modal_view(
               html.button(
                 [
                   attribute.class(
-                    "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130",
+                    "fixed top-10 right:10 lg:right-130 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130",
                   ),
                   attribute.attribute("aria-label", "Close modal"),
                   event.on_click(close_modal_event),
@@ -59,7 +59,7 @@ pub fn modal_view(
                   html.button(
                     [
                       attribute.class(
-                        "absolute top-70 left-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                        "fixed top-70 left-10 lg:left-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
                       ),
                       attribute.attribute("aria-label", "Close modal"),
                       event.on_click(go_to_previous_photo_event(
@@ -73,7 +73,7 @@ pub fn modal_view(
                   html.button(
                     [
                       attribute.class(
-                        "absolute top-70 right-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                        "fixed top-70 right-10 lg:right-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
                       ),
                       attribute.attribute("aria-label", "Close modal"),
                       event.on_click(go_to_next_photo_event(
