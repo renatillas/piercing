@@ -16,13 +16,14 @@ pub fn footer() {
             attribute.src("/priv/static/footer-divisor.png"),
             attribute.class("shadow max-w-7xl h-auto object-cover"),
             attribute.alt("Footer divisor"),
+            attribute.attribute("loading", "lazy"),
           ]),
         ],
       ),
       // Footer content
       html.div(
         [
-          attribute.class("relative py-8 px-4 sm:px-6 lg:px-8"),
+          attribute.class("relative py-6 px-4 sm:px-6 lg:px-8"),
           attribute.style(
             "background",
             "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)",
@@ -33,7 +34,7 @@ pub fn footer() {
             html.div(
               [
                 attribute.class(
-                  "grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8",
+                  "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6",
                 ),
               ],
               [
@@ -42,7 +43,7 @@ pub fn footer() {
                   html.h4(
                     [
                       attribute.class(
-                        "text-xl font-bold text-white mb-4 tracking-wide",
+                        "text-lg font-bold text-white mb-3 tracking-wide",
                       ),
                       attribute.style(
                         "font-family",
@@ -63,7 +64,7 @@ pub fn footer() {
                   html.h4(
                     [
                       attribute.class(
-                        "text-xl font-bold text-white mb-4 tracking-wide",
+                        "text-lg font-bold text-white mb-3 tracking-wide",
                       ),
                       attribute.style(
                         "font-family",
@@ -84,7 +85,7 @@ pub fn footer() {
                   html.h4(
                     [
                       attribute.class(
-                        "text-xl font-bold text-white mb-4 tracking-wide",
+                        "text-lg font-bold text-white mb-3 tracking-wide",
                       ),
                       attribute.style(
                         "font-family",
@@ -101,7 +102,7 @@ pub fn footer() {
                 ]),
               ],
             ),
-            html.div([attribute.class("pt-6")], [
+            html.div([attribute.class("pt-4")], [
               html.div(
                 [
                   attribute.class(

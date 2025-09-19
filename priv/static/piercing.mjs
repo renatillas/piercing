@@ -4080,14 +4080,15 @@ function footer2() {
             toList([
               src("/priv/static/footer-divisor.png"),
               class$("shadow max-w-7xl h-auto object-cover"),
-              alt("Footer divisor")
+              alt("Footer divisor"),
+              attribute2("loading", "lazy")
             ])
           )
         ])
       ),
       div(
         toList([
-          class$("relative py-8 px-4 sm:px-6 lg:px-8"),
+          class$("relative py-6 px-4 sm:px-6 lg:px-8"),
           style(
             "background",
             "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.9) 100%)"
@@ -4100,7 +4101,7 @@ function footer2() {
               div(
                 toList([
                   class$(
-                    "grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8"
+                    "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6"
                   )
                 ]),
                 toList([
@@ -4110,7 +4111,7 @@ function footer2() {
                       h4(
                         toList([
                           class$(
-                            "text-xl font-bold text-white mb-4 tracking-wide"
+                            "text-lg font-bold text-white mb-3 tracking-wide"
                           ),
                           style(
                             "font-family",
@@ -4135,7 +4136,7 @@ function footer2() {
                       h4(
                         toList([
                           class$(
-                            "text-xl font-bold text-white mb-4 tracking-wide"
+                            "text-lg font-bold text-white mb-3 tracking-wide"
                           ),
                           style(
                             "font-family",
@@ -4160,7 +4161,7 @@ function footer2() {
                       h4(
                         toList([
                           class$(
-                            "text-xl font-bold text-white mb-4 tracking-wide"
+                            "text-lg font-bold text-white mb-3 tracking-wide"
                           ),
                           style(
                             "font-family",
@@ -4182,7 +4183,7 @@ function footer2() {
                 ])
               ),
               div(
-                toList([class$("pt-6")]),
+                toList([class$("pt-4")]),
                 toList([
                   div(
                     toList([
