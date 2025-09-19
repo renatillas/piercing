@@ -77,7 +77,7 @@ pub fn home_page(set_category_filter_event) {
                     html.a(
                       [
                         attribute.class(
-                          "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer",
+                          "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 ",
                         ),
                         attribute.href("/about"),
                       ],
@@ -140,7 +140,7 @@ pub fn home_page(set_category_filter_event) {
                   // Image
                   html.a(
                     [
-                      attribute.class("order-1 lg:order-2 group cursor-pointer"),
+                      attribute.class("order-1 lg:order-2 group "),
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
@@ -211,7 +211,7 @@ pub fn home_page(set_category_filter_event) {
                   // Image (left on large screens)
                   html.a(
                     [
-                      attribute.class("order-1 lg:order-1 group cursor-pointer"),
+                      attribute.class("order-1 lg:order-1 group "),
                       event.on_click(
                         set_category_filter_event(gallery.Ear(gallery.EarAll)),
                       ),
@@ -334,7 +334,7 @@ pub fn home_page(set_category_filter_event) {
                   // Image
                   html.a(
                     [
-                      attribute.class("order-1 lg:order-2 group cursor-pointer"),
+                      attribute.class("order-1 lg:order-2 group "),
                       event.on_click(
                         set_category_filter_event(gallery.Body(gallery.BodyAll)),
                       ),

@@ -4674,9 +4674,7 @@ var Flat = class extends CustomType {
 function gallery_section_card(title, description, filter3, image_src, filter_event) {
   return div(
     toList([
-      class$(
-        "gallery-section-card relative group cursor-pointer overflow-hidden"
-      )
+      class$("gallery-section-card relative group overflow-hidden")
     ]),
     toList([
       div(
@@ -5061,7 +5059,7 @@ function gallery_grid(filter3, open_modal_event) {
           return button(
             toList([
               class$(
-                "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer"
+                "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group"
               ),
               on_click(open_modal_event(src2, alt2))
             ]),
@@ -5273,7 +5271,7 @@ function home_page(set_category_filter_event) {
                       a(
                         toList([
                           class$(
-                            "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                            "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 "
                           ),
                           href("/about")
                         ]),
@@ -5331,9 +5329,7 @@ function home_page(set_category_filter_event) {
                   ),
                   a(
                     toList([
-                      class$(
-                        "order-1 lg:order-2 group cursor-pointer"
-                      ),
+                      class$("order-1 lg:order-2 group "),
                       on_click(
                         set_category_filter_event(
                           new Ear(new EarAll())
@@ -5406,9 +5402,7 @@ function home_page(set_category_filter_event) {
                 toList([
                   a(
                     toList([
-                      class$(
-                        "order-1 lg:order-1 group cursor-pointer"
-                      ),
+                      class$("order-1 lg:order-1 group "),
                       on_click(
                         set_category_filter_event(
                           new Ear(new EarAll())
@@ -5537,9 +5531,7 @@ function home_page(set_category_filter_event) {
                   ),
                   a(
                     toList([
-                      class$(
-                        "order-1 lg:order-2 group cursor-pointer"
-                      ),
+                      class$("order-1 lg:order-2 group "),
                       on_click(
                         set_category_filter_event(
                           new Body(new BodyAll())
@@ -6624,7 +6616,7 @@ function view2(model) {
   return div(
     toList([
       class$(
-        "min-h-[100dvh] bg-black/85 black text-white flex flex-col"
+        "min-h-[100dvh] bg-black/85 black text-white flex flex-col cursor-[url('/priv/static/cursor-32.png'),auto]"
       )
     ]),
     toList([

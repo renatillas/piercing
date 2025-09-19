@@ -144,9 +144,7 @@ fn gallery_section_card(
 ) -> Element(a) {
   html.div(
     [
-      attribute.class(
-        "gallery-section-card relative group cursor-pointer overflow-hidden",
-      ),
+      attribute.class("gallery-section-card relative group overflow-hidden"),
     ],
     [
       html.div([attribute.class("relative aspect-[4/3] overflow-hidden")], [
@@ -354,7 +352,7 @@ fn gallery_grid(
         html.button(
           [
             attribute.class(
-              "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer",
+              "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group",
             ),
             event.on_click(open_modal_event(src, alt)),
           ],

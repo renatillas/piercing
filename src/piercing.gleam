@@ -109,7 +109,7 @@ fn view(model: Model) -> Element(Msg) {
   html.div(
     [
       attribute.class(
-        "min-h-[100dvh] bg-black/85 black text-white flex flex-col",
+        "min-h-[100dvh] bg-black/85 black text-white flex flex-col cursor-[url('/priv/static/cursor-32.png'),auto]",
       ),
     ],
     [

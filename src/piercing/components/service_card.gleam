@@ -14,7 +14,7 @@ pub fn service_card(
   html.div(
     [
       attribute.class(
-        "relative overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group cursor-pointer",
+        "relative overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group",
       ),
       event.on_click(case category {
         "ear" -> open_modal_event(image_url, title)

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @font-face {
   font-family: 'Dark Reborn';
   src: url('/priv/static/DarkReborn-Regular.ttf') format('truetype');
