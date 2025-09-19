@@ -1268,8 +1268,8 @@ function style(property3, value) {
 function href(url) {
   return attribute2("href", url);
 }
-function alt(text3) {
-  return attribute2("alt", text3);
+function alt(text4) {
+  return attribute2("alt", text4);
 }
 function src(url) {
   return attribute2("src", url);
@@ -1877,6 +1877,9 @@ function none2() {
 }
 
 // build/dev/javascript/lustre/lustre/element/html.mjs
+function text3(content) {
+  return text2(content);
+}
 function footer(attrs, children) {
   return element2("footer", attrs, children);
 }
@@ -4073,6 +4076,119 @@ function about_page() {
 }
 
 // build/dev/javascript/piercing/piercing/components/footer.mjs
+function contact_info() {
+  return div(
+    toList([class$("md:text-left")]),
+    toList([
+      h4(
+        toList([
+          class$(
+            "text-center text-2xl font-bold text-white mb-3 tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("CONTACTO")])
+      ),
+      p(
+        toList([class$("text-center text-gray-300 mb-2")]),
+        toList([text2("+34 663 73 66 31")])
+      ),
+      p(
+        toList([class$("text-center text-gray-300 mb-2")]),
+        toList([text2("@keitepinxa")])
+      )
+    ])
+  );
+}
+function address() {
+  return div(
+    toList([class$("md:text-left")]),
+    toList([
+      p(
+        toList([class$("text-center text-gray-300")]),
+        toList([
+          text2("C/ Doctor Jaume Segarra, 4"),
+          br(toList([])),
+          text2("46019 Valencia, Espa\xF1a")
+        ])
+      )
+    ])
+  );
+}
+function hours() {
+  return div(
+    toList([class$("md:text-left")]),
+    toList([
+      h4(
+        toList([
+          class$(
+            "text-center text-2xl font-bold text-white mb-3 tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("HORARIO")])
+      ),
+      p(
+        toList([class$("text-center text-gray-300 mb-2")]),
+        toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
+      ),
+      p(
+        toList([class$("text-center text-gray-300")]),
+        toList([text2("Domingo: Cerrado")])
+      ),
+      address()
+    ])
+  );
+}
+function legal() {
+  return div(
+    toList([class$("flex gap-2 text-sm text-gray-400")]),
+    toList([
+      a(
+        toList([
+          class$("hover:text-white transition-colors"),
+          href("/aviso-legal")
+        ]),
+        toList([text2("Aviso legal")])
+      ),
+      text3("\u2727"),
+      a(
+        toList([
+          class$("text-center hover:text-white transition-colors"),
+          href("/politica-privacidad")
+        ]),
+        toList([text2("Pol\xEDtica de privacidad")])
+      ),
+      text3("\u2727"),
+      a(
+        toList([
+          class$("hover:text-white transition-colors"),
+          href("/politica-cookies")
+        ]),
+        toList([text2("Pol\xEDtica de Cookies")])
+      )
+    ])
+  );
+}
+function mini_hero() {
+  return div(
+    toList([class$("")]),
+    toList([
+      p(
+        toList([
+          class$("text-4xl font-bold text-white mb-2"),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("\uE072EI \uE193 PINX\uE01A")])
+      ),
+      p(
+        toList([class$("text-gray-300")]),
+        toList([text2("Piercer y modificadora corporal desde 2023")])
+      ),
+      div(toList([class$("mt-10")]), toList([legal()]))
+    ])
+  );
+}
 function footer2() {
   return footer(
     toList([class$("relative max-w-dvw")]),
@@ -4110,150 +4226,7 @@ function footer2() {
                     "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6"
                   )
                 ]),
-                toList([
-                  div(
-                    toList([class$("text-center md:text-left")]),
-                    toList([
-                      h4(
-                        toList([
-                          class$(
-                            "text-lg font-bold text-white mb-3 tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
-                          )
-                        ]),
-                        toList([text2("CONTACTO")])
-                      ),
-                      p(
-                        toList([class$("text-gray-300 mb-2")]),
-                        toList([text2("+34 663 73 66 31")])
-                      ),
-                      p(
-                        toList([class$("text-gray-300 mb-2")]),
-                        toList([text2("@keitepinxa")])
-                      )
-                    ])
-                  ),
-                  div(
-                    toList([class$("text-center md:text-left")]),
-                    toList([
-                      h4(
-                        toList([
-                          class$(
-                            "text-lg font-bold text-white mb-3 tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
-                          )
-                        ]),
-                        toList([text2("HORARIO")])
-                      ),
-                      p(
-                        toList([class$("text-gray-300 mb-2")]),
-                        toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
-                      ),
-                      p(
-                        toList([class$("text-gray-300")]),
-                        toList([text2("Domingo: Cerrado")])
-                      )
-                    ])
-                  ),
-                  div(
-                    toList([class$("text-center md:text-left")]),
-                    toList([
-                      h4(
-                        toList([
-                          class$(
-                            "text-lg font-bold text-white mb-3 tracking-wide"
-                          ),
-                          style(
-                            "font-family",
-                            "'Dark Reborn', sans-serif"
-                          )
-                        ]),
-                        toList([text2("DIRECCI\xD3N")])
-                      ),
-                      p(
-                        toList([class$("text-gray-300")]),
-                        toList([
-                          text2("C/ Doctor Jaume Segarra, 4"),
-                          br(toList([])),
-                          text2("46019 Valencia, Espa\xF1a")
-                        ])
-                      )
-                    ])
-                  )
-                ])
-              ),
-              div(
-                toList([class$("pt-4")]),
-                toList([
-                  div(
-                    toList([
-                      class$(
-                        "flex flex-col md:flex-row justify-between items-center gap-4"
-                      )
-                    ]),
-                    toList([
-                      div(
-                        toList([class$("text-center md:text-left")]),
-                        toList([
-                          p(
-                            toList([
-                              class$("text-gray-400 text-sm"),
-                              style(
-                                "font-family",
-                                "'Dark Reborn', sans-serif"
-                              )
-                            ]),
-                            toList([
-                              text2(
-                                "Piercer y modificadora corporal desde 2023"
-                              )
-                            ])
-                          )
-                        ])
-                      ),
-                      div(
-                        toList([
-                          class$("flex gap-4 text-sm text-gray-400")
-                        ]),
-                        toList([
-                          a(
-                            toList([
-                              class$(
-                                "hover:text-white transition-colors"
-                              ),
-                              href("/aviso-legal")
-                            ]),
-                            toList([text2("Aviso legal")])
-                          ),
-                          a(
-                            toList([
-                              class$(
-                                "hover:text-white transition-colors"
-                              ),
-                              href("/politica-privacidad")
-                            ]),
-                            toList([text2("Pol\xEDtica de privacidad")])
-                          ),
-                          a(
-                            toList([
-                              class$(
-                                "hover:text-white transition-colors"
-                              ),
-                              href("/politica-cookies")
-                            ]),
-                            toList([text2("Pol\xEDtica de Cookies")])
-                          )
-                        ])
-                      )
-                    ])
-                  )
-                ])
+                toList([mini_hero(), contact_info(), hours()])
               )
             ])
           )

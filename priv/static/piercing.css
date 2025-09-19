@@ -283,6 +283,9 @@
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
@@ -619,9 +622,6 @@
   }
   .py-12 {
     padding-block: calc(var(--spacing) * 12);
-  }
-  .pt-4 {
-    padding-top: calc(var(--spacing) * 4);
   }
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
@@ -1063,11 +1063,6 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  .md\:flex-row {
-    @media (width >= 48rem) {
-      flex-direction: row;
-    }
-  }
   .md\:text-left {
     @media (width >= 48rem) {
       text-align: left;
@@ -1236,7 +1231,7 @@ body {
   body {
     background-size: cover;
     background-attachment: scroll;
-    background-position: calc(50% + 13px) center;
+    background-position: calc(50% + 20px) center;
   }
 }
 @keyframes metallic-sweep {

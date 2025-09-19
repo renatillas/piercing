@@ -32,7 +32,7 @@ body {
   body {
     background-size: cover;
     background-attachment: scroll;
-    background-position: calc(50% + 13px) center;
+    background-position: calc(50% + 20px) center;
   }
 }
 

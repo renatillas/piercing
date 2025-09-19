@@ -38,133 +38,115 @@ pub fn footer() {
                 ),
               ],
               [
-                // Contact Info
-                html.div([attribute.class("text-center md:text-left")], [
-                  html.h4(
-                    [
-                      attribute.class(
-                        "text-lg font-bold text-white mb-3 tracking-wide",
-                      ),
-                      attribute.style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif",
-                      ),
-                    ],
-                    [element.text("CONTACTO")],
-                  ),
-                  html.p([attribute.class("text-gray-300 mb-2")], [
-                    element.text("+34 663 73 66 31"),
-                  ]),
-                  html.p([attribute.class("text-gray-300 mb-2")], [
-                    element.text("@keitepinxa"),
-                  ]),
-                ]),
-                // Hours
-                html.div([attribute.class("text-center md:text-left")], [
-                  html.h4(
-                    [
-                      attribute.class(
-                        "text-lg font-bold text-white mb-3 tracking-wide",
-                      ),
-                      attribute.style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif",
-                      ),
-                    ],
-                    [element.text("HORARIO")],
-                  ),
-                  html.p([attribute.class("text-gray-300 mb-2")], [
-                    element.text("Lunes a Sábado: 14:00 - 20:00"),
-                  ]),
-                  html.p([attribute.class("text-gray-300")], [
-                    element.text("Domingo: Cerrado"),
-                  ]),
-                ]),
-                // Address
-                html.div([attribute.class("text-center md:text-left")], [
-                  html.h4(
-                    [
-                      attribute.class(
-                        "text-lg font-bold text-white mb-3 tracking-wide",
-                      ),
-                      attribute.style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif",
-                      ),
-                    ],
-                    [element.text("DIRECCIÓN")],
-                  ),
-                  html.p([attribute.class("text-gray-300")], [
-                    element.text("C/ Doctor Jaume Segarra, 4"),
-                    html.br([]),
-                    element.text("46019 Valencia, España"),
-                  ]),
-                ]),
+                mini_hero(),
+                contact_info(),
+                hours(),
               ],
             ),
-            html.div([attribute.class("pt-4")], [
-              html.div(
-                [
-                  attribute.class(
-                    "flex flex-col md:flex-row justify-between items-center gap-4",
-                  ),
-                ],
-                [
-                  html.div([attribute.class("text-center md:text-left")], [
-                    html.p(
-                      [
-                        attribute.class("text-gray-400 text-sm"),
-                        attribute.style(
-                          "font-family",
-                          "'Dark Reborn', sans-serif",
-                        ),
-                      ],
-                      [
-                        element.text(
-                          "Piercer y modificadora corporal desde 2023",
-                        ),
-                      ],
-                    ),
-                  ]),
-                  html.div(
-                    [attribute.class("flex gap-4 text-sm text-gray-400")],
-                    [
-                      html.a(
-                        [
-                          attribute.class("hover:text-white transition-colors"),
-                          attribute.href("/aviso-legal"),
-                        ],
-                        [
-                          element.text("Aviso legal"),
-                        ],
-                      ),
-                      html.a(
-                        [
-                          attribute.class("hover:text-white transition-colors"),
-                          attribute.href("/politica-privacidad"),
-                        ],
-                        [
-                          element.text("Política de privacidad"),
-                        ],
-                      ),
-                      html.a(
-                        [
-                          attribute.class("hover:text-white transition-colors"),
-                          attribute.href("/politica-cookies"),
-                        ],
-                        [
-                          element.text("Política de Cookies"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ]),
           ]),
         ],
       ),
-      // Close the footer content div
     ],
   )
+}
+
+fn contact_info() {
+  html.div([attribute.class("md:text-left")], [
+    html.h4(
+      [
+        attribute.class(
+          "text-center text-2xl font-bold text-white mb-3 tracking-wide",
+        ),
+        attribute.style("font-family", "'Dark Reborn', sans-serif"),
+      ],
+      [element.text("CONTACTO")],
+    ),
+    html.p([attribute.class("text-center text-gray-300 mb-2")], [
+      element.text("+34 663 73 66 31"),
+    ]),
+    html.p([attribute.class("text-center text-gray-300 mb-2")], [
+      element.text("@keitepinxa"),
+    ]),
+  ])
+}
+
+fn hours() {
+  html.div([attribute.class("md:text-left")], [
+    html.h4(
+      [
+        attribute.class(
+          "text-center text-2xl font-bold text-white mb-3 tracking-wide",
+        ),
+        attribute.style("font-family", "'Dark Reborn', sans-serif"),
+      ],
+      [element.text("HORARIO")],
+    ),
+    html.p([attribute.class("text-center text-gray-300 mb-2")], [
+      element.text("Lunes a Sábado: 14:00 - 20:00"),
+    ]),
+    html.p([attribute.class("text-center text-gray-300")], [
+      element.text("Domingo: Cerrado"),
+    ]),
+    address(),
+  ])
+}
+
+fn address() {
+  html.div([attribute.class("md:text-left")], [
+    html.p([attribute.class("text-center text-gray-300")], [
+      element.text("C/ Doctor Jaume Segarra, 4"),
+      html.br([]),
+      element.text("46019 Valencia, España"),
+    ]),
+  ])
+}
+
+fn legal() {
+  html.div([attribute.class("flex gap-2 text-sm text-gray-400")], [
+    html.a(
+      [
+        attribute.class("hover:text-white transition-colors"),
+        attribute.href("/aviso-legal"),
+      ],
+      [
+        element.text("Aviso legal"),
+      ],
+    ),
+    html.text("✧"),
+    html.a(
+      [
+        attribute.class("text-center hover:text-white transition-colors"),
+        attribute.href("/politica-privacidad"),
+      ],
+      [
+        element.text("Política de privacidad"),
+      ],
+    ),
+    html.text("✧"),
+    html.a(
+      [
+        attribute.class("hover:text-white transition-colors"),
+        attribute.href("/politica-cookies"),
+      ],
+      [
+        element.text("Política de Cookies"),
+      ],
+    ),
+  ])
+}
+
+fn mini_hero() {
+  html.div([attribute.class("")], [
+    html.p(
+      [
+        attribute.class("text-4xl font-bold text-white mb-2"),
+        attribute.style("font-family", "'Dark Reborn', sans-serif"),
+      ],
+      [element.text("EI  PINX")],
+    ),
+    html.p([attribute.class("text-gray-300")], [
+      element.text("Piercer y modificadora corporal desde 2023"),
+    ]),
+    html.div([attribute.class("mt-10")], [legal()]),
+  ])
 }
