@@ -1274,6 +1274,12 @@ function alt(text3) {
 function src(url) {
   return attribute2("src", url);
 }
+function loading(value) {
+  return attribute2("loading", value);
+}
+function fetchpriority(value) {
+  return attribute2("fetchpriority", value);
+}
 
 // build/dev/javascript/lustre/lustre/effect.mjs
 var Effect = class extends CustomType {
@@ -5229,7 +5235,8 @@ function hero() {
                           src("/priv/static/profile_picture.jpeg"),
                           alt("Avatar de Kei"),
                           class$("w-full h-full object-cover"),
-                          attribute2("loading", "lazy")
+                          fetchpriority("high"),
+                          loading("eager")
                         ])
                       )
                     ])
