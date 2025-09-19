@@ -3,6 +3,7 @@ import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
+import piercing/components/modal
 
 const categories = [
   #(
@@ -37,7 +38,7 @@ const categories = [
     Body(BodyAll),
     [
       #("Ombligo", Body(Ombligo)),
-      #("Superficie", Body(Superficie)),
+      #("Surface", Body(Surface)),
       #("Microdermal", Body(Microdermal)),
     ],
   ),
@@ -65,7 +66,7 @@ pub type Facial {
 pub type Body {
   BodyAll
   Ombligo
-  Superficie
+  Surface
   Microdermal
 }
 
@@ -83,7 +84,7 @@ pub type Ear {
 pub fn gallery_page(
   filter filter: GalleryFilter,
   filter_event filter_event: fn(GalleryFilter) -> a,
-  open_modal_event open_modal_event: fn(String, String) -> a,
+  open_modal_event open_modal_event,
 ) -> Element(a) {
   case filter {
     All -> gallery_home_page(filter_event)
@@ -200,7 +201,7 @@ fn gallery_section_card(
 fn gallery_filtered_page(
   filter: GalleryFilter,
   filter_event: fn(GalleryFilter) -> a,
-  open_modal_event: fn(String, String) -> a,
+  open_modal_event,
 ) -> Element(a) {
   html.div(
     [
@@ -213,7 +214,6 @@ fn gallery_filtered_page(
         ],
         [
           html.div([attribute.class("max-w-7xl mx-auto")], [
-            // Filter Sidebar and Gallery Grid
             html.div(
               [attribute.class("flex flex-col lg:flex-row gap-8 lg:gap-12")],
               [
@@ -335,10 +335,7 @@ fn filter_category_list(
   )
 }
 
-fn gallery_grid(
-  filter: GalleryFilter,
-  open_modal_event: fn(String, String) -> b,
-) -> Element(b) {
+fn gallery_grid(filter: GalleryFilter, open_modal_event) -> Element(b) {
   let images = get_filtered_images(filter)
   html.div(
     [
@@ -348,21 +345,24 @@ fn gallery_grid(
     ],
     images
       |> list.map(fn(img) {
-        let #(src, alt, _) = img
+        let #(image, _) = img
         html.button(
           [
             attribute.class(
-              "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group",
+              "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group ",
             ),
-            event.on_click(open_modal_event(src, alt)),
+            event.on_click(open_modal_event(
+              image,
+              list.map(images, fn(i) { i.0 }),
+            )),
           ],
           [
             html.img([
-              attribute.src(src),
+              attribute.src(image.src),
               attribute.class(
                 "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300",
               ),
-              attribute.alt(alt),
+              attribute.alt(image.alt),
             ]),
           ],
         )
@@ -372,30 +372,72 @@ fn gallery_grid(
 
 fn get_filtered_images(
   filter: GalleryFilter,
-) -> List(#(String, String, GalleryFilter)) {
+) -> List(#(modal.Image, GalleryFilter)) {
   let all_images = [
     // Ear piercings
-    #("/priv/static/lobulo.jpeg", "Perforación de lóbulo", Ear(Lobulo)),
-    #("/priv/static/flat.jpeg", "Perforación flat", Ear(Flat)),
-    #("/priv/static/industrial.jpeg", "Perforación industrial", Ear(Industrial)),
-    #("/priv/static/oreja.jpeg", "Perforación hélix", Ear(Helix)),
+    #(
+      modal.Image("/priv/static/lobulo.jpeg", "Perforación de lóbulo"),
+      Ear(Lobulo),
+    ),
+    #(modal.Image("/priv/static/flat.jpeg", "Perforación flat"), Ear(Flat)),
+    #(
+      modal.Image("/priv/static/industrial.jpeg", "Perforación industrial"),
+      Ear(Industrial),
+    ),
+    #(modal.Image("/priv/static/oreja.jpeg", "Perforación hélix"), Ear(Helix)),
 
-    // Facial piercings
-    #("/priv/static/nostril-1.jpeg", "Perforación nostril", Facial(Nostril)),
-    #("/priv/static/nostril-2.jpeg", "Perforación nostril", Facial(Nostril)),
-    #("/priv/static/nostril-3.jpeg", "Perforación nostril", Facial(Nostril)),
-    #("/priv/static/nostril-4.jpeg", "Perforación nostril", Facial(Nostril)),
-    #("/priv/static/nostril-5.jpeg", "Perforación nostril", Facial(Nostril)),
-    #("/priv/static/ceja-1.heic", "Perforación de ceja", Facial(Ceja)),
-    #("/priv/static/ceja-2.jpeg", "Perforación de ceja", Facial(Ceja)),
-    #("/priv/static/venom.jpeg", "Perforación venom", Facial(Venom)),
-    #("/priv/static/lengua-1.jpeg", "Perforación de lengua", Facial(Lengua)),
-    #("/priv/static/lengua-2.jpeg", "Perforación de lengua", Facial(Lengua)),
+    //modal.Image( Facial piercings
+    #(
+      modal.Image("/priv/static/nostril-1.jpeg", "Perforación nostril"),
+      Facial(Nostril),
+    ),
+    #(
+      modal.Image("/priv/static/nostril-2.jpeg", "Perforación nostril"),
+      Facial(Nostril),
+    ),
+    #(
+      modal.Image("/priv/static/nostril-3.jpeg", "Perforación nostril"),
+      Facial(Nostril),
+    ),
+    #(
+      modal.Image("/priv/static/nostril-4.jpeg", "Perforación nostril"),
+      Facial(Nostril),
+    ),
+    #(
+      modal.Image("/priv/static/nostril-5.jpeg", "Perforación nostril"),
+      Facial(Nostril),
+    ),
+    #(
+      modal.Image("/priv/static/ceja-1.heic", "Perforación de ceja"),
+      Facial(Ceja),
+    ),
+    #(
+      modal.Image("/priv/static/ceja-2.jpeg", "Perforación de ceja"),
+      Facial(Ceja),
+    ),
+    #(
+      modal.Image("/priv/static/venom.jpeg", "Perforación venom"),
+      Facial(Venom),
+    ),
+    #(
+      modal.Image("/priv/static/lengua-1.jpeg", "Perforación de lengua"),
+      Facial(Lengua),
+    ),
+    #(
+      modal.Image("/priv/static/lengua-2.jpeg", "Perforación de lengua"),
+      Facial(Lengua),
+    ),
 
-    // Body piercings  
-    #("/priv/static/ombligo.jpeg", "Perforación de ombligo", Body(Ombligo)),
-    #("/priv/static/microdermal.jpeg", "Microdermal", Body(Microdermal)),
-    #("/priv/static/cuerpo.heic", "Surface", Body(Superficie)),
+    //modal.Image( Body piercings  
+    #(
+      modal.Image("/priv/static/ombligo.jpeg", "Perforación de ombligo"),
+      Body(Ombligo),
+    ),
+    #(
+      modal.Image("/priv/static/microdermal.jpeg", "Microdermal"),
+      Body(Microdermal),
+    ),
+    #(modal.Image("/priv/static/cuerpo.heic", "Surface"), Body(Surface)),
   ]
 
   case filter {
@@ -404,8 +446,7 @@ fn get_filtered_images(
     Ear(EarAll) ->
       all_images
       |> list.filter(fn(img) {
-        let #(_, _, img_filter) = img
-        case img_filter {
+        case img.1 {
           Ear(_) -> True
           _ -> False
         }
@@ -413,8 +454,7 @@ fn get_filtered_images(
     Facial(FacialAll) ->
       all_images
       |> list.filter(fn(img) {
-        let #(_, _, img_filter) = img
-        case img_filter {
+        case img.1 {
           Facial(_) -> True
           _ -> False
         }
@@ -422,8 +462,7 @@ fn get_filtered_images(
     Body(BodyAll) ->
       all_images
       |> list.filter(fn(img) {
-        let #(_, _, img_filter) = img
-        case img_filter {
+        case img.1 {
           Body(_) -> True
           _ -> False
         }
@@ -431,9 +470,6 @@ fn get_filtered_images(
     // Specific subcategory filters
     specific_filter ->
       all_images
-      |> list.filter(fn(img) {
-        let #(_, _, img_filter) = img
-        img_filter == specific_filter
-      })
+      |> list.filter(fn(img) { img.1 == specific_filter })
   }
 }

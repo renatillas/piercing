@@ -517,6 +517,22 @@ var Ascending = class extends CustomType {
 };
 var Descending = class extends CustomType {
 };
+function length_loop(loop$list, loop$count) {
+  while (true) {
+    let list4 = loop$list;
+    let count = loop$count;
+    if (list4 instanceof Empty) {
+      return count;
+    } else {
+      let list$1 = list4.tail;
+      loop$list = list$1;
+      loop$count = count + 1;
+    }
+  }
+}
+function length2(list4) {
+  return length_loop(list4, 0);
+}
 function reverse_and_prepend(loop$prefix, loop$suffix) {
   while (true) {
     let prefix = loop$prefix;
@@ -561,6 +577,34 @@ function filter_loop(loop$list, loop$fun, loop$acc) {
 function filter(list4, predicate) {
   return filter_loop(list4, predicate, toList([]));
 }
+function filter_map_loop(loop$list, loop$fun, loop$acc) {
+  while (true) {
+    let list4 = loop$list;
+    let fun = loop$fun;
+    let acc = loop$acc;
+    if (list4 instanceof Empty) {
+      return reverse(acc);
+    } else {
+      let first$1 = list4.head;
+      let rest$1 = list4.tail;
+      let _block;
+      let $ = fun(first$1);
+      if ($ instanceof Ok) {
+        let first$2 = $[0];
+        _block = prepend(first$2, acc);
+      } else {
+        _block = acc;
+      }
+      let new_acc = _block;
+      loop$list = rest$1;
+      loop$fun = fun;
+      loop$acc = new_acc;
+    }
+  }
+}
+function filter_map(list4, fun) {
+  return filter_map_loop(list4, fun, toList([]));
+}
 function map_loop(loop$list, loop$fun, loop$acc) {
   while (true) {
     let list4 = loop$list;
@@ -579,6 +623,48 @@ function map_loop(loop$list, loop$fun, loop$acc) {
 }
 function map(list4, fun) {
   return map_loop(list4, fun, toList([]));
+}
+function drop(loop$list, loop$n) {
+  while (true) {
+    let list4 = loop$list;
+    let n = loop$n;
+    let $ = n <= 0;
+    if ($) {
+      return list4;
+    } else {
+      if (list4 instanceof Empty) {
+        return list4;
+      } else {
+        let rest$1 = list4.tail;
+        loop$list = rest$1;
+        loop$n = n - 1;
+      }
+    }
+  }
+}
+function take_loop(loop$list, loop$n, loop$acc) {
+  while (true) {
+    let list4 = loop$list;
+    let n = loop$n;
+    let acc = loop$acc;
+    let $ = n <= 0;
+    if ($) {
+      return reverse(acc);
+    } else {
+      if (list4 instanceof Empty) {
+        return reverse(acc);
+      } else {
+        let first$1 = list4.head;
+        let rest$1 = list4.tail;
+        loop$list = rest$1;
+        loop$n = n - 1;
+        loop$acc = prepend(first$1, acc);
+      }
+    }
+  }
+}
+function take(list4, n) {
+  return take_loop(list4, n, toList([]));
 }
 function append_loop(loop$first, loop$second) {
   while (true) {
@@ -946,6 +1032,30 @@ function sort(list4, compare5) {
     }
   }
 }
+function window_loop(loop$acc, loop$list, loop$n) {
+  while (true) {
+    let acc = loop$acc;
+    let list4 = loop$list;
+    let n = loop$n;
+    let window$1 = take(list4, n);
+    let $ = length2(window$1) === n;
+    if ($) {
+      loop$acc = prepend(window$1, acc);
+      loop$list = drop(list4, 1);
+      loop$n = n;
+    } else {
+      return reverse(acc);
+    }
+  }
+}
+function window2(list4, n) {
+  let $ = n <= 0;
+  if ($) {
+    return toList([]);
+  } else {
+    return window_loop(toList([]), list4, n);
+  }
+}
 
 // build/dev/javascript/gleam_stdlib/gleam/result.mjs
 function map3(result, fun) {
@@ -1074,28 +1184,34 @@ var Property = class extends CustomType {
   }
 };
 var Event2 = class extends CustomType {
-  constructor(kind, name, handler, include, prevent_default, stop_propagation, immediate, debounce, throttle) {
+  constructor(kind, name, handler, include, prevent_default, stop_propagation2, immediate, debounce, throttle) {
     super();
     this.kind = kind;
     this.name = name;
     this.handler = handler;
     this.include = include;
     this.prevent_default = prevent_default;
-    this.stop_propagation = stop_propagation;
+    this.stop_propagation = stop_propagation2;
     this.immediate = immediate;
     this.debounce = debounce;
     this.throttle = throttle;
   }
 };
 var Handler = class extends CustomType {
-  constructor(prevent_default, stop_propagation, message2) {
+  constructor(prevent_default, stop_propagation2, message2) {
     super();
     this.prevent_default = prevent_default;
-    this.stop_propagation = stop_propagation;
+    this.stop_propagation = stop_propagation2;
     this.message = message2;
   }
 };
 var Never = class extends CustomType {
+  constructor(kind) {
+    super();
+    this.kind = kind;
+  }
+};
+var Always = class extends CustomType {
   constructor(kind) {
     super();
     this.kind = kind;
@@ -1232,14 +1348,14 @@ function attribute(name, value) {
 }
 var property_kind = 1;
 var event_kind = 2;
-function event(name, handler, include, prevent_default, stop_propagation, immediate, debounce, throttle) {
+function event(name, handler, include, prevent_default, stop_propagation2, immediate, debounce, throttle) {
   return new Event2(
     event_kind,
     name,
     handler,
     include,
     prevent_default,
-    stop_propagation,
+    stop_propagation2,
     immediate,
     debounce,
     throttle
@@ -1248,6 +1364,7 @@ function event(name, handler, include, prevent_default, stop_propagation, immedi
 var never_kind = 0;
 var never = /* @__PURE__ */ new Never(never_kind);
 var always_kind = 2;
+var always = /* @__PURE__ */ new Always(always_kind);
 
 // build/dev/javascript/lustre/lustre/attribute.mjs
 function attribute2(name, value) {
@@ -4270,6 +4387,23 @@ function on(name, handler) {
     0
   );
 }
+function stop_propagation(event4) {
+  if (event4 instanceof Event2) {
+    return new Event2(
+      event4.kind,
+      event4.name,
+      event4.handler,
+      event4.include,
+      event4.prevent_default,
+      always,
+      event4.immediate,
+      event4.debounce,
+      event4.throttle
+    );
+  } else {
+    return event4;
+  }
+}
 function on_click(msg) {
   return on("click", success(msg));
 }
@@ -4278,18 +4412,25 @@ function on_click(msg) {
 var Closed = class extends CustomType {
 };
 var Open = class extends CustomType {
-  constructor(image_src, image_alt) {
+  constructor(current, filtered_images) {
     super();
-    this.image_src = image_src;
-    this.image_alt = image_alt;
+    this.current = current;
+    this.filtered_images = filtered_images;
   }
 };
-function modal_view(modal, close_modal_event) {
+var Image = class extends CustomType {
+  constructor(src2, alt2) {
+    super();
+    this.src = src2;
+    this.alt = alt2;
+  }
+};
+function modal_view(modal, close_modal_event, go_to_previous_photo_event, go_to_next_photo_event) {
   if (modal instanceof Closed) {
     return div(toList([]), toList([]));
   } else {
-    let src2 = modal.image_src;
-    let alt2 = modal.image_alt;
+    let current = modal.current;
+    let filtered_images = modal.filtered_images;
     return dialog(
       toList([
         class$(
@@ -4309,7 +4450,7 @@ function modal_view(modal, close_modal_event) {
             button(
               toList([
                 class$(
-                  "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center rounded-full bg-transparent border border-white/20 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:scale-110 hover:shadow-lg hover:shadow-white/30"
+                  "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130"
                 ),
                 attribute2("aria-label", "Close modal"),
                 on_click(close_modal_event)
@@ -4323,10 +4464,40 @@ function modal_view(modal, close_modal_event) {
                 )
               ]),
               toList([
+                button(
+                  toList([
+                    class$(
+                      "absolute top-70 left-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 "
+                    ),
+                    attribute2("aria-label", "Close modal"),
+                    (() => {
+                      let _pipe = on_click(
+                        go_to_previous_photo_event(current, filtered_images)
+                      );
+                      return stop_propagation(_pipe);
+                    })()
+                  ]),
+                  toList([text3("<")])
+                ),
+                button(
+                  toList([
+                    class$(
+                      "absolute top-70 right-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 "
+                    ),
+                    attribute2("aria-label", "Close modal"),
+                    (() => {
+                      let _pipe = on_click(
+                        go_to_next_photo_event(current, filtered_images)
+                      );
+                      return stop_propagation(_pipe);
+                    })()
+                  ]),
+                  toList([text3(">")])
+                ),
                 img(
                   toList([
-                    src(src2),
-                    alt(alt2),
+                    src(current.src),
+                    alt(current.alt),
                     class$("max-w-full max-h-[80vh] object-contain")
                   ])
                 ),
@@ -4341,7 +4512,7 @@ function modal_view(modal, close_modal_event) {
                       "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)"
                     )
                   ]),
-                  toList([text2(alt2)])
+                  toList([text2(current.alt)])
                 )
               ])
             )
@@ -4631,7 +4802,7 @@ var BodyAll = class extends CustomType {
 };
 var Ombligo = class extends CustomType {
 };
-var Superficie = class extends CustomType {
+var Surface = class extends CustomType {
 };
 var Microdermal = class extends CustomType {
 };
@@ -4873,63 +5044,74 @@ function collapsible_category_section(title, items, items_filter, filter_event, 
 }
 function get_filtered_images(filter3) {
   let all_images = toList([
-    ["/priv/static/lobulo.jpeg", "Perforaci\xF3n de l\xF3bulo", new Ear(new Lobulo())],
-    ["/priv/static/flat.jpeg", "Perforaci\xF3n flat", new Ear(new Flat())],
     [
-      "/priv/static/industrial.jpeg",
-      "Perforaci\xF3n industrial",
+      new Image("/priv/static/lobulo.jpeg", "Perforaci\xF3n de l\xF3bulo"),
+      new Ear(new Lobulo())
+    ],
+    [
+      new Image("/priv/static/flat.jpeg", "Perforaci\xF3n flat"),
+      new Ear(new Flat())
+    ],
+    [
+      new Image("/priv/static/industrial.jpeg", "Perforaci\xF3n industrial"),
       new Ear(new Industrial())
     ],
-    ["/priv/static/oreja.jpeg", "Perforaci\xF3n h\xE9lix", new Ear(new Helix())],
     [
-      "/priv/static/nostril-1.jpeg",
-      "Perforaci\xF3n nostril",
+      new Image("/priv/static/oreja.jpeg", "Perforaci\xF3n h\xE9lix"),
+      new Ear(new Helix())
+    ],
+    [
+      new Image("/priv/static/nostril-1.jpeg", "Perforaci\xF3n nostril"),
       new Facial(new Nostril())
     ],
     [
-      "/priv/static/nostril-2.jpeg",
-      "Perforaci\xF3n nostril",
+      new Image("/priv/static/nostril-2.jpeg", "Perforaci\xF3n nostril"),
       new Facial(new Nostril())
     ],
     [
-      "/priv/static/nostril-3.jpeg",
-      "Perforaci\xF3n nostril",
+      new Image("/priv/static/nostril-3.jpeg", "Perforaci\xF3n nostril"),
       new Facial(new Nostril())
     ],
     [
-      "/priv/static/nostril-4.jpeg",
-      "Perforaci\xF3n nostril",
+      new Image("/priv/static/nostril-4.jpeg", "Perforaci\xF3n nostril"),
       new Facial(new Nostril())
     ],
     [
-      "/priv/static/nostril-5.jpeg",
-      "Perforaci\xF3n nostril",
+      new Image("/priv/static/nostril-5.jpeg", "Perforaci\xF3n nostril"),
       new Facial(new Nostril())
     ],
-    ["/priv/static/ceja-1.heic", "Perforaci\xF3n de ceja", new Facial(new Ceja())],
-    ["/priv/static/ceja-2.jpeg", "Perforaci\xF3n de ceja", new Facial(new Ceja())],
-    ["/priv/static/venom.jpeg", "Perforaci\xF3n venom", new Facial(new Venom())],
     [
-      "/priv/static/lengua-1.jpeg",
-      "Perforaci\xF3n de lengua",
+      new Image("/priv/static/ceja-1.heic", "Perforaci\xF3n de ceja"),
+      new Facial(new Ceja())
+    ],
+    [
+      new Image("/priv/static/ceja-2.jpeg", "Perforaci\xF3n de ceja"),
+      new Facial(new Ceja())
+    ],
+    [
+      new Image("/priv/static/venom.jpeg", "Perforaci\xF3n venom"),
+      new Facial(new Venom())
+    ],
+    [
+      new Image("/priv/static/lengua-1.jpeg", "Perforaci\xF3n de lengua"),
       new Facial(new Lengua())
     ],
     [
-      "/priv/static/lengua-2.jpeg",
-      "Perforaci\xF3n de lengua",
+      new Image("/priv/static/lengua-2.jpeg", "Perforaci\xF3n de lengua"),
       new Facial(new Lengua())
     ],
     [
-      "/priv/static/ombligo.jpeg",
-      "Perforaci\xF3n de ombligo",
+      new Image("/priv/static/ombligo.jpeg", "Perforaci\xF3n de ombligo"),
       new Body(new Ombligo())
     ],
     [
-      "/priv/static/microdermal.jpeg",
-      "Microdermal",
+      new Image("/priv/static/microdermal.jpeg", "Microdermal"),
       new Body(new Microdermal())
     ],
-    ["/priv/static/cuerpo.heic", "Surface", new Body(new Superficie())]
+    [
+      new Image("/priv/static/cuerpo.heic", "Surface"),
+      new Body(new Surface())
+    ]
   ]);
   if (filter3 instanceof All) {
     return all_images;
@@ -4940,9 +5122,8 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          if (img_filter instanceof Ear) {
+          let $1 = img2[1];
+          if ($1 instanceof Ear) {
             return true;
           } else {
             return false;
@@ -4955,9 +5136,7 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          return isEqual(img_filter, specific_filter);
+          return isEqual(img2[1], specific_filter);
         }
       );
     }
@@ -4968,9 +5147,8 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          if (img_filter instanceof Facial) {
+          let $1 = img2[1];
+          if ($1 instanceof Facial) {
             return true;
           } else {
             return false;
@@ -4983,9 +5161,7 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          return isEqual(img_filter, specific_filter);
+          return isEqual(img2[1], specific_filter);
         }
       );
     }
@@ -4996,9 +5172,8 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          if (img_filter instanceof Body) {
+          let $1 = img2[1];
+          if ($1 instanceof Body) {
             return true;
           } else {
             return false;
@@ -5011,9 +5186,7 @@ function get_filtered_images(filter3) {
       return filter(
         _pipe,
         (img2) => {
-          let img_filter;
-          img_filter = img2[2];
-          return isEqual(img_filter, specific_filter);
+          return isEqual(img2[1], specific_filter);
         }
       );
     }
@@ -5032,25 +5205,30 @@ function gallery_grid(filter3, open_modal_event) {
       return map(
         _pipe,
         (img2) => {
-          let src2;
-          let alt2;
-          src2 = img2[0];
-          alt2 = img2[1];
+          let image;
+          image = img2[0];
           return button(
             toList([
               class$(
-                "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group"
+                "aspect-square overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 group "
               ),
-              on_click(open_modal_event(src2, alt2))
+              on_click(
+                open_modal_event(
+                  image,
+                  map(images, (i) => {
+                    return i[0];
+                  })
+                )
+              )
             ]),
             toList([
               img(
                 toList([
-                  src(src2),
+                  src(image.src),
                   class$(
                     "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   ),
-                  alt(alt2)
+                  alt(image.alt)
                 ])
               )
             ])
@@ -5093,7 +5271,7 @@ var categories = /* @__PURE__ */ toList([
     /* @__PURE__ */ new Body(/* @__PURE__ */ new BodyAll()),
     /* @__PURE__ */ toList([
       ["Ombligo", /* @__PURE__ */ new Body(/* @__PURE__ */ new Ombligo())],
-      ["Superficie", /* @__PURE__ */ new Body(/* @__PURE__ */ new Superficie())],
+      ["Surface", /* @__PURE__ */ new Body(/* @__PURE__ */ new Surface())],
       [
         "Microdermal",
         /* @__PURE__ */ new Body(/* @__PURE__ */ new Microdermal())
@@ -6480,10 +6658,24 @@ var OnRouteChange = class extends CustomType {
   }
 };
 var OpenModal = class extends CustomType {
-  constructor($0, $1) {
+  constructor(photo, filtered_photos) {
     super();
-    this[0] = $0;
-    this[1] = $1;
+    this.photo = photo;
+    this.filtered_photos = filtered_photos;
+  }
+};
+var GoToNextPhoto = class extends CustomType {
+  constructor(photo, filtered_photos) {
+    super();
+    this.photo = photo;
+    this.filtered_photos = filtered_photos;
+  }
+};
+var GoToPreviousPhoto = class extends CustomType {
+  constructor(photo, filtered_photos) {
+    super();
+    this.photo = photo;
+    this.filtered_photos = filtered_photos;
   }
 };
 var CloseModal = class extends CustomType {
@@ -6569,12 +6761,194 @@ function update2(model, msg) {
     let route = msg[0];
     return [new Model(route, model.modal, model.gallery_filter), none()];
   } else if (msg instanceof OpenModal) {
-    let src2 = msg[0];
-    let alt2 = msg[1];
+    let current = msg.photo;
+    let filtered_images = msg.filtered_photos;
     return [
-      new Model(model.route, new Open(src2, alt2), model.gallery_filter),
+      new Model(
+        model.route,
+        new Open(current, filtered_images),
+        model.gallery_filter
+      ),
       none()
     ];
+  } else if (msg instanceof GoToNextPhoto) {
+    let current = msg.photo;
+    let filtered_images = msg.filtered_photos;
+    let _block;
+    let _pipe = window2(filtered_images, 3);
+    _block = filter_map(
+      _pipe,
+      (window3) => {
+        if (window3 instanceof Empty) {
+          return new Error(void 0);
+        } else {
+          let $ = window3.tail;
+          if ($ instanceof Empty) {
+            return new Error(void 0);
+          } else {
+            let $1 = $.tail;
+            if ($1 instanceof Empty) {
+              return new Error(void 0);
+            } else {
+              let $2 = $1.tail;
+              if ($2 instanceof Empty) {
+                let first = window3.head;
+                if (isEqual(first, current)) {
+                  let second2 = $.head;
+                  return new Ok(second2);
+                } else {
+                  let second2 = $.head;
+                  if (isEqual(second2, current)) {
+                    let third = $1.head;
+                    return new Ok(third);
+                  } else {
+                    return new Error(void 0);
+                  }
+                }
+              } else {
+                return new Error(void 0);
+              }
+            }
+          }
+        }
+      }
+    );
+    let photos = _block;
+    let _block$1;
+    if (filtered_images instanceof Empty) {
+      if (photos instanceof Empty) {
+        _block$1 = photos;
+      } else {
+        _block$1 = photos;
+      }
+    } else {
+      let $ = filtered_images.tail;
+      if ($ instanceof Empty) {
+        if (photos instanceof Empty) {
+          _block$1 = filtered_images;
+        } else {
+          _block$1 = photos;
+        }
+      } else {
+        let $1 = $.tail;
+        if ($1 instanceof Empty && photos instanceof Empty) {
+          let second2 = $.head;
+          _block$1 = toList([second2]);
+        } else {
+          _block$1 = photos;
+        }
+      }
+    }
+    let photos$1 = _block$1;
+    if (photos$1 instanceof Empty) {
+      return [
+        new Model(
+          model.route,
+          new Open(current, filtered_images),
+          model.gallery_filter
+        ),
+        none()
+      ];
+    } else {
+      let next = photos$1.head;
+      return [
+        new Model(
+          model.route,
+          new Open(next, filtered_images),
+          model.gallery_filter
+        ),
+        none()
+      ];
+    }
+  } else if (msg instanceof GoToPreviousPhoto) {
+    let current = msg.photo;
+    let filtered_images = msg.filtered_photos;
+    let _block;
+    let _pipe = window2(filtered_images, 3);
+    _block = filter_map(
+      _pipe,
+      (window3) => {
+        if (window3 instanceof Empty) {
+          return new Error(void 0);
+        } else {
+          let $ = window3.tail;
+          if ($ instanceof Empty) {
+            return new Error(void 0);
+          } else {
+            let $1 = $.tail;
+            if ($1 instanceof Empty) {
+              return new Error(void 0);
+            } else {
+              let $2 = $1.tail;
+              if ($2 instanceof Empty) {
+                let last = $1.head;
+                if (isEqual(last, current)) {
+                  let middle = $.head;
+                  return new Ok(middle);
+                } else {
+                  let middle = $.head;
+                  if (isEqual(middle, current)) {
+                    let previous = window3.head;
+                    return new Ok(previous);
+                  } else {
+                    return new Error(void 0);
+                  }
+                }
+              } else {
+                return new Error(void 0);
+              }
+            }
+          }
+        }
+      }
+    );
+    let photos = _block;
+    let _block$1;
+    if (filtered_images instanceof Empty) {
+      if (photos instanceof Empty) {
+        _block$1 = photos;
+      } else {
+        _block$1 = photos;
+      }
+    } else {
+      let $ = filtered_images.tail;
+      if ($ instanceof Empty) {
+        if (photos instanceof Empty) {
+          _block$1 = filtered_images;
+        } else {
+          _block$1 = photos;
+        }
+      } else {
+        let $1 = $.tail;
+        if ($1 instanceof Empty && photos instanceof Empty) {
+          let first = filtered_images.head;
+          _block$1 = toList([first]);
+        } else {
+          _block$1 = photos;
+        }
+      }
+    }
+    let photos$1 = _block$1;
+    if (photos$1 instanceof Empty) {
+      return [
+        new Model(
+          model.route,
+          new Open(current, filtered_images),
+          model.gallery_filter
+        ),
+        none()
+      ];
+    } else {
+      let next = photos$1.head;
+      return [
+        new Model(
+          model.route,
+          new Open(next, filtered_images),
+          model.gallery_filter
+        ),
+        none()
+      ];
+    }
   } else if (msg instanceof CloseModal) {
     return [
       new Model(model.route, new Closed(), model.gallery_filter),
@@ -6632,7 +7006,16 @@ function view2(model) {
         ])
       ),
       footer2(),
-      modal_view(model.modal, new CloseModal())
+      modal_view(
+        model.modal,
+        new CloseModal(),
+        (var0, var1) => {
+          return new GoToPreviousPhoto(var0, var1);
+        },
+        (var0, var1) => {
+          return new GoToNextPhoto(var0, var1);
+        }
+      )
     ])
   );
 }
@@ -6644,10 +7027,16 @@ function main2() {
       "let_assert",
       FILEPATH,
       "piercing",
-      45,
+      48,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 811, end: 860, pattern_start: 822, pattern_end: 827 }
+      {
+        value: $,
+        start: 1017,
+        end: 1066,
+        pattern_start: 1028,
+        pattern_end: 1033
+      }
     );
   }
   return void 0;

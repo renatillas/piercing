@@ -5,13 +5,22 @@ import lustre/event
 
 pub type ModalState {
   Closed
-  Open(image_src: String, image_alt: String)
+  Open(current: Image, filtered_images: List(Image))
 }
 
-pub fn modal_view(modal: ModalState, close_modal_event) {
+pub type Image {
+  Image(src: String, alt: String)
+}
+
+pub fn modal_view(
+  modal: ModalState,
+  close_modal_event,
+  go_to_previous_photo_event,
+  go_to_next_photo_event,
+) {
   case modal {
     Closed -> html.div([], [])
-    Open(src, alt) ->
+    Open(current, filtered_images) ->
       html.dialog(
         [
           attribute.class(
@@ -31,7 +40,7 @@ pub fn modal_view(modal: ModalState, close_modal_event) {
               html.button(
                 [
                   attribute.class(
-                    "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center rounded-full bg-transparent border border-white/20 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:scale-110 hover:shadow-lg hover:shadow-white/30",
+                    "absolute top-2 right-2 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130",
                   ),
                   attribute.attribute("aria-label", "Close modal"),
                   event.on_click(close_modal_event),
@@ -47,9 +56,37 @@ pub fn modal_view(modal: ModalState, close_modal_event) {
                   ),
                 ],
                 [
+                  html.button(
+                    [
+                      attribute.class(
+                        "absolute top-70 left-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                      ),
+                      attribute.attribute("aria-label", "Close modal"),
+                      event.on_click(go_to_previous_photo_event(
+                        current,
+                        filtered_images,
+                      ))
+                        |> event.stop_propagation(),
+                    ],
+                    [html.text("<")],
+                  ),
+                  html.button(
+                    [
+                      attribute.class(
+                        "absolute top-70 right-0 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                      ),
+                      attribute.attribute("aria-label", "Close modal"),
+                      event.on_click(go_to_next_photo_event(
+                        current,
+                        filtered_images,
+                      ))
+                        |> event.stop_propagation(),
+                    ],
+                    [html.text(">")],
+                  ),
                   html.img([
-                    attribute.src(src),
-                    attribute.alt(alt),
+                    attribute.src(current.src),
+                    attribute.alt(current.alt),
                     attribute.class("max-w-full max-h-[80vh] object-contain"),
                   ]),
                   html.figcaption(
@@ -67,7 +104,7 @@ pub fn modal_view(modal: ModalState, close_modal_event) {
                       ),
                     ],
                     [
-                      element.text(alt),
+                      element.text(current.alt),
                     ],
                   ),
                 ],

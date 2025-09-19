@@ -1,3 +1,4 @@
+import gleam/list
 import gleam/result
 import gleam/uri
 import lustre
@@ -27,7 +28,9 @@ pub type Route {
 
 pub type Msg {
   OnRouteChange(Route)
-  OpenModal(String, String)
+  OpenModal(photo: modal.Image, filtered_photos: List(modal.Image))
+  GoToNextPhoto(photo: modal.Image, filtered_photos: List(modal.Image))
+  GoToPreviousPhoto(photo: modal.Image, filtered_photos: List(modal.Image))
   CloseModal
   SetGalleryFilter(gallery.GalleryFilter)
 }
@@ -93,10 +96,67 @@ fn route_to_navbar_route(route: Route) -> navbar.Route {
 fn update(model: Model, msg: Msg) {
   case msg {
     OnRouteChange(route) -> #(Model(..model, route: route), effect.none())
-    OpenModal(src, alt) -> #(
-      Model(..model, modal: modal.Open(src, alt)),
-      effect.none(),
-    )
+    OpenModal(current, filtered_images) -> {
+      #(
+        Model(..model, modal: modal.Open(current:, filtered_images:)),
+        effect.none(),
+      )
+    }
+    GoToNextPhoto(current, filtered_images) -> {
+      let photos =
+        list.window(filtered_images, 3)
+        |> list.filter_map(fn(window) {
+          case window {
+            [first, second, _] if first == current -> Ok(second)
+            [_, second, third] if second == current -> Ok(third)
+            _ -> Error(Nil)
+          }
+        })
+      let photos = case photos, filtered_images {
+        [], [_, second] -> [second]
+        [], [first] -> [first]
+        [], [] -> []
+        _, _ -> photos
+      }
+      case photos {
+        [next, ..] -> #(
+          Model(..model, modal: modal.Open(next, filtered_images)),
+          effect.none(),
+        )
+        [] -> #(
+          Model(..model, modal: modal.Open(current, filtered_images)),
+          effect.none(),
+        )
+      }
+    }
+
+    GoToPreviousPhoto(current, filtered_images) -> {
+      let photos =
+        list.window(filtered_images, 3)
+        |> list.filter_map(fn(window) {
+          case window {
+            [_, middle, last] if last == current -> Ok(middle)
+            [previous, middle, _] if middle == current -> Ok(previous)
+            _ -> Error(Nil)
+          }
+        })
+      let photos = case photos, filtered_images {
+        [], [first, _] -> [first]
+        [], [first] -> [first]
+        [], [] -> []
+        _, _ -> photos
+      }
+      case photos {
+        [next, ..] -> #(
+          Model(..model, modal: modal.Open(next, filtered_images)),
+          effect.none(),
+        )
+        [] -> #(
+          Model(..model, modal: modal.Open(current, filtered_images)),
+          effect.none(),
+        )
+      }
+    }
     CloseModal -> #(Model(..model, modal: modal.Closed), effect.none())
     SetGalleryFilter(filter) -> #(
       Model(..model, gallery_filter: filter),
@@ -133,7 +193,12 @@ fn view(model: Model) -> Element(Msg) {
         },
       ]),
       footer.footer(),
-      modal.modal_view(model.modal, CloseModal),
+      modal.modal_view(
+        model.modal,
+        CloseModal,
+        GoToPreviousPhoto,
+        GoToNextPhoto,
+      ),
     ],
   )
 }
