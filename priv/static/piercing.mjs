@@ -4069,7 +4069,7 @@ function about_page() {
 // build/dev/javascript/piercing/piercing/components/footer.mjs
 function footer2() {
   return footer(
-    toList([class$("relative")]),
+    toList([class$("relative max-w-dvw")]),
     toList([
       div(
         toList([
@@ -5194,389 +5194,178 @@ function gallery_page(filter3, filter_event, open_modal_event) {
 }
 
 // build/dev/javascript/piercing/piercing/home.mjs
-function home_page(set_category_filter_event) {
-  return div(
-    toList([class$("relative min-h-screen")]),
+function hero() {
+  return section(
     toList([
-      section(
-        toList([
-          class$(
-            "relative text-center py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
-          )
-        ]),
+      class$(
+        "relative text-center py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
+      )
+    ]),
+    toList([
+      div(
+        toList([class$("max-w-7xl mx-auto")]),
         toList([
           div(
-            toList([class$("max-w-7xl mx-auto")]),
+            toList([
+              class$(
+                "grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center"
+              )
+            ]),
             toList([
               div(
                 toList([
-                  class$(
-                    "grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center"
-                  )
+                  class$("order-1 lg:order-1 flex justify-center")
                 ]),
                 toList([
                   div(
                     toList([
                       class$(
-                        "order-1 lg:order-1 flex justify-center"
+                        "w-80 h-96 lg:w-96 lg:h-[32rem] bg-white rounded-lg flex items-center justify-center overflow-hidden"
                       )
                     ]),
                     toList([
-                      div(
+                      img(
                         toList([
-                          class$(
-                            "w-80 h-96 lg:w-96 lg:h-[32rem] bg-white rounded-lg flex items-center justify-center overflow-hidden"
-                          )
-                        ]),
-                        toList([
-                          img(
-                            toList([
-                              src(
-                                "/priv/static/profile_picture.jpeg"
-                              ),
-                              alt("Avatar de Kei"),
-                              class$("w-full h-full object-cover")
-                            ])
-                          )
+                          src("/priv/static/profile_picture.jpeg"),
+                          alt("Avatar de Kei"),
+                          class$("w-full h-full object-cover"),
+                          attribute2("loading", "lazy")
                         ])
+                      )
+                    ])
+                  )
+                ])
+              ),
+              div(
+                toList([
+                  class$(
+                    "flex flex-col order-2 lg:order-2 text-center  lg:text-left"
+                  )
+                ]),
+                toList([
+                  h1(
+                    toList([
+                      class$(
+                        "pb-3 text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
+                      )
+                    ]),
+                    toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
+                  ),
+                  p(
+                    toList([
+                      class$(
+                        "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed"
+                      )
+                    ]),
+                    toList([
+                      text2(
+                        "Anilladora aprendiz en proceso de convertirse en un profesional m\xE1s del mundo del body piercing. Cada d\xEDa me esfuerzo por perfeccionar mis t\xE9cnicas y brindar el mejor servicio. Mi pasi\xF3n por el arte corporal me impulsa a seguir creciendo en esta hermosa profesi\xF3n."
                       )
                     ])
                   ),
-                  div(
+                  a(
                     toList([
                       class$(
-                        "flex flex-col order-2 lg:order-2 text-center  lg:text-left"
-                      )
+                        "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 "
+                      ),
+                      href("/about")
                     ]),
-                    toList([
-                      h1(
-                        toList([
-                          class$(
-                            "pb-3 text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide font-[Dark_Reborn]"
-                          )
-                        ]),
-                        toList([text2("\uE007ola, soy \uE03Ee\uE12C")])
-                      ),
-                      p(
-                        toList([
-                          class$(
-                            "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed"
-                          )
-                        ]),
-                        toList([
-                          text2(
-                            "Anilladora aprendiz en proceso de convertirse en un profesional m\xE1s del mundo del body piercing. Cada d\xEDa me esfuerzo por perfeccionar mis t\xE9cnicas y brindar el mejor servicio. Mi pasi\xF3n por el arte corporal me impulsa a seguir creciendo en esta hermosa profesi\xF3n."
-                          )
-                        ])
-                      ),
-                      a(
-                        toList([
-                          class$(
-                            "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 "
-                          ),
-                          href("/about")
-                        ]),
-                        toList([text2("Saber m\xE1s")])
-                      )
-                    ])
+                    toList([text2("Saber m\xE1s")])
                   )
                 ])
               )
             ])
           )
         ])
-      ),
-      section(
-        toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
+      )
+    ])
+  );
+}
+function esteril(set_category_filter_event) {
+  return section(
+    toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
+    toList([
+      div(
+        toList([class$("max-w-7xl mx-auto")]),
         toList([
           div(
-            toList([class$("max-w-7xl mx-auto")]),
+            toList([
+              class$(
+                "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+              )
+            ]),
             toList([
               div(
                 toList([
-                  class$(
-                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
-                  )
+                  class$("justify-items-center order-2 lg:order-1")
                 ]),
                 toList([
-                  div(
+                  h2(
                     toList([
                       class$(
-                        "justify-items-center order-2 lg:order-1"
+                        "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
                       )
                     ]),
-                    toList([
-                      h2(
-                        toList([
-                          class$(
-                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
-                          )
-                        ]),
-                        toList([text2("\uE004st\xE9ri\uE0FB")])
-                      ),
-                      p(
-                        toList([
-                          class$(
-                            "text-xl text-gray-300 mb-8 leading-relaxed"
-                          )
-                        ]),
-                        toList([
-                          text2(
-                            "Todo el equipo esterilizado usando tecnolog\xEDa de autoclave"
-                          )
-                        ])
-                      )
-                    ])
+                    toList([text2("\uE004st\xE9ri\uE0FB")])
                   ),
-                  a(
+                  p(
                     toList([
-                      class$("order-1 lg:order-2 group "),
-                      on_click(
-                        set_category_filter_event(
-                          new Ear(new EarAll())
-                        )
-                      ),
-                      style(
-                        "background",
-                        "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)"
-                      ),
-                      href("/gallery")
+                      class$(
+                        "text-xl text-gray-300 mb-8 leading-relaxed"
+                      )
                     ]),
                     toList([
-                      div(
-                        toList([
-                          class$(
-                            "relative overflow-hidden rounded-lg"
-                          )
-                        ]),
-                        toList([
-                          img(
-                            toList([
-                              src("/priv/static/oreja.jpeg"),
-                              alt("Perforaciones de oreja"),
-                              class$(
-                                "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
-                              )
-                            ])
-                          ),
-                          div(
-                            toList([
-                              class$(
-                                "absolute bottom-0 left-0 right-0 text-white p-4"
-                              ),
-                              style(
-                                "background",
-                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
-                              )
-                            ]),
-                            toList([
-                              p(
-                                toList([
-                                  class$("text-xl font-medium")
-                                ]),
-                                toList([text2("Perforaciones de oreja")])
-                              )
-                            ])
-                          )
-                        ])
+                      text2(
+                        "Todo el equipo esterilizado usando tecnolog\xEDa de autoclave"
                       )
                     ])
                   )
                 ])
-              )
-            ])
-          )
-        ])
-      ),
-      section(
-        toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
-        toList([
-          div(
-            toList([class$("max-w-7xl mx-auto")]),
-            toList([
-              div(
+              ),
+              a(
                 toList([
-                  class$(
-                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
-                  )
-                ]),
-                toList([
-                  a(
-                    toList([
-                      class$("order-1 lg:order-1 group "),
-                      on_click(
-                        set_category_filter_event(
-                          new Ear(new EarAll())
-                        )
-                      ),
-                      href("/gallery")
-                    ]),
-                    toList([
-                      div(
-                        toList([
-                          class$(
-                            "relative overflow-hidden rounded-lg"
-                          )
-                        ]),
-                        toList([
-                          img(
-                            toList([
-                              src("/priv/static/ceja-1.heic"),
-                              alt("Perforaciones faciales"),
-                              class$(
-                                "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
-                              )
-                            ])
-                          ),
-                          div(
-                            toList([
-                              class$(
-                                "absolute bottom-0 left-0 right-0 text-white p-4"
-                              ),
-                              style(
-                                "background",
-                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
-                              )
-                            ]),
-                            toList([
-                              p(
-                                toList([
-                                  class$("text-xl font-medium")
-                                ]),
-                                toList([text2("Perforaciones faciales")])
-                              )
-                            ])
-                          )
-                        ])
-                      )
-                    ])
+                  class$("order-1 lg:order-2 group "),
+                  on_click(
+                    set_category_filter_event(
+                      new Ear(new EarAll())
+                    )
                   ),
-                  div(
-                    toList([
-                      class$(
-                        "justify-items-center order-2 lg:order-2 lg:text-right"
-                      )
-                    ]),
-                    toList([
-                      h2(
-                        toList([
-                          class$(
-                            "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
-                          )
-                        ]),
-                        toList([text2("\uE00Fremiu\uE0FC")])
-                      ),
-                      p(
-                        toList([
-                          class$(
-                            "text-xl text-gray-300 mb-8 leading-relaxed"
-                          )
-                        ]),
-                        toList([
-                          text2(
-                            "Joyer\xEDa de titanio y acero quir\xFArgico de alta calidad"
-                          )
-                        ])
-                      )
-                    ])
-                  )
-                ])
-              )
-            ])
-          )
-        ])
-      ),
-      section(
-        toList([
-          class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:pb-20")
-        ]),
-        toList([
-          div(
-            toList([class$("max-w-7xl mx-auto")]),
-            toList([
-              div(
-                toList([
-                  class$(
-                    "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
-                  )
+                  style(
+                    "background",
+                    "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.9) 95%)"
+                  ),
+                  href("/gallery")
                 ]),
                 toList([
                   div(
                     toList([
-                      class$(
-                        "justify-items-center order-2 lg:order-1"
-                      )
+                      class$("relative overflow-hidden rounded-lg")
                     ]),
                     toList([
-                      h2(
+                      img(
                         toList([
+                          src("/priv/static/oreja.jpeg"),
+                          alt("Perforaciones de oreja"),
                           class$(
-                            "font-[Dark_Reborn] text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide"
-                          )
-                        ]),
-                        toList([text2("\uE004xperienci\uE0F0")])
-                      ),
-                      p(
-                        toList([
-                          class$(
-                            "text-xl text-gray-300 mb-8 leading-relaxed"
-                          )
-                        ]),
-                        toList([
-                          text2(
-                            "M\xE1s de 2 a\xF1os de experiencia profesional en perforaciones"
-                          )
+                            "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
+                          ),
+                          attribute2("loading", "lazy")
                         ])
-                      )
-                    ])
-                  ),
-                  a(
-                    toList([
-                      class$("order-1 lg:order-2 group "),
-                      on_click(
-                        set_category_filter_event(
-                          new Body(new BodyAll())
-                        )
                       ),
-                      href("/gallery")
-                    ]),
-                    toList([
                       div(
                         toList([
                           class$(
-                            "relative overflow-hidden rounded-lg"
+                            "absolute bottom-0 left-0 right-0 text-white p-4"
+                          ),
+                          style(
+                            "background",
+                            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
                           )
                         ]),
                         toList([
-                          img(
-                            toList([
-                              src("/priv/static/cuerpo.heic"),
-                              alt("Perforaciones corporales"),
-                              class$(
-                                "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
-                              )
-                            ])
-                          ),
-                          div(
-                            toList([
-                              class$(
-                                "absolute bottom-0 left-0 right-0 text-white p-4"
-                              ),
-                              style(
-                                "background",
-                                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
-                              )
-                            ]),
-                            toList([
-                              p(
-                                toList([
-                                  class$("text-xl font-medium")
-                                ]),
-                                toList([
-                                  text2("Perforaciones corporales")
-                                ])
-                              )
-                            ])
+                          p(
+                            toList([class$("text-xl font-medium")]),
+                            toList([text2("Perforaciones de oreja")])
                           )
                         ])
                       )
@@ -5588,6 +5377,209 @@ function home_page(set_category_filter_event) {
           )
         ])
       )
+    ])
+  );
+}
+function premium(set_category_filter_event) {
+  return section(
+    toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16")]),
+    toList([
+      div(
+        toList([class$("max-w-7xl mx-auto")]),
+        toList([
+          div(
+            toList([
+              class$(
+                "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+              )
+            ]),
+            toList([
+              a(
+                toList([
+                  class$("order-1 lg:order-1 group "),
+                  on_click(
+                    set_category_filter_event(
+                      new Ear(new EarAll())
+                    )
+                  ),
+                  href("/gallery")
+                ]),
+                toList([
+                  div(
+                    toList([
+                      class$("relative overflow-hidden rounded-lg")
+                    ]),
+                    toList([
+                      img(
+                        toList([
+                          src("/priv/static/ceja-1.heic"),
+                          alt("Perforaciones faciales"),
+                          class$(
+                            "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
+                          ),
+                          attribute2("loading", "lazy")
+                        ])
+                      ),
+                      div(
+                        toList([
+                          class$(
+                            "absolute bottom-0 left-0 right-0 text-white p-4"
+                          ),
+                          style(
+                            "background",
+                            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
+                          )
+                        ]),
+                        toList([
+                          p(
+                            toList([class$("text-xl font-medium")]),
+                            toList([text2("Perforaciones faciales")])
+                          )
+                        ])
+                      )
+                    ])
+                  )
+                ])
+              ),
+              div(
+                toList([
+                  class$(
+                    "justify-items-center order-2 lg:order-2 lg:text-right"
+                  )
+                ]),
+                toList([
+                  h2(
+                    toList([
+                      class$(
+                        "font-[Dark_Reborn] text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white tracking-wide"
+                      )
+                    ]),
+                    toList([text2("\uE00Fremiu\uE0FC")])
+                  ),
+                  p(
+                    toList([
+                      class$(
+                        "text-xl text-gray-300 mb-8 leading-relaxed"
+                      )
+                    ]),
+                    toList([
+                      text2(
+                        "Joyer\xEDa de titanio y acero quir\xFArgico de alta calidad"
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function experiencia(set_category_filter_event) {
+  return section(
+    toList([class$("px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:pb-20")]),
+    toList([
+      div(
+        toList([class$("max-w-7xl mx-auto")]),
+        toList([
+          div(
+            toList([
+              class$(
+                "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+              )
+            ]),
+            toList([
+              div(
+                toList([
+                  class$("justify-items-center order-2 lg:order-1")
+                ]),
+                toList([
+                  h2(
+                    toList([
+                      class$(
+                        "font-[Dark_Reborn] text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-wide"
+                      )
+                    ]),
+                    toList([text2("\uE004xperienci\uE0F0")])
+                  ),
+                  p(
+                    toList([
+                      class$(
+                        "text-xl text-gray-300 mb-8 leading-relaxed"
+                      )
+                    ]),
+                    toList([
+                      text2(
+                        "M\xE1s de 2 a\xF1os de experiencia profesional en perforaciones"
+                      )
+                    ])
+                  )
+                ])
+              ),
+              a(
+                toList([
+                  class$("order-1 lg:order-2 group "),
+                  on_click(
+                    set_category_filter_event(
+                      new Body(new BodyAll())
+                    )
+                  ),
+                  href("/gallery")
+                ]),
+                toList([
+                  div(
+                    toList([
+                      class$("relative overflow-hidden rounded-lg")
+                    ]),
+                    toList([
+                      img(
+                        toList([
+                          src("/priv/static/cuerpo.heic"),
+                          alt("Perforaciones corporales"),
+                          class$(
+                            "w-full h-64 sm:h-80 lg:h-96 object-cover group-hover:scale-110 transition-transform duration-300"
+                          ),
+                          attribute2("loading", "lazy")
+                        ])
+                      ),
+                      div(
+                        toList([
+                          class$(
+                            "absolute bottom-0 left-0 right-0 text-white p-4"
+                          ),
+                          style(
+                            "background",
+                            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 20%,rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.8) 100%)"
+                          )
+                        ]),
+                        toList([
+                          p(
+                            toList([class$("text-xl font-medium")]),
+                            toList([text2("Perforaciones corporales")])
+                          )
+                        ])
+                      )
+                    ])
+                  )
+                ])
+              )
+            ])
+          )
+        ])
+      )
+    ])
+  );
+}
+function home_page(set_category_filter_event) {
+  return div(
+    toList([class$("relative min-h-screen")]),
+    toList([
+      hero(),
+      esteril(set_category_filter_event),
+      premium(set_category_filter_event),
+      experiencia(set_category_filter_event)
     ])
   );
 }

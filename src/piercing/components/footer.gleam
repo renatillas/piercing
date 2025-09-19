@@ -5,7 +5,7 @@ import lustre/element/html
 pub fn footer() {
   html.footer(
     [
-      attribute.class("relative"),
+      attribute.class("relative max-w-dvw"),
     ],
     [
       // Footer divisor image

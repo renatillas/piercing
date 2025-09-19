@@ -379,6 +379,9 @@
   .max-w-\[30\%\] {
     max-width: 30%;
   }
+  .max-w-dvw {
+    max-width: 100dvw;
+  }
   .max-w-full {
     max-width: 100%;
   }
