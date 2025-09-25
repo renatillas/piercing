@@ -203,103 +203,69 @@ fn gallery_filtered_page(
   filter_event: fn(GalleryFilter) -> a,
   open_modal_event,
 ) -> Element(a) {
+  let filter_category =
+    categories
+    |> list.filter_map(fn(category) {
+      let #(_, category_filter, items) = category
+      case filter, category_filter {
+        Ear(_), Ear(_) | Facial(_), Facial(_) | Body(_), Body(_) ->
+          Ok(filter_category_list(items, filter_event, filter))
+        _, _ -> Error(Nil)
+      }
+    })
   html.div(
     [
       attribute.class("min-h-screen"),
     ],
     [
-      html.div(
-        [
-          attribute.class("px-4 sm:px-6 lg:px-8 py-8 sm:py-12"),
-        ],
-        [
-          html.div([attribute.class("max-w-7xl mx-auto")], [
-            html.div(
-              [attribute.class("flex flex-col lg:flex-row gap-8 lg:gap-12")],
-              [
-                // Sidebar with filters
-                html.div([attribute.class("lg:w-64 flex-shrink-0")], [
-                  html.div([attribute.class("sticky top-24")], [
-                    filter_sidebar(filter_event, filter),
-                  ]),
-                ]),
-                // Gallery Grid
-                html.div([attribute.class("flex-1")], [
-                  gallery_grid(filter, open_modal_event),
-                ]),
-              ],
-            ),
+      html.div([attribute.class("max-w-7xl mx-auto p-6 ")], [
+        html.div([attribute.class("flex flex-col gap-5")], [
+          header(filter),
+          element.fragment(filter_category),
+          html.div([attribute.class("flex-col lg:flex-row flex")], [
+            other_filters(filter_event, filter),
+            html.div([], [
+              html.div([attribute.class("flex-1")], [
+                gallery_grid(filter, open_modal_event),
+              ]),
+            ]),
           ]),
-        ],
-      ),
+        ]),
+      ]),
     ],
   )
 }
 
-fn filter_sidebar(
+fn other_filters(
   filter_event: fn(GalleryFilter) -> a,
   current_filter: GalleryFilter,
 ) -> Element(a) {
-  html.div(
-    [attribute.class("space-y-6")],
-    categories
-      |> list.map(fn(category) {
-        let #(title, filter, items) = category
-        collapsible_category_section(
-          title,
-          items,
-          filter,
-          filter_event,
-          current_filter,
-        )
-      }),
-  )
+  let all_filters = [
+    #("OREJA", Ear(EarAll)),
+    #("FACIALES", Facial(FacialAll)),
+    #("CORPORALES", Body(BodyAll)),
+  ]
+  html.div([attribute.class("lg:pr-10")], [
+    filter_category_list(all_filters, filter_event, current_filter),
+  ])
 }
 
-fn collapsible_category_section(
-  title: String,
-  items: List(#(String, GalleryFilter)),
-  items_filter: GalleryFilter,
-  filter_event: fn(GalleryFilter) -> a,
-  current_filter: GalleryFilter,
-) -> Element(a) {
-  html.div([], [
-    html.button(
-      [
-        attribute.class(
-          "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded",
-        ),
-      ],
-      [
-        html.h2(
-          [
-            attribute.class(
-              "text-2xl font-bold text-white tracking-wide"
-              <> case current_filter, items_filter {
-                Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
-                  " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
-                _, _ -> "text-shadow-none!"
-              },
-            ),
-            attribute.style("font-family", "'Dark Reborn', sans-serif"),
-            event.on_click(filter_event(items_filter)),
-          ],
-          [
-            element.text(case current_filter, items_filter {
-              Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
-                "erforaciones " <> title <> " ✧"
-              _, _ -> title
-            }),
-          ],
-        ),
-      ],
-    ),
-    case current_filter, items_filter {
-      Body(_), Body(_) | Ear(_), Ear(_) | Facial(_), Facial(_) ->
-        filter_category_list(items, filter_event, current_filter)
-      _, _ -> html.div([], [])
-    },
-  ])
+fn header(filter: GalleryFilter) -> Element(b) {
+  let title = case filter {
+    All -> "Explora nuestro trabajo"
+    Ear(_) -> "Perforaciones de oreja"
+    Facial(_) -> "Perforaciones faciales"
+    Body(_) -> "Perforaciones corporales"
+  }
+  html.h1(
+    [
+      attribute.class(
+        "text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-wide",
+      ),
+      attribute.style("font-family", "'Dark Reborn', sans-serif"),
+    ],
+    [element.text(title)],
+  )
 }
 
 fn filter_category_list(
@@ -308,7 +274,7 @@ fn filter_category_list(
   current_filter: GalleryFilter,
 ) {
   html.div(
-    [attribute.class("ml-10 space-y-2")],
+    [attribute.class("flex flex-wrap pb-5 lg:pb-0")],
     items
       |> list.map(fn(item) {
         let #(name, filter) = item
@@ -316,7 +282,7 @@ fn filter_category_list(
         html.button(
           [
             attribute.class(
-              "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300"
+              "block min-w-max text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300"
               <> case is_active {
                 True -> " pl-3 bg-white/20 font-bold"
                 False -> ""

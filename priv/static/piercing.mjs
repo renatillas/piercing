@@ -1077,7 +1077,7 @@ function unwrap(result, default$) {
 
 // build/dev/javascript/gleam_stdlib/gleam/uri.mjs
 var Uri = class extends CustomType {
-  constructor(scheme, userinfo, host, port, path, query, fragment3) {
+  constructor(scheme, userinfo, host, port, path, query, fragment4) {
     super();
     this.scheme = scheme;
     this.userinfo = userinfo;
@@ -1085,7 +1085,7 @@ var Uri = class extends CustomType {
     this.port = port;
     this.path = path;
     this.query = query;
-    this.fragment = fragment3;
+    this.fragment = fragment4;
   }
 };
 function remove_dot_segments_loop(loop$input, loop$accumulator) {
@@ -1997,6 +1997,9 @@ function text2(content) {
 }
 function none2() {
   return text("", identity2, "");
+}
+function fragment2(children) {
+  return fragment("", identity2, children, empty2());
 }
 
 // build/dev/javascript/lustre/lustre/element/html.mjs
@@ -3219,10 +3222,10 @@ var Reconciler = class {
   }
   // CHANGES -------------------------------------------------------------------
   #insert(parent, { children, before }) {
-    const fragment3 = createDocumentFragment();
+    const fragment4 = createDocumentFragment();
     const beforeEl = this.#getReference(parent, before);
-    this.#insertChildren(fragment3, null, parent, before | 0, children);
-    insertBefore(parent.parentNode, fragment3, beforeEl);
+    this.#insertChildren(fragment4, null, parent, before | 0, children);
+    insertBefore(parent.parentNode, fragment4, beforeEl);
   }
   #replace(parent, { index: index2, with: child }) {
     this.#removeChildren(parent, index2 | 0, 1);
@@ -3614,7 +3617,7 @@ function namespaced2(namespace, tag, attributes, children) {
     false
   );
 }
-function fragment2(children) {
+function fragment3(children) {
   let $ = extract_keyed_children(children);
   let keyed_children;
   let children$1;
@@ -3644,7 +3647,7 @@ var virtualise = (root3) => {
   const fragmentMeta = insertMetadataChild(fragment_kind, rootMeta, fragmentHead, 0, null);
   const children = virtualiseChildNodes(fragmentMeta, root3);
   root3.insertBefore(fragmentHead, root3.firstChild);
-  return fragment2(children);
+  return fragment3(children);
 };
 var canVirtualiseNode = (node) => {
   switch (node.nodeType) {
@@ -4164,31 +4167,59 @@ function about_page() {
       div(
         toList([
           class$(
-            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 border border-gray-700"
+            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 flex gap-10 flex-col lg:flex-row"
           )
         ]),
         toList([
-          p(
+          div(
+            toList([class$("flex justify-center")]),
             toList([
-              class$(
-                "mb-4 sm:mb-6 text-base sm:text-lg text-gray-300 leading-relaxed"
-              )
-            ]),
-            toList([
-              text2(
-                "Hola soy Kei, aprendiz de piercer profesional y apasionado por el arte corporal. Desde que comenc\xE9 mi viaje en el mundo del piercing, he tenido la oportunidad de trabajar con una variedad de clientes, ayud\xE1ndoles a expresar su individualidad a trav\xE9s de perforaciones seguras y de alta calidad."
+              div(
+                toList([
+                  class$(
+                    "w-80 h-full bg-white rounded-lg flex items-center justify-center overflow-hidden"
+                  )
+                ]),
+                toList([
+                  img(
+                    toList([
+                      src("/priv/static/profile_picture.jpeg"),
+                      alt("Avatar de Kei"),
+                      class$("w-full object-cover"),
+                      fetchpriority("high"),
+                      loading("eager")
+                    ])
+                  )
+                ])
               )
             ])
           ),
-          p(
+          div(
+            toList([class$("flex-col gap-5 flex")]),
             toList([
-              class$(
-                "text-base sm:text-lg text-gray-300 leading-relaxed"
-              )
-            ]),
-            toList([
-              text2(
-                "Creo que las perforaciones corporales son una forma de arte y expresi\xF3n personal. Mi objetivo es ayudarte a lograr el look que deseas mientras aseguro tu seguridad y comodidad durante todo el proceso."
+              p(
+                toList([
+                  class$(
+                    "text-base sm:text-lg text-gray-300 leading-relaxed"
+                  )
+                ]),
+                toList([
+                  text2(
+                    "Hola soy Kei, aprendiz de piercer profesional y apasionado por el arte corporal. Desde que comenc\xE9 mi viaje en el mundo del piercing, he tenido la oportunidad de trabajar con una variedad de clientes, ayud\xE1ndoles a expresar su individualidad a trav\xE9s de perforaciones seguras y de alta calidad."
+                  )
+                ])
+              ),
+              p(
+                toList([
+                  class$(
+                    "text-base sm:text-lg text-gray-300 leading-relaxed"
+                  )
+                ]),
+                toList([
+                  text2(
+                    "Creo que las perforaciones corporales son una forma de arte y expresi\xF3n personal. Mi objetivo es ayudarte a lograr el look que deseas mientras aseguro tu seguridad y comodidad durante todo el proceso."
+                  )
+                ])
               )
             ])
           )
@@ -4201,7 +4232,7 @@ function about_page() {
 // build/dev/javascript/piercing/piercing/components/footer.mjs
 function contact_info() {
   return div(
-    toList([class$("md:text-left pt-3")]),
+    toList([class$("md:text-left lg:col-start-4 lg:col-span-2 pt-3")]),
     toList([
       h4(
         toList([
@@ -4245,7 +4276,7 @@ function address() {
 }
 function hours() {
   return div(
-    toList([class$("text-left lg:col-start-4 lg:col-span-2 pt-3")]),
+    toList([class$("text-left lg:col-start-3 pt-3")]),
     toList([
       h4(
         toList([
@@ -4282,7 +4313,7 @@ function legal() {
   return div(
     toList([
       class$(
-        "flex justify-center gap-1 lg:gap-2 lg:text-sm text-xs text-gray-400"
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 text-xs text-gray-400"
       )
     ]),
     toList([
@@ -4312,6 +4343,47 @@ function legal() {
     ])
   );
 }
+function info_designer_and_developer() {
+  return div(
+    toList([
+      class$(
+        "pt-5 text-center lg:text-sm lg:col-start-2 lg:col-span-3 text-center text-gray-400"
+      )
+    ]),
+    toList([
+      div(
+        toList([]),
+        toList([
+          text2("Dise\xF1o por "),
+          a(
+            toList([
+              href("https://www.instagram.com/rinrindoesart/"),
+              class$("hover:text-white"),
+              target("_blank"),
+              rel("noopener")
+            ]),
+            toList([text2("Luc\xEDa Nadal")])
+          )
+        ])
+      ),
+      div(
+        toList([]),
+        toList([
+          text2("Desarrollo por "),
+          a(
+            toList([
+              href("https://renatillas.pages.dev/"),
+              class$("hover:text-white"),
+              target("_blank"),
+              rel("noopener")
+            ]),
+            toList([text2("Renatillas")])
+          )
+        ])
+      )
+    ])
+  );
+}
 function mini_hero() {
   return div(
     toList([
@@ -4329,38 +4401,9 @@ function mini_hero() {
         toList([class$("text-center text-gray-300")]),
         toList([text2("Piercer desde 2025")])
       ),
-      div(toList([class$("")]), toList([legal()]))
-    ])
-  );
-}
-function info_designer_and_developer() {
-  return div(
-    toList([class$("text-left lg:col-start-2 lg:col-span-3")]),
-    toList([
       div(
-        toList([class$("text-center text-gray-300")]),
-        toList([
-          text2("Dise\xF1o por "),
-          a(
-            toList([
-              href("https://www.instagram.com/rinrindoesart/"),
-              class$("hover:text-white"),
-              target("_blank"),
-              rel("noopener")
-            ]),
-            toList([text2("Luc\xEDa Nadal")])
-          ),
-          text2(" y desarrollo por "),
-          a(
-            toList([
-              href("https://renatillas.pages.dev/"),
-              class$("hover:text-white"),
-              target("_blank"),
-              rel("noopener")
-            ]),
-            toList([text2("Renatillas")])
-          )
-        ])
+        toList([class$("")]),
+        toList([info_designer_and_developer()])
       )
     ])
   );
@@ -4399,15 +4442,10 @@ function footer2() {
               div(
                 toList([
                   class$(
-                    "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-0"
+                    "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5 lg:grid-rows-2"
                   )
                 ]),
-                toList([
-                  mini_hero(),
-                  contact_info(),
-                  hours(),
-                  info_designer_and_developer()
-                ])
+                toList([mini_hero(), hours(), contact_info(), legal()])
               )
             ])
           )
@@ -5004,9 +5042,31 @@ function gallery_home_page(filter_event) {
     ])
   );
 }
+function header(filter3) {
+  let _block;
+  if (filter3 instanceof All) {
+    _block = "Explora nuestro trabajo";
+  } else if (filter3 instanceof Ear) {
+    _block = "Perforaciones de oreja";
+  } else if (filter3 instanceof Facial) {
+    _block = "Perforaciones faciales";
+  } else {
+    _block = "Perforaciones corporales";
+  }
+  let title = _block;
+  return h1(
+    toList([
+      class$(
+        "text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-wide"
+      ),
+      style("font-family", "'Dark Reborn', sans-serif")
+    ]),
+    toList([text2(title)])
+  );
+}
 function filter_category_list(items, filter_event, current_filter) {
   return div(
-    toList([class$("ml-10 space-y-2")]),
+    toList([class$("flex flex-wrap pb-5 lg:pb-0")]),
     (() => {
       let _pipe = items;
       return map(
@@ -5020,7 +5080,7 @@ function filter_category_list(items, filter_event, current_filter) {
           return button(
             toList([
               class$(
-                "block w-full text-left px-3 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
+                "block min-w-max text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
                   if (is_active) {
                     return " pl-3 bg-white/20 font-bold";
                   } else {
@@ -5047,65 +5107,15 @@ function filter_category_list(items, filter_event, current_filter) {
     })()
   );
 }
-function collapsible_category_section(title, items, items_filter, filter_event, current_filter) {
+function other_filters(filter_event, current_filter) {
+  let all_filters = toList([
+    ["OREJA", new Ear(new EarAll())],
+    ["FACIALES", new Facial(new FacialAll())],
+    ["CORPORALES", new Body(new BodyAll())]
+  ]);
   return div(
-    toList([]),
-    toList([
-      button(
-        toList([
-          class$(
-            "w-full text-left flex items-center justify-between mb-4 hover:bg-white/5 transition-colors duration-200 p-2 rounded"
-          )
-        ]),
-        toList([
-          h2(
-            toList([
-              class$(
-                "text-2xl font-bold text-white tracking-wide" + (() => {
-                  if (items_filter instanceof Ear && current_filter instanceof Ear) {
-                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
-                  } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
-                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
-                  } else if (items_filter instanceof Body && current_filter instanceof Body) {
-                    return " font-bold text-shadow-[0_0_10px_rgba(255,255,255,0.7)]";
-                  } else {
-                    return "text-shadow-none!";
-                  }
-                })()
-              ),
-              style("font-family", "'Dark Reborn', sans-serif"),
-              on_click(filter_event(items_filter))
-            ]),
-            toList([
-              text2(
-                (() => {
-                  if (items_filter instanceof Ear && current_filter instanceof Ear) {
-                    return "\uE00Ferforaciones " + title + " \u2727";
-                  } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
-                    return "\uE00Ferforaciones " + title + " \u2727";
-                  } else if (items_filter instanceof Body && current_filter instanceof Body) {
-                    return "\uE00Ferforaciones " + title + " \u2727";
-                  } else {
-                    return title;
-                  }
-                })()
-              )
-            ])
-          )
-        ])
-      ),
-      (() => {
-        if (items_filter instanceof Ear && current_filter instanceof Ear) {
-          return filter_category_list(items, filter_event, current_filter);
-        } else if (items_filter instanceof Facial && current_filter instanceof Facial) {
-          return filter_category_list(items, filter_event, current_filter);
-        } else if (items_filter instanceof Body && current_filter instanceof Body) {
-          return filter_category_list(items, filter_event, current_filter);
-        } else {
-          return div(toList([]), toList([]));
-        }
-      })()
-    ])
+    toList([class$("lg:pr-10")]),
+    toList([filter_category_list(all_filters, filter_event, current_filter)])
   );
 }
 function get_filtered_images(filter3) {
@@ -5345,59 +5355,51 @@ var categories = /* @__PURE__ */ toList([
     ])
   ]
 ]);
-function filter_sidebar(filter_event, current_filter) {
-  return div(
-    toList([class$("space-y-6")]),
-    (() => {
-      let _pipe = categories;
-      return map(
-        _pipe,
-        (category) => {
-          let title;
-          let filter3;
-          let items;
-          title = category[0];
-          filter3 = category[1];
-          items = category[2];
-          return collapsible_category_section(
-            title,
-            items,
-            filter3,
-            filter_event,
-            current_filter
-          );
-        }
-      );
-    })()
-  );
-}
 function gallery_filtered_page(filter3, filter_event, open_modal_event) {
+  let _block;
+  let _pipe = categories;
+  _block = filter_map(
+    _pipe,
+    (category) => {
+      let category_filter;
+      let items;
+      category_filter = category[1];
+      items = category[2];
+      if (category_filter instanceof Ear && filter3 instanceof Ear) {
+        return new Ok(filter_category_list(items, filter_event, filter3));
+      } else if (category_filter instanceof Facial && filter3 instanceof Facial) {
+        return new Ok(filter_category_list(items, filter_event, filter3));
+      } else if (category_filter instanceof Body && filter3 instanceof Body) {
+        return new Ok(filter_category_list(items, filter_event, filter3));
+      } else {
+        return new Error(void 0);
+      }
+    }
+  );
+  let filter_category = _block;
   return div(
     toList([class$("min-h-screen")]),
     toList([
       div(
-        toList([class$("px-4 sm:px-6 lg:px-8 py-8 sm:py-12")]),
+        toList([class$("max-w-7xl mx-auto p-6 ")]),
         toList([
           div(
-            toList([class$("max-w-7xl mx-auto")]),
+            toList([class$("flex flex-col gap-5")]),
             toList([
+              header(filter3),
+              fragment2(filter_category),
               div(
+                toList([class$("flex-col lg:flex-row flex")]),
                 toList([
-                  class$("flex flex-col lg:flex-row gap-8 lg:gap-12")
-                ]),
-                toList([
+                  other_filters(filter_event, filter3),
                   div(
-                    toList([class$("lg:w-64 flex-shrink-0")]),
+                    toList([]),
                     toList([
                       div(
-                        toList([class$("sticky top-24")]),
-                        toList([filter_sidebar(filter_event, filter3)])
+                        toList([class$("flex-1")]),
+                        toList([gallery_grid(filter3, open_modal_event)])
                       )
                     ])
-                  ),
-                  div(
-                    toList([class$("flex-1")]),
-                    toList([gallery_grid(filter3, open_modal_event)])
                   )
                 ])
               )
@@ -5463,7 +5465,7 @@ function hero() {
               div(
                 toList([
                   class$(
-                    "flex flex-col order-2 lg:order-2 text-center  lg:text-left"
+                    "flex max-w-xl flex-col order-2 lg:order-2 text-center lg:text-left"
                   )
                 ]),
                 toList([
@@ -5478,7 +5480,7 @@ function hero() {
                   p(
                     toList([
                       class$(
-                        "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed"
+                        "text-lg text-left sm:text-xl text-gray-300 mb-8 max-w-lg mx-6 leading-relaxed"
                       )
                     ]),
                     toList([

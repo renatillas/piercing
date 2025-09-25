@@ -60,7 +60,7 @@ fn hero() {
             html.div(
               [
                 attribute.class(
-                  "flex flex-col order-2 lg:order-2 text-center  lg:text-left",
+                  "flex max-w-xl flex-col order-2 lg:order-2 text-center lg:text-left",
                 ),
               ],
               [
@@ -75,7 +75,7 @@ fn hero() {
                 html.p(
                   [
                     attribute.class(
-                      "text-lg sm:text-xl text-gray-300 mb-8 max-w-md mx-auto leading-relaxed",
+                      "text-lg text-left sm:text-xl text-gray-300 mb-8 max-w-lg mx-6 leading-relaxed",
                     ),
                   ],
                   [

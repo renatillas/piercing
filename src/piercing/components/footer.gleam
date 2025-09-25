@@ -33,14 +33,14 @@ pub fn footer() {
             html.div(
               [
                 attribute.class(
-                  "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-0",
+                  "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5 lg:grid-rows-2",
                 ),
               ],
               [
                 mini_hero(),
-                contact_info(),
                 hours(),
-                info_designer_and_developer(),
+                contact_info(),
+                legal(),
               ],
             ),
           ]),
@@ -51,7 +51,7 @@ pub fn footer() {
 }
 
 fn contact_info() {
-  html.div([attribute.class("md:text-left pt-3")], [
+  html.div([attribute.class("md:text-left lg:col-start-4 lg:col-span-2 pt-3")], [
     html.h4(
       [
         attribute.class(
@@ -73,7 +73,7 @@ fn contact_info() {
 }
 
 fn hours() {
-  html.div([attribute.class("text-left lg:col-start-4 lg:col-span-2 pt-3")], [
+  html.div([attribute.class("text-left lg:col-start-3 pt-3")], [
     html.h4(
       [
         attribute.class(
@@ -111,7 +111,7 @@ fn legal() {
   html.div(
     [
       attribute.class(
-        "flex justify-center gap-1 lg:gap-2 lg:text-sm text-xs text-gray-400",
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 text-xs text-gray-400",
       ),
     ],
     [
@@ -162,34 +162,43 @@ fn mini_hero() {
       html.p([attribute.class("text-center text-gray-300")], [
         element.text("Piercer desde 2025"),
       ]),
-      html.div([attribute.class("")], [legal()]),
+      html.div([attribute.class("")], [info_designer_and_developer()]),
     ],
   )
 }
 
 fn info_designer_and_developer() {
-  html.div([attribute.class("text-left lg:col-start-2 lg:col-span-3")], [
-    html.div([attribute.class("text-center text-gray-300")], [
-      element.text("Diseño por "),
-      html.a(
-        [
-          attribute.href("https://www.instagram.com/rinrindoesart/"),
-          attribute.class("hover:text-white"),
-          attribute.target("_blank"),
-          attribute.rel("noopener"),
-        ],
-        [element.text("Lucía Nadal")],
+  html.div(
+    [
+      attribute.class(
+        "pt-5 text-center lg:text-sm lg:col-start-2 lg:col-span-3 text-center text-gray-400",
       ),
-      element.text(" y desarrollo por "),
-      html.a(
-        [
-          attribute.href("https://renatillas.pages.dev/"),
-          attribute.class("hover:text-white"),
-          attribute.target("_blank"),
-          attribute.rel("noopener"),
-        ],
-        [element.text("Renatillas")],
-      ),
-    ]),
-  ])
+    ],
+    [
+      html.div([], [
+        element.text("Diseño por "),
+        html.a(
+          [
+            attribute.href("https://www.instagram.com/rinrindoesart/"),
+            attribute.class("hover:text-white"),
+            attribute.target("_blank"),
+            attribute.rel("noopener"),
+          ],
+          [element.text("Lucía Nadal")],
+        ),
+      ]),
+      html.div([], [
+        element.text("Desarrollo por "),
+        html.a(
+          [
+            attribute.href("https://renatillas.pages.dev/"),
+            attribute.class("hover:text-white"),
+            attribute.target("_blank"),
+            attribute.rel("noopener"),
+          ],
+          [element.text("Renatillas")],
+        ),
+      ]),
+    ],
+  )
 }
