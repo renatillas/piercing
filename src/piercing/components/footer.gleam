@@ -34,7 +34,7 @@ pub fn footer() {
             html.div(
               [
                 attribute.class(
-                  "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6",
+                  "grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-10 mb-6",
                 ),
               ],
               [
@@ -65,7 +65,7 @@ fn contact_info() {
     html.p([attribute.class("text-center text-gray-300 mb-2")], [
       element.text("+34 644 09 12 10"),
     ]),
-    html.p([attribute.class("text-center text-gray-300 mb-2")], [
+    html.p([attribute.class("text-center text-gray-300")], [
       html.a([attribute.href("https://www.instagram.com/keitepinxa/")], [
         element.text("@keitepinxa"),
       ]),

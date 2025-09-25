@@ -4217,7 +4217,7 @@ function contact_info() {
         toList([text2("+34 644 09 12 10")])
       ),
       p(
-        toList([class$("text-center text-gray-300 mb-2")]),
+        toList([class$("text-center text-gray-300")]),
         toList([
           a(
             toList([href("https://www.instagram.com/keitepinxa/")]),
@@ -4407,7 +4407,7 @@ function footer2() {
               div(
                 toList([
                   class$(
-                    "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6"
+                    "grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-10 mb-6"
                   )
                 ]),
                 toList([
