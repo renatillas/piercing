@@ -1385,6 +1385,12 @@ function style(property3, value) {
 function href(url) {
   return attribute2("href", url);
 }
+function target(value) {
+  return attribute2("target", value);
+}
+function rel(value) {
+  return attribute2("rel", value);
+}
 function alt(text4) {
   return attribute2("alt", text4);
 }
@@ -3792,8 +3798,8 @@ var Runtime = class {
     }
   }
   emit(event4, data) {
-    const target = this.root.host ?? this.root;
-    target.dispatchEvent(
+    const target2 = this.root.host ?? this.root;
+    target2.dispatchEvent(
       new CustomEvent(event4, {
         detail: data,
         bubbles: true,
@@ -4170,7 +4176,7 @@ function about_page() {
             ]),
             toList([
               text2(
-                "Kei Te Pinxa es un estudio de perforaciones corporales premier dedicado a proporcionar modificaciones corporales seguras, profesionales y art\xEDsticas. Nuestros perforadores experimentados usan solo materiales de la m\xE1s alta calidad y mantienen los est\xE1ndares de higiene m\xE1s estrictos."
+                "Hola soy Kei, aprendiz de piercer profesional y apasionado por el arte corporal. Desde que comenc\xE9 mi viaje en el mundo del piercing, he tenido la oportunidad de trabajar con una variedad de clientes, ayud\xE1ndoles a expresar su individualidad a trav\xE9s de perforaciones seguras y de alta calidad."
               )
             ])
           ),
@@ -4182,7 +4188,7 @@ function about_page() {
             ]),
             toList([
               text2(
-                "Creemos que las perforaciones corporales son una forma de arte y expresi\xF3n personal. Nuestro objetivo es ayudarte a lograr el look que deseas mientras aseguramos tu seguridad y comodidad durante todo el proceso."
+                "Creo que las perforaciones corporales son una forma de arte y expresi\xF3n personal. Mi objetivo es ayudarte a lograr el look que deseas mientras aseguro tu seguridad y comodidad durante todo el proceso."
               )
             ])
           )
@@ -4208,21 +4214,26 @@ function contact_info() {
       ),
       p(
         toList([class$("text-center text-gray-300 mb-2")]),
-        toList([text2("+34 663 73 66 31")])
+        toList([text2("+34 644 09 12 10")])
       ),
       p(
         toList([class$("text-center text-gray-300 mb-2")]),
-        toList([text2("@keitepinxa")])
+        toList([
+          a(
+            toList([href("https://www.instagram.com/keitepinxa/")]),
+            toList([text2("@keitepinxa")])
+          )
+        ])
       )
     ])
   );
 }
 function address() {
   return div(
-    toList([class$("md:text-left")]),
+    toList([class$("text-left")]),
     toList([
       p(
-        toList([class$("text-center text-gray-300")]),
+        toList([class$("text-gray-300")]),
         toList([
           text2("C/ Doctor Jaume Segarra, 4"),
           br(toList([])),
@@ -4234,7 +4245,7 @@ function address() {
 }
 function hours() {
   return div(
-    toList([class$("md:text-left")]),
+    toList([class$("text-left")]),
     toList([
       h4(
         toList([
@@ -4245,25 +4256,35 @@ function hours() {
         ]),
         toList([text2("HORARIO")])
       ),
-      p(
-        toList([class$("text-center text-gray-300 mb-2")]),
-        toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
-      ),
-      p(
-        toList([class$("text-center text-gray-300")]),
-        toList([text2("Domingo: Cerrado")])
-      ),
-      address()
+      div(
+        toList([class$("flex flex-col items-center")]),
+        toList([
+          div(
+            toList([class$("mb-3")]),
+            toList([
+              p(
+                toList([class$("text-gray-300")]),
+                toList([text2("Lunes a S\xE1bado: 14:00 - 20:00")])
+              ),
+              p(
+                toList([class$("text-gray-300")]),
+                toList([text2("Domingo: Cerrado")])
+              )
+            ])
+          ),
+          address()
+        ])
+      )
     ])
   );
 }
 function legal() {
   return div(
-    toList([class$("flex gap-2 text-sm text-gray-400")]),
+    toList([class$("flex gap-2 lg:text-sm text-xs text-gray-400")]),
     toList([
       a(
         toList([
-          class$("hover:text-white transition-colors"),
+          class$("hover:text-white text-center"),
           href("/aviso-legal")
         ]),
         toList([text2("Aviso legal")])
@@ -4271,7 +4292,7 @@ function legal() {
       text3("\u2727"),
       a(
         toList([
-          class$("text-center hover:text-white transition-colors"),
+          class$("hover:text-white text-center"),
           href("/politica-privacidad")
         ]),
         toList([text2("Pol\xEDtica de privacidad")])
@@ -4279,7 +4300,7 @@ function legal() {
       text3("\u2727"),
       a(
         toList([
-          class$("hover:text-white transition-colors"),
+          class$("hover:text-white text-center"),
           href("/politica-cookies")
         ]),
         toList([text2("Pol\xEDtica de Cookies")])
@@ -4293,16 +4314,62 @@ function mini_hero() {
     toList([
       p(
         toList([
-          class$("text-4xl font-bold text-white mb-2"),
+          class$("text-center text-4xl font-bold text-white mb-2"),
           style("font-family", "'Dark Reborn', sans-serif")
         ]),
         toList([text2("\uE072EI \uE193 PINX\uE01A")])
       ),
       p(
-        toList([class$("text-gray-300")]),
-        toList([text2("Piercer y modificadora corporal desde 2023")])
+        toList([class$("text-center text-gray-300")]),
+        toList([text2("Piercer desde 2025")])
       ),
-      div(toList([class$("mt-10")]), toList([legal()]))
+      div(toList([class$("mt-5 mb-5")]), toList([legal()]))
+    ])
+  );
+}
+function info_designer_and_developer() {
+  return div(
+    toList([class$("text-left col-start-2")]),
+    toList([
+      h4(
+        toList([
+          class$(
+            "text-center text-2xl font-bold text-white mb-3 tracking-wide"
+          ),
+          style("font-family", "'Dark Reborn', sans-serif")
+        ]),
+        toList([text2("DISE\xD1O Y DESARROLLO")])
+      ),
+      div(
+        toList([class$("text-center text-gray-300")]),
+        toList([
+          text2("Dise\xF1ado por "),
+          a(
+            toList([
+              href("https://www.instagram.com/rinrindoesart/"),
+              class$("hover:text-white"),
+              target("_blank"),
+              rel("noopener")
+            ]),
+            toList([text2("Rin Rin")])
+          )
+        ])
+      ),
+      div(
+        toList([class$("text-center text-gray-300")]),
+        toList([
+          text2("Desarrollado por "),
+          a(
+            toList([
+              href("https://renatillas.pages.dev/"),
+              class$("hover:text-white"),
+              target("_blank"),
+              rel("noopener")
+            ]),
+            toList([text2("Renatillas")])
+          )
+        ])
+      )
     ])
   );
 }
@@ -4343,7 +4410,12 @@ function footer2() {
                     "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6"
                   )
                 ]),
-                toList([mini_hero(), contact_info(), hours()])
+                toList([
+                  mini_hero(),
+                  contact_info(),
+                  hours(),
+                  info_designer_and_developer()
+                ])
               )
             ])
           )
@@ -4588,7 +4660,9 @@ function navbar(current_route) {
         ]),
         toList([
           div(
-            toList([class$("nav-brand mb-2 sm:mb-0 sm:left-0")]),
+            toList([
+              class$("nav-brand mb-2 sm:mb-0 sm:left-0 mt-5 lg:mt-0")
+            ]),
             toList([
               a(
                 toList([
@@ -4703,7 +4777,7 @@ function contact_page() {
               ),
               p(
                 toList([class$("text-gray-300")]),
-                toList([text2("+34 663 73 66 31")])
+                toList([text2("+34 644 09 12 10")])
               )
             ])
           ),
@@ -5424,7 +5498,7 @@ function hero() {
                   a(
                     toList([
                       class$(
-                        "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 "
+                        "self-center text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 "
                       ),
                       href("/about")
                     ]),
@@ -5622,7 +5696,7 @@ function premium(set_category_filter_event) {
                     ]),
                     toList([
                       text2(
-                        "Joyer\xEDa de titanio y acero quir\xFArgico de alta calidad"
+                        "Joyer\xEDa de acero quir\xFArgico y titanio de alta calidad"
                       )
                     ])
                   )
@@ -5670,7 +5744,7 @@ function experiencia(set_category_filter_event) {
                     ]),
                     toList([
                       text2(
-                        "M\xE1s de 2 a\xF1os de experiencia profesional en perforaciones"
+                        "M\xE1s de 7 meses de experiencia profesional en perforaciones"
                       )
                     ])
                   )
@@ -6635,6 +6709,11 @@ function legal_page(page_type) {
   );
 }
 
+// build/dev/javascript/piercing/piercing/reviews.mjs
+function reviews() {
+  return div(toList([]), toList([]));
+}
+
 // build/dev/javascript/piercing/piercing.mjs
 var FILEPATH = "src/piercing.gleam";
 var Home2 = class extends CustomType {
@@ -6752,8 +6831,10 @@ function route_to_navbar_route(route) {
     return new AvisoLegal();
   } else if (route instanceof PoliticaPrivacidad3) {
     return new PoliticaPrivacidad();
-  } else {
+  } else if (route instanceof PoliticaCookies3) {
     return new PoliticaCookies();
+  } else {
+    return new Home();
   }
 }
 function update2(model, msg) {
@@ -6999,8 +7080,10 @@ function view2(model) {
               return legal_page(new AvisoLegal2());
             } else if ($ instanceof PoliticaPrivacidad3) {
               return legal_page(new PoliticaPrivacidad2());
-            } else {
+            } else if ($ instanceof PoliticaCookies3) {
               return legal_page(new PoliticaCookies2());
+            } else {
+              return reviews();
             }
           })()
         ])
@@ -7027,15 +7110,15 @@ function main2() {
       "let_assert",
       FILEPATH,
       "piercing",
-      48,
+      50,
       "main",
       "Pattern match failed, no pattern matched the value.",
       {
         value: $,
-        start: 1017,
-        end: 1066,
-        pattern_start: 1028,
-        pattern_end: 1033
+        start: 1051,
+        end: 1100,
+        pattern_start: 1062,
+        pattern_end: 1067
       }
     );
   }

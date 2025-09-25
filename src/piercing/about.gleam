@@ -33,7 +33,7 @@ pub fn about_page() {
             ],
             [
               element.text(
-                "Kei Te Pinxa es un estudio de perforaciones corporales premier dedicado a proporcionar modificaciones corporales seguras, profesionales y artísticas. Nuestros perforadores experimentados usan solo materiales de la más alta calidad y mantienen los estándares de higiene más estrictos.",
+                "Hola soy Kei, aprendiz de piercer profesional y apasionado por el arte corporal. Desde que comencé mi viaje en el mundo del piercing, he tenido la oportunidad de trabajar con una variedad de clientes, ayudándoles a expresar su individualidad a través de perforaciones seguras y de alta calidad.",
               ),
             ],
           ),
@@ -45,7 +45,7 @@ pub fn about_page() {
             ],
             [
               element.text(
-                "Creemos que las perforaciones corporales son una forma de arte y expresión personal. Nuestro objetivo es ayudarte a lograr el look que deseas mientras aseguramos tu seguridad y comodidad durante todo el proceso.",
+                "Creo que las perforaciones corporales son una forma de arte y expresión personal. Mi objetivo es ayudarte a lograr el look que deseas mientras aseguro tu seguridad y comodidad durante todo el proceso.",
               ),
             ],
           ),

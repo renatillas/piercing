@@ -87,7 +87,7 @@ fn hero() {
                 html.a(
                   [
                     attribute.class(
-                      "self-center max-w-[30%] text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 ",
+                      "self-center text-center inline-block text-white border-2 border-white px-8 py-3 text-lg font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 ",
                     ),
                     attribute.href("/about"),
                   ],
@@ -288,7 +288,7 @@ pub fn premium(set_category_filter_event) {
                     ],
                     [
                       element.text(
-                        "Joyería de titanio y acero quirúrgico de alta calidad",
+                        "Joyería de acero quirúrgico y titanio de alta calidad",
                       ),
                     ],
                   ),
@@ -340,7 +340,7 @@ fn experiencia(set_category_filter_event) {
                     ],
                     [
                       element.text(
-                        "Más de 2 años de experiencia profesional en perforaciones",
+                        "Más de 7 meses de experiencia profesional en perforaciones",
                       ),
                     ],
                   ),

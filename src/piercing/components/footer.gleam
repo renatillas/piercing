@@ -41,6 +41,7 @@ pub fn footer() {
                 mini_hero(),
                 contact_info(),
                 hours(),
+                info_designer_and_developer(),
               ],
             ),
           ]),
@@ -62,16 +63,18 @@ fn contact_info() {
       [element.text("CONTACTO")],
     ),
     html.p([attribute.class("text-center text-gray-300 mb-2")], [
-      element.text("+34 663 73 66 31"),
+      element.text("+34 644 09 12 10"),
     ]),
     html.p([attribute.class("text-center text-gray-300 mb-2")], [
-      element.text("@keitepinxa"),
+      html.a([attribute.href("https://www.instagram.com/keitepinxa/")], [
+        element.text("@keitepinxa"),
+      ]),
     ]),
   ])
 }
 
 fn hours() {
-  html.div([attribute.class("md:text-left")], [
+  html.div([attribute.class("text-left")], [
     html.h4(
       [
         attribute.class(
@@ -81,19 +84,23 @@ fn hours() {
       ],
       [element.text("HORARIO")],
     ),
-    html.p([attribute.class("text-center text-gray-300 mb-2")], [
-      element.text("Lunes a Sábado: 14:00 - 20:00"),
+    html.div([attribute.class("flex flex-col items-center")], [
+      html.div([attribute.class("mb-3")], [
+        html.p([attribute.class("text-gray-300")], [
+          element.text("Lunes a Sábado: 14:00 - 20:00"),
+        ]),
+        html.p([attribute.class("text-gray-300")], [
+          element.text("Domingo: Cerrado"),
+        ]),
+      ]),
+      address(),
     ]),
-    html.p([attribute.class("text-center text-gray-300")], [
-      element.text("Domingo: Cerrado"),
-    ]),
-    address(),
   ])
 }
 
 fn address() {
-  html.div([attribute.class("md:text-left")], [
-    html.p([attribute.class("text-center text-gray-300")], [
+  html.div([attribute.class("text-left")], [
+    html.p([attribute.class("text-gray-300")], [
       element.text("C/ Doctor Jaume Segarra, 4"),
       html.br([]),
       element.text("46019 Valencia, España"),
@@ -102,10 +109,10 @@ fn address() {
 }
 
 fn legal() {
-  html.div([attribute.class("flex gap-2 text-sm text-gray-400")], [
+  html.div([attribute.class("flex gap-2 lg:text-sm text-xs text-gray-400")], [
     html.a(
       [
-        attribute.class("hover:text-white transition-colors"),
+        attribute.class("hover:text-white text-center"),
         attribute.href("/aviso-legal"),
       ],
       [
@@ -115,7 +122,7 @@ fn legal() {
     html.text("✧"),
     html.a(
       [
-        attribute.class("text-center hover:text-white transition-colors"),
+        attribute.class("hover:text-white text-center"),
         attribute.href("/politica-privacidad"),
       ],
       [
@@ -125,7 +132,7 @@ fn legal() {
     html.text("✧"),
     html.a(
       [
-        attribute.class("hover:text-white transition-colors"),
+        attribute.class("hover:text-white text-center"),
         attribute.href("/politica-cookies"),
       ],
       [
@@ -139,14 +146,52 @@ fn mini_hero() {
   html.div([attribute.class("")], [
     html.p(
       [
-        attribute.class("text-4xl font-bold text-white mb-2"),
+        attribute.class("text-center text-4xl font-bold text-white mb-2"),
         attribute.style("font-family", "'Dark Reborn', sans-serif"),
       ],
       [element.text("EI  PINX")],
     ),
-    html.p([attribute.class("text-gray-300")], [
-      element.text("Piercer y modificadora corporal desde 2023"),
+    html.p([attribute.class("text-center text-gray-300")], [
+      element.text("Piercer desde 2025"),
     ]),
-    html.div([attribute.class("mt-10")], [legal()]),
+    html.div([attribute.class("mt-5 mb-5")], [legal()]),
+  ])
+}
+
+fn info_designer_and_developer() {
+  html.div([attribute.class("text-left col-start-2")], [
+    html.h4(
+      [
+        attribute.class(
+          "text-center text-2xl font-bold text-white mb-3 tracking-wide",
+        ),
+        attribute.style("font-family", "'Dark Reborn', sans-serif"),
+      ],
+      [element.text("DISEÑO Y DESARROLLO")],
+    ),
+    html.div([attribute.class("text-center text-gray-300")], [
+      element.text("Diseñado por "),
+      html.a(
+        [
+          attribute.href("https://www.instagram.com/rinrindoesart/"),
+          attribute.class("hover:text-white"),
+          attribute.target("_blank"),
+          attribute.rel("noopener"),
+        ],
+        [element.text("Rin Rin")],
+      ),
+    ]),
+    html.div([attribute.class("text-center text-gray-300")], [
+      element.text("Desarrollado por "),
+      html.a(
+        [
+          attribute.href("https://renatillas.pages.dev/"),
+          attribute.class("hover:text-white"),
+          attribute.target("_blank"),
+          attribute.rel("noopener"),
+        ],
+        [element.text("Renatillas")],
+      ),
+    ]),
   ])
 }

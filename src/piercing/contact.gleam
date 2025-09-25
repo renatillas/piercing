@@ -64,7 +64,7 @@ pub fn contact_page() {
                 [element.text("Teléfono")],
               ),
               html.p([attribute.class("text-gray-300")], [
-                element.text("+34 663 73 66 31"),
+                element.text("+34 644 09 12 10"),
               ]),
             ],
           ),

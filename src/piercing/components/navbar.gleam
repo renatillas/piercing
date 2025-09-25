@@ -40,17 +40,20 @@ pub fn navbar(current_route: Route) {
           ),
         ],
         [
-          html.div([attribute.class("nav-brand mb-2 sm:mb-0 sm:left-0")], [
-            html.a(
-              [
-                attribute.class(
-                  "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white",
-                ),
-                attribute.href("/"),
-              ],
-              [element.text("EI  PINX")],
-            ),
-          ]),
+          html.div(
+            [attribute.class("nav-brand mb-2 sm:mb-0 sm:left-0 mt-5 lg:mt-0")],
+            [
+              html.a(
+                [
+                  attribute.class(
+                    "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider text-white",
+                  ),
+                  attribute.href("/"),
+                ],
+                [element.text("EI  PINX")],
+              ),
+            ],
+          ),
           html.div(
             [
               attribute.class(

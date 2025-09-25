@@ -15,6 +15,7 @@ import piercing/contact
 import piercing/gallery
 import piercing/home
 import piercing/legal
+import piercing/reviews
 
 pub type Route {
   Home
@@ -24,6 +25,7 @@ pub type Route {
   AvisoLegal
   PoliticaPrivacidad
   PoliticaCookies
+  Reviews
 }
 
 pub type Msg {
@@ -90,6 +92,7 @@ fn route_to_navbar_route(route: Route) -> navbar.Route {
     AvisoLegal -> navbar.AvisoLegal
     PoliticaPrivacidad -> navbar.PoliticaPrivacidad
     PoliticaCookies -> navbar.PoliticaCookies
+    Reviews -> navbar.Home
   }
 }
 
@@ -190,6 +193,7 @@ fn view(model: Model) -> Element(Msg) {
           AvisoLegal -> legal.legal_page(legal.AvisoLegal)
           PoliticaPrivacidad -> legal.legal_page(legal.PoliticaPrivacidad)
           PoliticaCookies -> legal.legal_page(legal.PoliticaCookies)
+          Reviews -> reviews.reviews()
         },
       ]),
       footer.footer(),
