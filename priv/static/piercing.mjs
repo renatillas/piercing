@@ -4329,7 +4329,7 @@ function mini_hero() {
 }
 function info_designer_and_developer() {
   return div(
-    toList([class$("text-left col-start-2")]),
+    toList([class$("text-left ")]),
     toList([
       h4(
         toList([
@@ -4351,7 +4351,7 @@ function info_designer_and_developer() {
               target("_blank"),
               rel("noopener")
             ]),
-            toList([text2("Rin Rin")])
+            toList([text2("Rin")])
           )
         ])
       ),

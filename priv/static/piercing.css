@@ -276,9 +276,6 @@
   .order-2 {
     order: 2;
   }
-  .col-start-2 {
-    grid-column-start: 2;
-  }
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }

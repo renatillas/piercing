@@ -159,7 +159,7 @@ fn mini_hero() {
 }
 
 fn info_designer_and_developer() {
-  html.div([attribute.class("text-left col-start-2")], [
+  html.div([attribute.class("text-left ")], [
     html.h4(
       [
         attribute.class(
@@ -178,7 +178,7 @@ fn info_designer_and_developer() {
           attribute.target("_blank"),
           attribute.rel("noopener"),
         ],
-        [element.text("Rin Rin")],
+        [element.text("Rin")],
       ),
     ]),
     html.div([attribute.class("text-center text-gray-300")], [
