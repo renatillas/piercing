@@ -37,31 +37,19 @@ pub fn modal_view(
               ),
             ],
             [
-              html.button(
-                [
-                  attribute.class(
-                    "fixed top-10 right:10 lg:right-130 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130",
-                  ),
-                  attribute.attribute("aria-label", "Close modal"),
-                  event.on_click(close_modal_event),
-                ],
-                [
-                  element.text("×"),
-                ],
-              ),
               html.figure(
                 [
                   attribute.class(
-                    "bg-black border border-white/10 relative overflow-hidden m-0",
+                    "flex bg-black border border-white/10 relative overflow-hidden m-0",
                   ),
                 ],
                 [
                   html.button(
                     [
                       attribute.class(
-                        "fixed top-70 left-10 lg:left-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                        "self-center text-white text-2xl font-bold z-10 w-8 h-8 justify-center cover:scale-130 bg-black",
                       ),
-                      attribute.attribute("aria-label", "Close modal"),
+                      attribute.attribute("aria-label", "Go to previous image"),
                       event.on_click(go_to_previous_photo_event(
                         current,
                         filtered_images,
@@ -70,12 +58,37 @@ pub fn modal_view(
                     ],
                     [html.text("<")],
                   ),
+                  html.div([], [
+                    html.img([
+                      attribute.src(current.src),
+                      attribute.alt(current.alt),
+                      attribute.class("max-w-full max-h-[80vh] object-contain"),
+                    ]),
+                    html.figcaption(
+                      [
+                        attribute.class(
+                          "modal-caption-accent bg-transparent border-t border-white/10 p-4 text-center text-gray-300 uppercase tracking-[2px] relative",
+                        ),
+                        attribute.style(
+                          "font-family",
+                          "'Dark Reborn', sans-serif",
+                        ),
+                        attribute.style(
+                          "text-shadow",
+                          "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)",
+                        ),
+                      ],
+                      [
+                        element.text(current.alt),
+                      ],
+                    ),
+                  ]),
                   html.button(
                     [
                       attribute.class(
-                        "fixed top-70 right-10 lg:right-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 ",
+                        "self-center text-white text-2xl font-bold z-10 w-8 h-8 hover:scale-130 bg-black",
                       ),
-                      attribute.attribute("aria-label", "Close modal"),
+                      attribute.attribute("aria-label", "Go to next image"),
                       event.on_click(go_to_next_photo_event(
                         current,
                         filtered_images,
@@ -83,29 +96,6 @@ pub fn modal_view(
                         |> event.stop_propagation(),
                     ],
                     [html.text(">")],
-                  ),
-                  html.img([
-                    attribute.src(current.src),
-                    attribute.alt(current.alt),
-                    attribute.class("max-w-full max-h-[80vh] object-contain"),
-                  ]),
-                  html.figcaption(
-                    [
-                      attribute.class(
-                        "modal-caption-accent bg-transparent border-t border-white/10 p-4 text-center text-gray-300 uppercase tracking-[2px] relative",
-                      ),
-                      attribute.style(
-                        "font-family",
-                        "'Dark Reborn', sans-serif",
-                      ),
-                      attribute.style(
-                        "text-shadow",
-                        "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)",
-                      ),
-                    ],
-                    [
-                      element.text(current.alt),
-                    ],
                   ),
                 ],
               ),

@@ -4201,7 +4201,7 @@ function about_page() {
 // build/dev/javascript/piercing/piercing/components/footer.mjs
 function contact_info() {
   return div(
-    toList([class$("md:text-left")]),
+    toList([class$("md:text-left pt-3")]),
     toList([
       h4(
         toList([
@@ -4245,7 +4245,7 @@ function address() {
 }
 function hours() {
   return div(
-    toList([class$("text-left")]),
+    toList([class$("text-left lg:col-start-4 lg:col-span-2 pt-3")]),
     toList([
       h4(
         toList([
@@ -4280,7 +4280,11 @@ function hours() {
 }
 function legal() {
   return div(
-    toList([class$("flex gap-2 lg:text-sm text-xs text-gray-400")]),
+    toList([
+      class$(
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm text-xs text-gray-400"
+      )
+    ]),
     toList([
       a(
         toList([
@@ -4310,7 +4314,9 @@ function legal() {
 }
 function mini_hero() {
   return div(
-    toList([class$("")]),
+    toList([
+      class$("flex flex-col gap-2 lg:col-start-1 lg:col-span-2")
+    ]),
     toList([
       p(
         toList([
@@ -4323,27 +4329,18 @@ function mini_hero() {
         toList([class$("text-center text-gray-300")]),
         toList([text2("Piercer desde 2025")])
       ),
-      div(toList([class$("mt-5 mb-5")]), toList([legal()]))
+      div(toList([class$("")]), toList([legal()]))
     ])
   );
 }
 function info_designer_and_developer() {
   return div(
-    toList([class$("text-left ")]),
+    toList([class$("text-left lg:col-start-2 lg:col-span-3")]),
     toList([
-      h4(
-        toList([
-          class$(
-            "text-center text-2xl font-bold text-white mb-3 tracking-wide"
-          ),
-          style("font-family", "'Dark Reborn', sans-serif")
-        ]),
-        toList([text2("DISE\xD1O Y DESARROLLO")])
-      ),
       div(
         toList([class$("text-center text-gray-300")]),
         toList([
-          text2("Dise\xF1ado por "),
+          text2("Dise\xF1o por "),
           a(
             toList([
               href("https://www.instagram.com/rinrindoesart/"),
@@ -4351,14 +4348,9 @@ function info_designer_and_developer() {
               target("_blank"),
               rel("noopener")
             ]),
-            toList([text2("Rin")])
-          )
-        ])
-      ),
-      div(
-        toList([class$("text-center text-gray-300")]),
-        toList([
-          text2("Desarrollado por "),
+            toList([text2("Luc\xEDa Nadal")])
+          ),
+          text2(" y desarrollo por "),
           a(
             toList([
               href("https://renatillas.pages.dev/"),
@@ -4385,7 +4377,7 @@ function footer2() {
           img(
             toList([
               src("/priv/static/footer-divisor.png"),
-              class$("shadow max-w-7xl h-auto object-cover"),
+              class$("shadow lg:max-w-7xl h-auto object-cover"),
               alt("Footer divisor"),
               attribute2("loading", "lazy")
             ])
@@ -4407,7 +4399,7 @@ function footer2() {
               div(
                 toList([
                   class$(
-                    "grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-10 mb-6"
+                    "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-0"
                   )
                 ]),
                 toList([
@@ -4519,29 +4511,19 @@ function modal_view(modal, close_modal_event, go_to_previous_photo_event, go_to_
             )
           ]),
           toList([
-            button(
-              toList([
-                class$(
-                  "fixed top-10 right:10 lg:right-130 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 hover:scale-130"
-                ),
-                attribute2("aria-label", "Close modal"),
-                on_click(close_modal_event)
-              ]),
-              toList([text2("\xD7")])
-            ),
             figure(
               toList([
                 class$(
-                  "bg-black border border-white/10 relative overflow-hidden m-0"
+                  "flex bg-black border border-white/10 relative overflow-hidden m-0"
                 )
               ]),
               toList([
                 button(
                   toList([
                     class$(
-                      "fixed top-70 left-10 lg:left-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 "
+                      "self-center text-white text-2xl font-bold z-10 w-8 h-8 justify-center cover:scale-130 bg-black"
                     ),
-                    attribute2("aria-label", "Close modal"),
+                    attribute2("aria-label", "Go to previous image"),
                     (() => {
                       let _pipe = on_click(
                         go_to_previous_photo_event(current, filtered_images)
@@ -4551,12 +4533,42 @@ function modal_view(modal, close_modal_event, go_to_previous_photo_event, go_to_
                   ]),
                   toList([text3("<")])
                 ),
+                div(
+                  toList([]),
+                  toList([
+                    img(
+                      toList([
+                        src(current.src),
+                        alt(current.alt),
+                        class$(
+                          "max-w-full max-h-[80vh] object-contain"
+                        )
+                      ])
+                    ),
+                    figcaption(
+                      toList([
+                        class$(
+                          "modal-caption-accent bg-transparent border-t border-white/10 p-4 text-center text-gray-300 uppercase tracking-[2px] relative"
+                        ),
+                        style(
+                          "font-family",
+                          "'Dark Reborn', sans-serif"
+                        ),
+                        style(
+                          "text-shadow",
+                          "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)"
+                        )
+                      ]),
+                      toList([text2(current.alt)])
+                    )
+                  ])
+                ),
                 button(
                   toList([
                     class$(
-                      "fixed top-70 right-10 lg:right-150 text-white text-2xl font-bold z-10 w-8 h-8 flex items-center justify-center  transition-all duration-300 hover:scale-130 "
+                      "self-center text-white text-2xl font-bold z-10 w-8 h-8 hover:scale-130 bg-black"
                     ),
-                    attribute2("aria-label", "Close modal"),
+                    attribute2("aria-label", "Go to next image"),
                     (() => {
                       let _pipe = on_click(
                         go_to_next_photo_event(current, filtered_images)
@@ -4565,26 +4577,6 @@ function modal_view(modal, close_modal_event, go_to_previous_photo_event, go_to_
                     })()
                   ]),
                   toList([text3(">")])
-                ),
-                img(
-                  toList([
-                    src(current.src),
-                    alt(current.alt),
-                    class$("max-w-full max-h-[80vh] object-contain")
-                  ])
-                ),
-                figcaption(
-                  toList([
-                    class$(
-                      "modal-caption-accent bg-transparent border-t border-white/10 p-4 text-center text-gray-300 uppercase tracking-[2px] relative"
-                    ),
-                    style("font-family", "'Dark Reborn', sans-serif"),
-                    style(
-                      "text-shadow",
-                      "0 0 10px rgba(255,255,255,0.3), 2px 2px 4px rgba(0,0,0,0.8)"
-                    )
-                  ]),
-                  toList([text2(current.alt)])
                 )
               ])
             )
@@ -6840,7 +6832,7 @@ function route_to_navbar_route(route) {
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
     let route = msg[0];
-    return [new Model(route, model.modal, model.gallery_filter), none()];
+    return [new Model(route, model.modal, new All()), none()];
   } else if (msg instanceof OpenModal) {
     let current = msg.photo;
     let filtered_images = msg.filtered_photos;

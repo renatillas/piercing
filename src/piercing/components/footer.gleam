@@ -14,13 +14,12 @@ pub fn footer() {
         [
           html.img([
             attribute.src("/priv/static/footer-divisor.png"),
-            attribute.class("shadow max-w-7xl h-auto object-cover"),
+            attribute.class("shadow lg:max-w-7xl h-auto object-cover"),
             attribute.alt("Footer divisor"),
             attribute.attribute("loading", "lazy"),
           ]),
         ],
       ),
-      // Footer content
       html.div(
         [
           attribute.class("relative py-6 px-4 sm:px-6 lg:px-8"),
@@ -34,7 +33,7 @@ pub fn footer() {
             html.div(
               [
                 attribute.class(
-                  "grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-10 mb-6",
+                  "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-0",
                 ),
               ],
               [
@@ -52,7 +51,7 @@ pub fn footer() {
 }
 
 fn contact_info() {
-  html.div([attribute.class("md:text-left")], [
+  html.div([attribute.class("md:text-left pt-3")], [
     html.h4(
       [
         attribute.class(
@@ -74,7 +73,7 @@ fn contact_info() {
 }
 
 fn hours() {
-  html.div([attribute.class("text-left")], [
+  html.div([attribute.class("text-left lg:col-start-4 lg:col-span-2 pt-3")], [
     html.h4(
       [
         attribute.class(
@@ -109,68 +108,69 @@ fn address() {
 }
 
 fn legal() {
-  html.div([attribute.class("flex gap-2 lg:text-sm text-xs text-gray-400")], [
-    html.a(
-      [
-        attribute.class("hover:text-white text-center"),
-        attribute.href("/aviso-legal"),
-      ],
-      [
-        element.text("Aviso legal"),
-      ],
-    ),
-    html.text("✧"),
-    html.a(
-      [
-        attribute.class("hover:text-white text-center"),
-        attribute.href("/politica-privacidad"),
-      ],
-      [
-        element.text("Política de privacidad"),
-      ],
-    ),
-    html.text("✧"),
-    html.a(
-      [
-        attribute.class("hover:text-white text-center"),
-        attribute.href("/politica-cookies"),
-      ],
-      [
-        element.text("Política de Cookies"),
-      ],
-    ),
-  ])
+  html.div(
+    [
+      attribute.class(
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm text-xs text-gray-400",
+      ),
+    ],
+    [
+      html.a(
+        [
+          attribute.class("hover:text-white text-center"),
+          attribute.href("/aviso-legal"),
+        ],
+        [
+          element.text("Aviso legal"),
+        ],
+      ),
+      html.text("✧"),
+      html.a(
+        [
+          attribute.class("hover:text-white text-center"),
+          attribute.href("/politica-privacidad"),
+        ],
+        [
+          element.text("Política de privacidad"),
+        ],
+      ),
+      html.text("✧"),
+      html.a(
+        [
+          attribute.class("hover:text-white text-center"),
+          attribute.href("/politica-cookies"),
+        ],
+        [
+          element.text("Política de Cookies"),
+        ],
+      ),
+    ],
+  )
 }
 
 fn mini_hero() {
-  html.div([attribute.class("")], [
-    html.p(
-      [
-        attribute.class("text-center text-4xl font-bold text-white mb-2"),
-        attribute.style("font-family", "'Dark Reborn', sans-serif"),
-      ],
-      [element.text("EI  PINX")],
-    ),
-    html.p([attribute.class("text-center text-gray-300")], [
-      element.text("Piercer desde 2025"),
-    ]),
-    html.div([attribute.class("mt-5 mb-5")], [legal()]),
-  ])
+  html.div(
+    [attribute.class("flex flex-col gap-2 lg:col-start-1 lg:col-span-2")],
+    [
+      html.p(
+        [
+          attribute.class("text-center text-4xl font-bold text-white mb-2"),
+          attribute.style("font-family", "'Dark Reborn', sans-serif"),
+        ],
+        [element.text("EI  PINX")],
+      ),
+      html.p([attribute.class("text-center text-gray-300")], [
+        element.text("Piercer desde 2025"),
+      ]),
+      html.div([attribute.class("")], [legal()]),
+    ],
+  )
 }
 
 fn info_designer_and_developer() {
-  html.div([attribute.class("text-left ")], [
-    html.h4(
-      [
-        attribute.class(
-          "text-center text-2xl font-bold text-white mb-3 tracking-wide",
-        ),
-        attribute.style("font-family", "'Dark Reborn', sans-serif"),
-      ],
-      [element.text("DISEÑO Y DESARROLLO")],
-    ),
+  html.div([attribute.class("text-left lg:col-start-2 lg:col-span-3")], [
     html.div([attribute.class("text-center text-gray-300")], [
-      element.text("Diseñado por "),
+      element.text("Diseño por "),
       html.a(
         [
           attribute.href("https://www.instagram.com/rinrindoesart/"),
@@ -178,11 +178,9 @@ fn info_designer_and_developer() {
           attribute.target("_blank"),
           attribute.rel("noopener"),
         ],
-        [element.text("Rin")],
+        [element.text("Lucía Nadal")],
       ),
-    ]),
-    html.div([attribute.class("text-center text-gray-300")], [
-      element.text("Desarrollado por "),
+      element.text(" y desarrollo por "),
       html.a(
         [
           attribute.href("https://renatillas.pages.dev/"),

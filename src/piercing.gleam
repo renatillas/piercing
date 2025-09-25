@@ -98,7 +98,10 @@ fn route_to_navbar_route(route: Route) -> navbar.Route {
 
 fn update(model: Model, msg: Msg) {
   case msg {
-    OnRouteChange(route) -> #(Model(..model, route: route), effect.none())
+    OnRouteChange(route) -> #(
+      Model(..model, route: route, gallery_filter: gallery.All),
+      effect.none(),
+    )
     OpenModal(current, filtered_images) -> {
       #(
         Model(..model, modal: modal.Open(current:, filtered_images:)),
