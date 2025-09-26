@@ -103,7 +103,7 @@ fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
             ),
             attribute.style("font-family", "'Dark Reborn', sans-serif"),
           ],
-          [element.text("Explora nuestro trabajo")],
+          [element.text("xplora nuestro trabaj")],
         ),
         html.div(
           [attribute.class("grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12")],
@@ -221,9 +221,9 @@ fn gallery_filtered_page(
       html.div([attribute.class("max-w-7xl mx-auto p-6 ")], [
         html.div([attribute.class("flex flex-col gap-5")], [
           header(filter),
-          element.fragment(filter_category),
+          other_filters(filter_event, filter),
           html.div([attribute.class("flex-col lg:flex-row flex")], [
-            other_filters(filter_event, filter),
+            element.fragment(filter_category),
             html.div([], [
               html.div([attribute.class("flex-1")], [
                 gallery_grid(filter, open_modal_event),

@@ -4156,10 +4156,10 @@ function about_page() {
       )
     ]),
     toList([
-      h2(
+      h1(
         toList([
           class$(
-            "font-[Dark_Reborn] text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "font-[Dark_Reborn] text-4xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
           )
         ]),
         toList([text2("\uE094obre m\uE12C")])
@@ -4756,10 +4756,10 @@ function contact_page() {
       )
     ]),
     toList([
-      h2(
+      h1(
         toList([
           class$(
-            "font-[Dark_Reborn] text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "font-[Dark_Reborn] text-4xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
           )
         ]),
         toList([text2("\uE036ontacta con nosotro\uE136")])
@@ -5009,7 +5009,7 @@ function gallery_home_page(filter_event) {
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
-                toList([text2("Explora nuestro trabajo")])
+                toList([text2("\uE004xplora nuestro trabaj\uE132")])
               ),
               div(
                 toList([
@@ -5393,11 +5393,11 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
             toList([class$("flex flex-col gap-5")]),
             toList([
               header(filter3),
-              fragment2(filter_category),
+              other_filters(filter_event, filter3),
               div(
                 toList([class$("flex-col lg:flex-row flex")]),
                 toList([
-                  other_filters(filter_event, filter3),
+                  fragment2(filter_category),
                   div(
                     toList([]),
                     toList([
