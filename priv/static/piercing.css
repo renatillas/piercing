@@ -1016,16 +1016,6 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  .md\:grid-cols-5 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-  .md\:text-left {
-    @media (width >= 48rem) {
-      text-align: left;
-    }
-  }
   .lg\:order-1 {
     @media (width >= 64rem) {
       order: 1;
@@ -1066,6 +1056,21 @@
       grid-column-start: 4;
     }
   }
+  .lg\:row-span-1 {
+    @media (width >= 64rem) {
+      grid-row: span 1 / span 1;
+    }
+  }
+  .lg\:row-span-4 {
+    @media (width >= 64rem) {
+      grid-row: span 4 / span 4;
+    }
+  }
+  .lg\:row-start-5 {
+    @media (width >= 64rem) {
+      grid-row-start: 5;
+    }
+  }
   .lg\:mt-0 {
     @media (width >= 64rem) {
       margin-top: calc(var(--spacing) * 0);
@@ -1084,6 +1089,11 @@
   .lg\:h-\[32rem\] {
     @media (width >= 64rem) {
       height: 32rem;
+    }
+  }
+  .lg\:max-h-min {
+    @media (width >= 64rem) {
+      max-height: min-content;
     }
   }
   .lg\:w-96 {
@@ -1106,9 +1116,14 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
-  .lg\:grid-rows-2 {
+  .lg\:grid-cols-5 {
     @media (width >= 64rem) {
-      grid-template-rows: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+  .lg\:grid-rows-5 {
+    @media (width >= 64rem) {
+      grid-template-rows: repeat(5, minmax(0, 1fr));
     }
   }
   .lg\:flex-row {

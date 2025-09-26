@@ -4232,7 +4232,11 @@ function about_page() {
 // build/dev/javascript/piercing/piercing/components/footer.mjs
 function contact_info() {
   return div(
-    toList([class$("md:text-left lg:col-start-4 lg:col-span-2 pt-3")]),
+    toList([
+      class$(
+        "lg:row-span-4 lg:text-left lg:col-start-4 lg:col-span-2 pt-3"
+      )
+    ]),
     toList([
       h4(
         toList([
@@ -4276,7 +4280,7 @@ function address() {
 }
 function hours() {
   return div(
-    toList([class$("text-left lg:col-start-3 pt-3")]),
+    toList([class$("lg:row-span-4 text-left lg:col-start-3 pt-3")]),
     toList([
       h4(
         toList([
@@ -4313,7 +4317,7 @@ function legal() {
   return div(
     toList([
       class$(
-        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 text-xs text-gray-400"
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 lg:row-start-5 lg:row-span-1 text-xs text-gray-400"
       )
     ]),
     toList([
@@ -4387,7 +4391,9 @@ function info_designer_and_developer() {
 function mini_hero() {
   return div(
     toList([
-      class$("flex flex-col gap-2 lg:col-start-1 lg:col-span-2")
+      class$(
+        "flex lg:row-span-4 flex-col gap-2 lg:col-start-1 lg:col-span-2"
+      )
     ]),
     toList([
       p(
@@ -4437,12 +4443,12 @@ function footer2() {
         ]),
         toList([
           div(
-            toList([class$("max-w-7xl mx-auto")]),
+            toList([class$("max-w-7xl mx-auto max-h-xl")]),
             toList([
               div(
                 toList([
                   class$(
-                    "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5 lg:grid-rows-2"
+                    "grid grid-cols-1 lg:grid-rows-5 lg:max-h-min lg:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5"
                   )
                 ]),
                 toList([mini_hero(), hours(), contact_info(), legal()])

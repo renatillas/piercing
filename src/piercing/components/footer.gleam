@@ -29,11 +29,11 @@ pub fn footer() {
           ),
         ],
         [
-          html.div([attribute.class("max-w-7xl mx-auto")], [
+          html.div([attribute.class("max-w-7xl mx-auto max-h-xl")], [
             html.div(
               [
                 attribute.class(
-                  "grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5 lg:grid-rows-2",
+                  "grid grid-cols-1 lg:grid-rows-5 lg:max-h-min lg:grid-cols-5 gap-6 lg:gap-x-0 lg:gap-y-5",
                 ),
               ],
               [
@@ -51,29 +51,36 @@ pub fn footer() {
 }
 
 fn contact_info() {
-  html.div([attribute.class("md:text-left lg:col-start-4 lg:col-span-2 pt-3")], [
-    html.h4(
-      [
-        attribute.class(
-          "text-center text-2xl font-bold text-white mb-3 tracking-wide",
-        ),
-        attribute.style("font-family", "'Dark Reborn', sans-serif"),
-      ],
-      [element.text("CONTACTO")],
-    ),
-    html.p([attribute.class("text-center text-gray-300 mb-2")], [
-      element.text("+34 644 09 12 10"),
-    ]),
-    html.p([attribute.class("text-center text-gray-300")], [
-      html.a([attribute.href("https://www.instagram.com/keitepinxa/")], [
-        element.text("@keitepinxa"),
+  html.div(
+    [
+      attribute.class(
+        "lg:row-span-4 lg:text-left lg:col-start-4 lg:col-span-2 pt-3",
+      ),
+    ],
+    [
+      html.h4(
+        [
+          attribute.class(
+            "text-center text-2xl font-bold text-white mb-3 tracking-wide",
+          ),
+          attribute.style("font-family", "'Dark Reborn', sans-serif"),
+        ],
+        [element.text("CONTACTO")],
+      ),
+      html.p([attribute.class("text-center text-gray-300 mb-2")], [
+        element.text("+34 644 09 12 10"),
       ]),
-    ]),
-  ])
+      html.p([attribute.class("text-center text-gray-300")], [
+        html.a([attribute.href("https://www.instagram.com/keitepinxa/")], [
+          element.text("@keitepinxa"),
+        ]),
+      ]),
+    ],
+  )
 }
 
 fn hours() {
-  html.div([attribute.class("text-left lg:col-start-3 pt-3")], [
+  html.div([attribute.class("lg:row-span-4 text-left lg:col-start-3 pt-3")], [
     html.h4(
       [
         attribute.class(
@@ -111,7 +118,7 @@ fn legal() {
   html.div(
     [
       attribute.class(
-        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 text-xs text-gray-400",
+        "flex justify-center gap-1 lg:gap-2 lg:text-sm lg:col-start-2 lg:col-span-3 lg:row-start-5 lg:row-span-1 text-xs text-gray-400",
       ),
     ],
     [
@@ -150,7 +157,11 @@ fn legal() {
 
 fn mini_hero() {
   html.div(
-    [attribute.class("flex flex-col gap-2 lg:col-start-1 lg:col-span-2")],
+    [
+      attribute.class(
+        "flex lg:row-span-4 flex-col gap-2 lg:col-start-1 lg:col-span-2",
+      ),
+    ],
     [
       html.p(
         [
