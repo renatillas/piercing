@@ -5070,9 +5070,9 @@ function header(filter3) {
     toList([text2(title)])
   );
 }
-function filter_category_list(items, filter_event, current_filter) {
+function filter_category_list(items, filter_event, current_filter, classes) {
   return div(
-    toList([class$("flex flex-wrap pb-5 lg:pb-0")]),
+    toList([class$(classes)]),
     (() => {
       let _pipe = items;
       return map(
@@ -5113,7 +5113,7 @@ function filter_category_list(items, filter_event, current_filter) {
     })()
   );
 }
-function other_filters(filter_event, current_filter) {
+function big_filters(filter_event, current_filter) {
   let all_filters = toList([
     ["OREJA", new Ear(new EarAll())],
     ["FACIALES", new Facial(new FacialAll())],
@@ -5121,7 +5121,14 @@ function other_filters(filter_event, current_filter) {
   ]);
   return div(
     toList([class$("lg:pr-10")]),
-    toList([filter_category_list(all_filters, filter_event, current_filter)])
+    toList([
+      filter_category_list(
+        all_filters,
+        filter_event,
+        current_filter,
+        "flex flex-wrap lg:flex-nowrap lg:pr-5"
+      )
+    ])
   );
 }
 function get_filtered_images(filter3) {
@@ -5372,17 +5379,38 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
       category_filter = category[1];
       items = category[2];
       if (category_filter instanceof Ear && filter3 instanceof Ear) {
-        return new Ok(filter_category_list(items, filter_event, filter3));
+        return new Ok(
+          filter_category_list(
+            items,
+            filter_event,
+            filter3,
+            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+          )
+        );
       } else if (category_filter instanceof Facial && filter3 instanceof Facial) {
-        return new Ok(filter_category_list(items, filter_event, filter3));
+        return new Ok(
+          filter_category_list(
+            items,
+            filter_event,
+            filter3,
+            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+          )
+        );
       } else if (category_filter instanceof Body && filter3 instanceof Body) {
-        return new Ok(filter_category_list(items, filter_event, filter3));
+        return new Ok(
+          filter_category_list(
+            items,
+            filter_event,
+            filter3,
+            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+          )
+        );
       } else {
         return new Error(void 0);
       }
     }
   );
-  let filter_category = _block;
+  let small_filter = _block;
   return div(
     toList([class$("min-h-screen")]),
     toList([
@@ -5393,11 +5421,13 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
             toList([class$("flex flex-col gap-5")]),
             toList([
               header(filter3),
-              other_filters(filter_event, filter3),
+              big_filters(filter_event, filter3),
               div(
-                toList([class$("flex-col lg:flex-row flex")]),
                 toList([
-                  fragment2(filter_category),
+                  class$("flex-col gap-5 lg:gap-0 lg:flex-row flex")
+                ]),
+                toList([
+                  fragment2(small_filter),
                   div(
                     toList([]),
                     toList([

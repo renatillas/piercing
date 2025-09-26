@@ -203,13 +203,18 @@ fn gallery_filtered_page(
   filter_event: fn(GalleryFilter) -> a,
   open_modal_event,
 ) -> Element(a) {
-  let filter_category =
+  let small_filter =
     categories
     |> list.filter_map(fn(category) {
       let #(_, category_filter, items) = category
       case filter, category_filter {
         Ear(_), Ear(_) | Facial(_), Facial(_) | Body(_), Body(_) ->
-          Ok(filter_category_list(items, filter_event, filter))
+          Ok(filter_category_list(
+            items,
+            filter_event,
+            filter,
+            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5",
+          ))
         _, _ -> Error(Nil)
       }
     })
@@ -221,22 +226,25 @@ fn gallery_filtered_page(
       html.div([attribute.class("max-w-7xl mx-auto p-6 ")], [
         html.div([attribute.class("flex flex-col gap-5")], [
           header(filter),
-          other_filters(filter_event, filter),
-          html.div([attribute.class("flex-col lg:flex-row flex")], [
-            element.fragment(filter_category),
-            html.div([], [
-              html.div([attribute.class("flex-1")], [
-                gallery_grid(filter, open_modal_event),
+          big_filters(filter_event, filter),
+          html.div(
+            [attribute.class("flex-col gap-5 lg:gap-0 lg:flex-row flex")],
+            [
+              element.fragment(small_filter),
+              html.div([], [
+                html.div([attribute.class("flex-1")], [
+                  gallery_grid(filter, open_modal_event),
+                ]),
               ]),
-            ]),
-          ]),
+            ],
+          ),
         ]),
       ]),
     ],
   )
 }
 
-fn other_filters(
+fn big_filters(
   filter_event: fn(GalleryFilter) -> a,
   current_filter: GalleryFilter,
 ) -> Element(a) {
@@ -246,7 +254,12 @@ fn other_filters(
     #("CORPORALES", Body(BodyAll)),
   ]
   html.div([attribute.class("lg:pr-10")], [
-    filter_category_list(all_filters, filter_event, current_filter),
+    filter_category_list(
+      all_filters,
+      filter_event,
+      current_filter,
+      "flex flex-wrap lg:flex-nowrap lg:pr-5",
+    ),
   ])
 }
 
@@ -272,9 +285,10 @@ fn filter_category_list(
   items: List(#(String, GalleryFilter)),
   filter_event,
   current_filter: GalleryFilter,
+  classes,
 ) {
   html.div(
-    [attribute.class("flex flex-wrap pb-5 lg:pb-0")],
+    [attribute.class(classes)],
     items
       |> list.map(fn(item) {
         let #(name, filter) = item
