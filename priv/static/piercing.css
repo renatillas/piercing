@@ -453,9 +453,6 @@
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .gap-7 {
-    gap: calc(var(--spacing) * 7);
-  }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
   }
@@ -610,6 +607,9 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .px-6 {
+    padding-inline: calc(var(--spacing) * 6);
+  }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
   }
@@ -621,9 +621,6 @@
   }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
-  }
-  .py-4 {
-    padding-block: calc(var(--spacing) * 4);
   }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
@@ -790,16 +787,6 @@
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
   }
-  .group-hover\:scale-105 {
-    &:is(:where(.group):hover *) {
-      @media (hover: hover) {
-        --tw-scale-x: 105%;
-        --tw-scale-y: 105%;
-        --tw-scale-z: 105%;
-        scale: var(--tw-scale-x) var(--tw-scale-y);
-      }
-    }
-  }
   .group-hover\:scale-110 {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
@@ -888,11 +875,6 @@
       margin-bottom: calc(var(--spacing) * 4);
     }
   }
-  .sm\:mb-12 {
-    @media (width >= 40rem) {
-      margin-bottom: calc(var(--spacing) * 12);
-    }
-  }
   .sm\:h-72 {
     @media (width >= 40rem) {
       height: calc(var(--spacing) * 72);
@@ -933,11 +915,6 @@
       padding: calc(var(--spacing) * 6);
     }
   }
-  .sm\:p-8 {
-    @media (width >= 40rem) {
-      padding: calc(var(--spacing) * 8);
-    }
-  }
   .sm\:px-4 {
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 4);
@@ -956,11 +933,6 @@
   .sm\:py-4 {
     @media (width >= 40rem) {
       padding-block: calc(var(--spacing) * 4);
-    }
-  }
-  .sm\:py-6 {
-    @media (width >= 40rem) {
-      padding-block: calc(var(--spacing) * 6);
     }
   }
   .sm\:py-12 {
@@ -1007,11 +979,6 @@
     @media (width >= 40rem) {
       font-size: var(--text-xl);
       line-height: var(--tw-leading, var(--text-xl--line-height));
-    }
-  }
-  .md\:grid-cols-2 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .lg\:order-1 {

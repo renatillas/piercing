@@ -57,7 +57,7 @@ pub fn navbar(current_route: Route) {
           html.div(
             [
               attribute.class(
-                "flex flex-wrap gap-7 sm:gap-4 lg:gap-8 justify-center",
+                "flex flex-wrap justify-between sm:gap-4 lg:gap-8",
               ),
             ],
             [

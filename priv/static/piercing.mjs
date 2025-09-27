@@ -4150,16 +4150,12 @@ function init(handler) {
 // build/dev/javascript/piercing/piercing/about.mjs
 function about_page() {
   return div(
-    toList([
-      class$(
-        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
-      )
-    ]),
+    toList([class$("max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8")]),
     toList([
       h1(
         toList([
           class$(
-            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-6 mb-12 tracking-wide text-white"
+            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-12 tracking-wide text-white"
           )
         ]),
         toList([text2("\uE094obre m\uE12C")])
@@ -4167,7 +4163,7 @@ function about_page() {
       div(
         toList([
           class$(
-            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 flex gap-10 flex-col lg:flex-row"
+            "max-w-5xl mx-auto lg:p-12 flex gap-10 flex-col lg:flex-row"
           )
         ]),
         toList([
@@ -4714,7 +4710,7 @@ function navbar(current_route) {
           div(
             toList([
               class$(
-                "flex flex-wrap gap-7 sm:gap-4 lg:gap-8 justify-center"
+                "flex flex-wrap justify-between sm:gap-4 lg:gap-8"
               )
             ]),
             toList([
@@ -4750,11 +4746,7 @@ function navbar(current_route) {
 // build/dev/javascript/piercing/piercing/contact.mjs
 function contact_page() {
   return div(
-    toList([
-      class$(
-        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8"
-      )
-    ]),
+    toList([class$("max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8")]),
     toList([
       h1(
         toList([
@@ -4964,7 +4956,7 @@ function gallery_section_card(title, description, filter3, image_src, filter_eve
               h3(
                 toList([
                   class$(
-                    "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform group-hover:scale-105 transition-transform duration-300"
+                    "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform transition-transform duration-300"
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
@@ -4997,15 +4989,17 @@ function gallery_home_page(filter_event) {
     toList([class$("min-h-screen")]),
     toList([
       div(
-        toList([class$("px-4 sm:px-6 lg:px-8 py-8 sm:py-12")]),
+        toList([class$("px-6 lg:px-8 py-6 lg:py-8 ")]),
         toList([
           div(
-            toList([class$("max-w-7xl mx-auto")]),
+            toList([
+              class$("max-w-7xl mx-auto flex items-center flex-col")
+            ]),
             toList([
               h1(
                 toList([
                   class$(
-                    "hidden lg:block text-5xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide"
+                    "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide"
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
@@ -5013,9 +5007,7 @@ function gallery_home_page(filter_event) {
               ),
               div(
                 toList([
-                  class$(
-                    "grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
-                  )
+                  class$("flex flex-col gap-8 self-center lg:gap-12")
                 ]),
                 toList([
                   gallery_section_card(

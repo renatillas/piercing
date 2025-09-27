@@ -5,15 +5,13 @@ import lustre/element/html
 pub fn about_page() {
   html.div(
     [
-      attribute.class(
-        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8",
-      ),
+      attribute.class("max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8"),
     ],
     [
       html.h1(
         [
           attribute.class(
-            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-6 mb-12 tracking-wide text-white",
+            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-12 tracking-wide text-white",
           ),
         ],
         [element.text("obre m")],
@@ -21,7 +19,7 @@ pub fn about_page() {
       html.div(
         [
           attribute.class(
-            "max-w-5xl mx-auto p-6 sm:p-8 lg:p-12 flex gap-10 flex-col lg:flex-row",
+            "max-w-5xl mx-auto lg:p-12 flex gap-10 flex-col lg:flex-row",
           ),
         ],
         [

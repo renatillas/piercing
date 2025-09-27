@@ -94,44 +94,49 @@ pub fn gallery_page(
 
 fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
   html.div([attribute.class("min-h-screen")], [
-    html.div([attribute.class("px-4 sm:px-6 lg:px-8 py-8 sm:py-12")], [
-      html.div([attribute.class("max-w-7xl mx-auto")], [
-        html.h1(
-          [
-            attribute.class(
-              "hidden lg:block text-5xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide",
-            ),
-            attribute.style("font-family", "'Dark Reborn', sans-serif"),
-          ],
-          [element.text("xplora nuestro trabaj")],
-        ),
-        html.div(
-          [attribute.class("grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12")],
-          [
-            gallery_section_card(
-              "Perforaciones de oreja",
-              "Hélix, tragus, conch y más",
-              Ear(EarAll),
-              "/priv/static/lobulo.jpeg",
-              filter_event,
-            ),
-            gallery_section_card(
-              "Perforaciones faciales",
-              "Nariz, cejas, labios y lengua",
-              Facial(FacialAll),
-              "/priv/static/nostril-1.jpeg",
-              filter_event,
-            ),
-            gallery_section_card(
-              "Perforaciones corporales",
-              "Ombligo y dermales",
-              Body(BodyAll),
-              "/priv/static/ombligo.jpeg",
-              filter_event,
-            ),
-          ],
-        ),
-      ]),
+    html.div([attribute.class("px-6 lg:px-8 py-6 lg:py-8 ")], [
+      html.div(
+        [attribute.class("max-w-7xl mx-auto flex items-center flex-col")],
+        [
+          html.h1(
+            [
+              attribute.class(
+                "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide",
+              ),
+              attribute.style("font-family", "'Dark Reborn', sans-serif"),
+            ],
+            [element.text("xplora nuestro trabaj")],
+          ),
+          html.div(
+            [
+              attribute.class("flex flex-col gap-8 self-center lg:gap-12"),
+            ],
+            [
+              gallery_section_card(
+                "Perforaciones de oreja",
+                "Hélix, tragus, conch y más",
+                Ear(EarAll),
+                "/priv/static/lobulo.jpeg",
+                filter_event,
+              ),
+              gallery_section_card(
+                "Perforaciones faciales",
+                "Nariz, cejas, labios y lengua",
+                Facial(FacialAll),
+                "/priv/static/nostril-1.jpeg",
+                filter_event,
+              ),
+              gallery_section_card(
+                "Perforaciones corporales",
+                "Ombligo y dermales",
+                Body(BodyAll),
+                "/priv/static/ombligo.jpeg",
+                filter_event,
+              ),
+            ],
+          ),
+        ],
+      ),
     ]),
   ])
 }
@@ -170,7 +175,7 @@ fn gallery_section_card(
             html.h3(
               [
                 attribute.class(
-                  "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform group-hover:scale-105 transition-transform duration-300",
+                  "text-2xl lg:text-3xl font-bold mb-2 tracking-wide transform transition-transform duration-300",
                 ),
                 attribute.style("font-family", "'Dark Reborn', sans-serif"),
               ],
