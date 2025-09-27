@@ -5006,9 +5006,7 @@ function gallery_home_page(filter_event) {
                 toList([text2("\uE004xplora nuestro trabaj\uE132")])
               ),
               div(
-                toList([
-                  class$("flex flex-col gap-8 self-center lg:gap-12")
-                ]),
+                toList([class$("flex gap-8 self-center lg:gap-12")]),
                 toList([
                   gallery_section_card(
                     "Perforaciones de oreja",

@@ -109,7 +109,7 @@ fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
           ),
           html.div(
             [
-              attribute.class("flex flex-col gap-8 self-center lg:gap-12"),
+              attribute.class("flex gap-8 self-center lg:gap-12"),
             ],
             [
               gallery_section_card(
