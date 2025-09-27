@@ -4163,7 +4163,7 @@ function about_page() {
       div(
         toList([
           class$(
-            "max-w-5xl mx-auto lg:p-12 flex gap-10 flex-col lg:flex-row"
+            "max-w-5xl mx-auto lg:p-12 flex gap-10 flex-col lg:flex-row items-center"
           )
         ]),
         toList([
