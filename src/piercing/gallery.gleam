@@ -99,7 +99,7 @@ fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
         html.h1(
           [
             attribute.class(
-              "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide",
+              "hidden lg:block text-5xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide",
             ),
             attribute.style("font-family", "'Dark Reborn', sans-serif"),
           ],
@@ -265,7 +265,7 @@ fn big_filters(
 
 fn header(filter: GalleryFilter) -> Element(b) {
   let title = case filter {
-    All -> "Explora nuestro trabajo"
+    All -> ""
     Ear(_) -> "Perforaciones de oreja"
     Facial(_) -> "Perforaciones faciales"
     Body(_) -> "Perforaciones corporales"

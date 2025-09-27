@@ -4159,7 +4159,7 @@ function about_page() {
       h1(
         toList([
           class$(
-            "font-[Dark_Reborn] text-4xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-6 mb-12 tracking-wide text-white"
           )
         ]),
         toList([text2("\uE094obre m\uE12C")])
@@ -4714,7 +4714,7 @@ function navbar(current_route) {
           div(
             toList([
               class$(
-                "flex flex-wrap gap-2 sm:gap-4 lg:gap-8 justify-center"
+                "flex flex-wrap gap-7 sm:gap-4 lg:gap-8 justify-center"
               )
             ]),
             toList([
@@ -4759,7 +4759,7 @@ function contact_page() {
       h1(
         toList([
           class$(
-            "font-[Dark_Reborn] text-4xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white"
+            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-6 mb-12 tracking-wide text-white "
           )
         ]),
         toList([text2("\uE036ontacta con nosotro\uE136")])
@@ -5005,7 +5005,7 @@ function gallery_home_page(filter_event) {
               h1(
                 toList([
                   class$(
-                    "text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide"
+                    "hidden lg:block text-5xl font-bold text-center mb-8 sm:mb-12 text-white tracking-wide"
                   ),
                   style("font-family", "'Dark Reborn', sans-serif")
                 ]),
@@ -5051,7 +5051,7 @@ function gallery_home_page(filter_event) {
 function header(filter3) {
   let _block;
   if (filter3 instanceof All) {
-    _block = "Explora nuestro trabajo";
+    _block = "";
   } else if (filter3 instanceof Ear) {
     _block = "Perforaciones de oreja";
   } else if (filter3 instanceof Facial) {

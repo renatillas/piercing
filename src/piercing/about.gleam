@@ -13,7 +13,7 @@ pub fn about_page() {
       html.h1(
         [
           attribute.class(
-            "font-[Dark_Reborn] text-4xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 tracking-wide sm:tracking-widest text-white",
+            "hidden lg:block font-[Dark_Reborn] text-5xl font-bold text-center mb-6 mb-12 tracking-wide text-white",
           ),
         ],
         [element.text("obre m")],
