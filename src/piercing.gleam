@@ -98,10 +98,7 @@ fn route_to_navbar_route(route: Route) -> navbar.Route {
 
 fn update(model: Model, msg: Msg) {
   case msg {
-    OnRouteChange(route) -> #(
-      Model(..model, route: route, gallery_filter: gallery.All),
-      effect.none(),
-    )
+    OnRouteChange(route) -> #(Model(..model, route: route), effect.none())
     OpenModal(current, filtered_images) -> {
       #(
         Model(..model, modal: modal.Open(current:, filtered_images:)),
@@ -181,7 +178,10 @@ fn view(model: Model) -> Element(Msg) {
     [
       html.div([attribute.class("fixed-overlay-1")], []),
       html.div([attribute.class("fixed-overlay-2")], []),
-      navbar.navbar(route_to_navbar_route(model.route)),
+      navbar.navbar(
+        route_to_navbar_route(model.route),
+        SetGalleryFilter(gallery.All),
+      ),
       html.main([attribute.class("flex-1")], [
         case model.route {
           Home -> home.home_page(SetGalleryFilter)

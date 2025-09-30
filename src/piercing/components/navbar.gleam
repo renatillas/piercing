@@ -1,6 +1,7 @@
 import lustre/attribute
 import lustre/element
 import lustre/element/html
+import lustre/event
 
 pub type Route {
   Home
@@ -21,7 +22,7 @@ fn get_nav_class(current_route: Route, button_route: Route) -> String {
   }
 }
 
-pub fn navbar(current_route: Route) {
+pub fn navbar(current_route: Route, event) {
   html.nav(
     [
       attribute.class(
@@ -65,6 +66,7 @@ pub fn navbar(current_route: Route) {
                 [
                   attribute.class(get_nav_class(current_route, Gallery)),
                   attribute.href("/gallery"),
+                  event.on_click(event),
                 ],
                 [element.text(set_text_gallery(current_route))],
               ),
@@ -72,11 +74,13 @@ pub fn navbar(current_route: Route) {
                 [
                   attribute.class(get_nav_class(current_route, About)),
                   attribute.href("/about"),
+                  event.on_click(event),
                 ],
                 [element.text(set_text_about(current_route))],
               ),
               html.a(
                 [
+                  event.on_click(event),
                   attribute.class(get_nav_class(current_route, Contact)),
                   attribute.href("/contact"),
                 ],

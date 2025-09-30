@@ -93,47 +93,42 @@ pub fn gallery_page(
 }
 
 fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
-  html.div([attribute.class("min-h-screen")], [
-    html.div([attribute.class("px-6 lg:px-8 py-6 lg:py-8 ")], [
-      html.div(
-        [attribute.class("max-w-7xl mx-auto flex items-center flex-col")],
+  html.div([attribute.class("px-6 lg:px-8 py-6 lg:py-8 ")], [
+    html.div([attribute.class("max-w-7xl mx-auto flex items-center flex-col")], [
+      html.h1(
         [
-          html.h1(
-            [
-              attribute.class(
-                "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide",
-              ),
-              attribute.style("font-family", "'Dark Reborn', sans-serif"),
-            ],
-            [element.text("xplora nuestro trabaj")],
+          attribute.class(
+            "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide",
           ),
-          html.div(
-            [
-              attribute.class("flex gap-8 self-center lg:gap-12"),
-            ],
-            [
-              gallery_section_card(
-                "Perforaciones de oreja",
-                "Hélix, tragus, conch y más",
-                Ear(EarAll),
-                "/priv/static/lobulo.jpeg",
-                filter_event,
-              ),
-              gallery_section_card(
-                "Perforaciones faciales",
-                "Nariz, cejas, labios y lengua",
-                Facial(FacialAll),
-                "/priv/static/nostril-1.jpeg",
-                filter_event,
-              ),
-              gallery_section_card(
-                "Perforaciones corporales",
-                "Ombligo y dermales",
-                Body(BodyAll),
-                "/priv/static/ombligo.jpeg",
-                filter_event,
-              ),
-            ],
+          attribute.style("font-family", "'Dark Reborn', sans-serif"),
+        ],
+        [element.text("xplora nuestro trabaj")],
+      ),
+      html.div(
+        [
+          attribute.class("lg:flex gap-8 self-center lg:gap-12"),
+        ],
+        [
+          gallery_section_card(
+            "Perforaciones de oreja",
+            "Hélix, tragus, conch y más",
+            Ear(EarAll),
+            "/priv/static/lobulo.jpeg",
+            filter_event,
+          ),
+          gallery_section_card(
+            "Perforaciones faciales",
+            "Nariz, cejas, labios y lengua",
+            Facial(FacialAll),
+            "/priv/static/nostril-1.jpeg",
+            filter_event,
+          ),
+          gallery_section_card(
+            "Perforaciones corporales",
+            "Ombligo y dermales",
+            Body(BodyAll),
+            "/priv/static/ombligo.jpeg",
+            filter_event,
           ),
         ],
       ),

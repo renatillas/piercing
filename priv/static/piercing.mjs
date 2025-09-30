@@ -4672,7 +4672,7 @@ function set_text_about(route) {
     return "SOBRE MI";
   }
 }
-function navbar(current_route) {
+function navbar(current_route, event4) {
   return nav(
     toList([
       class$(
@@ -4717,19 +4717,22 @@ function navbar(current_route) {
               a(
                 toList([
                   class$(get_nav_class(current_route, new Gallery())),
-                  href("/gallery")
+                  href("/gallery"),
+                  on_click(event4)
                 ]),
                 toList([text2(set_text_gallery(current_route))])
               ),
               a(
                 toList([
                   class$(get_nav_class(current_route, new About())),
-                  href("/about")
+                  href("/about"),
+                  on_click(event4)
                 ]),
                 toList([text2(set_text_about(current_route))])
               ),
               a(
                 toList([
+                  on_click(event4),
                   class$(get_nav_class(current_route, new Contact())),
                   href("/contact")
                 ]),
@@ -4986,50 +4989,45 @@ function gallery_section_card(title, description, filter3, image_src, filter_eve
 }
 function gallery_home_page(filter_event) {
   return div(
-    toList([class$("min-h-screen")]),
+    toList([class$("px-6 lg:px-8 py-6 lg:py-8 ")]),
     toList([
       div(
-        toList([class$("px-6 lg:px-8 py-6 lg:py-8 ")]),
         toList([
-          div(
+          class$("max-w-7xl mx-auto flex items-center flex-col")
+        ]),
+        toList([
+          h1(
             toList([
-              class$("max-w-7xl mx-auto flex items-center flex-col")
-            ]),
-            toList([
-              h1(
-                toList([
-                  class$(
-                    "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide"
-                  ),
-                  style("font-family", "'Dark Reborn', sans-serif")
-                ]),
-                toList([text2("\uE004xplora nuestro trabaj\uE132")])
+              class$(
+                "hidden lg:block text-5xl font-bold text-center mb-8 text-white tracking-wide"
               ),
-              div(
-                toList([class$("flex gap-8 self-center lg:gap-12")]),
-                toList([
-                  gallery_section_card(
-                    "Perforaciones de oreja",
-                    "H\xE9lix, tragus, conch y m\xE1s",
-                    new Ear(new EarAll()),
-                    "/priv/static/lobulo.jpeg",
-                    filter_event
-                  ),
-                  gallery_section_card(
-                    "Perforaciones faciales",
-                    "Nariz, cejas, labios y lengua",
-                    new Facial(new FacialAll()),
-                    "/priv/static/nostril-1.jpeg",
-                    filter_event
-                  ),
-                  gallery_section_card(
-                    "Perforaciones corporales",
-                    "Ombligo y dermales",
-                    new Body(new BodyAll()),
-                    "/priv/static/ombligo.jpeg",
-                    filter_event
-                  )
-                ])
+              style("font-family", "'Dark Reborn', sans-serif")
+            ]),
+            toList([text2("\uE004xplora nuestro trabaj\uE132")])
+          ),
+          div(
+            toList([class$("lg:flex gap-8 self-center lg:gap-12")]),
+            toList([
+              gallery_section_card(
+                "Perforaciones de oreja",
+                "H\xE9lix, tragus, conch y m\xE1s",
+                new Ear(new EarAll()),
+                "/priv/static/lobulo.jpeg",
+                filter_event
+              ),
+              gallery_section_card(
+                "Perforaciones faciales",
+                "Nariz, cejas, labios y lengua",
+                new Facial(new FacialAll()),
+                "/priv/static/nostril-1.jpeg",
+                filter_event
+              ),
+              gallery_section_card(
+                "Perforaciones corporales",
+                "Ombligo y dermales",
+                new Body(new BodyAll()),
+                "/priv/static/ombligo.jpeg",
+                filter_event
               )
             ])
           )
@@ -6860,7 +6858,7 @@ function route_to_navbar_route(route) {
 function update2(model, msg) {
   if (msg instanceof OnRouteChange) {
     let route = msg[0];
-    return [new Model(route, model.modal, new All()), none()];
+    return [new Model(route, model.modal, model.gallery_filter), none()];
   } else if (msg instanceof OpenModal) {
     let current = msg.photo;
     let filtered_images = msg.filtered_photos;
@@ -7070,7 +7068,10 @@ function view2(model) {
     toList([
       div(toList([class$("fixed-overlay-1")]), toList([])),
       div(toList([class$("fixed-overlay-2")]), toList([])),
-      navbar(route_to_navbar_route(model.route)),
+      navbar(
+        route_to_navbar_route(model.route),
+        new SetGalleryFilter(new All())
+      ),
       main(
         toList([class$("flex-1")]),
         toList([
