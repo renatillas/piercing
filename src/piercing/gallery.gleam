@@ -106,7 +106,9 @@ fn gallery_home_page(filter_event: fn(GalleryFilter) -> a) -> Element(a) {
       ),
       html.div(
         [
-          attribute.class("lg:flex gap-8 self-center lg:gap-12"),
+          attribute.class(
+            "lg:flex-row flex flex-col gap-8 self-center lg:gap-12",
+          ),
         ],
         [
           gallery_section_card(
@@ -213,7 +215,7 @@ fn gallery_filtered_page(
             items,
             filter_event,
             filter,
-            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5",
+            "flex min-w-40 flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5",
           ))
         _, _ -> Error(Nil)
       }
@@ -296,7 +298,7 @@ fn filter_category_list(
         html.button(
           [
             attribute.class(
-              "block min-w-max text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300"
+              "block text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300"
               <> case is_active {
                 True -> " pl-3 bg-white/20 font-bold"
                 False -> ""

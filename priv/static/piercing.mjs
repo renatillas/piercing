@@ -5006,7 +5006,11 @@ function gallery_home_page(filter_event) {
             toList([text2("\uE004xplora nuestro trabaj\uE132")])
           ),
           div(
-            toList([class$("lg:flex gap-8 self-center lg:gap-12")]),
+            toList([
+              class$(
+                "lg:flex-row flex flex-col gap-8 self-center lg:gap-12"
+              )
+            ]),
             toList([
               gallery_section_card(
                 "Perforaciones de oreja",
@@ -5074,7 +5078,7 @@ function filter_category_list(items, filter_event, current_filter, classes) {
           return button(
             toList([
               class$(
-                "block min-w-max text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
+                "block text-left px-2 py-2 text-white hover:bg-white/30 transition-all duration-300" + (() => {
                   if (is_active) {
                     return " pl-3 bg-white/20 font-bold";
                   } else {
@@ -5372,7 +5376,7 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
             items,
             filter_event,
             filter3,
-            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+            "flex min-w-40 flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
           )
         );
       } else if (category_filter instanceof Facial && filter3 instanceof Facial) {
@@ -5381,7 +5385,7 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
             items,
             filter_event,
             filter3,
-            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+            "flex min-w-40 flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
           )
         );
       } else if (category_filter instanceof Body && filter3 instanceof Body) {
@@ -5390,7 +5394,7 @@ function gallery_filtered_page(filter3, filter_event, open_modal_event) {
             items,
             filter_event,
             filter3,
-            "flex flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
+            "flex min-w-40 flex-wrap lg:flex-nowrap lg:flex-col lg:pr-5"
           )
         );
       } else {
