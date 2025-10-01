@@ -226,7 +226,7 @@ pub fn premium(set_category_filter_event) {
                 [
                   attribute.class("order-1 lg:order-1 group "),
                   event.on_click(
-                    set_category_filter_event(gallery.Ear(gallery.EarAll)),
+                    set_category_filter_event(gallery.Facial(gallery.FacialAll)),
                   ),
                   attribute.href("/gallery"),
                 ],
